@@ -1,0 +1,21 @@
+{
+  "name": "jshunter",
+  "version": "1.0.0",
+  "description": "Javascript Library for Developers",
+  "main": "jsHunter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@id_rsa_ubuntu_desktop_devel.github.com:jereelton-devel/jsHunter.git"
+  },
+  "keywords": [
+    "library",
+    "plugin",
+    "javascript",
+    "hunter"
+  ],
+  "author": "Jereelton Teixeira <e@email.com>",
+  "license": "ISC"
+}
