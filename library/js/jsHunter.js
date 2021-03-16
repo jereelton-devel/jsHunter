@@ -880,10 +880,10 @@
                 console.error(err);
             }
             return this;
-        }, //DONE
+        }, //DONE & DOCUMENTATION
 
         /***
-         * Writer And Modifications
+         * Writers And Modifiers
          * */
 
         html: function(text) {
@@ -1072,6 +1072,10 @@
             }
         }, //DONE
 
+        screen: function() {
+            return {width: window.innerWidth, height: window.innerHeight};
+        }, //TODO
+
         /***
          * Visual and Styles
          * */
@@ -1256,7 +1260,7 @@
                 console.error(err);
             }
             return this;
-        }, //TODO
+        }, //TODO PROGRAMAR FUNÇÃO PARA RETORNAR ALTURA DO ELEMENTO
 
         code: function() {}, //TODO
 
