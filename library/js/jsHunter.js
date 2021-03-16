@@ -780,7 +780,7 @@
 
         props: function(type, value) {
             return this.attr(type, value);
-        },//DONE
+        },//DONE & DOCUMENTATION
 
         attr: function(type, value) {
             try {
@@ -796,10 +796,10 @@
                 console.error(err);
             }
             return this;
-        },//DONE
+        },//DONE & DOCUMENTATION
 
         /***
-         * Events And Listener
+         * Events Listener
          * */
 
         click: function(param = "", callback) {
@@ -827,7 +827,7 @@
                 })()
                  : jsHunter.fn.exception("click() error " + _sel);
             return this;
-        }, //DONE
+        }, //DONE & DOCUMENTATION
 
         isOn: function(params, index) {
             let _sel    = this.sel;
@@ -851,7 +851,7 @@
                 console.error(err);
             }
             return state;
-        }, //DONE
+        }, //DONE & DOCUMENTATION
 
         on: function(ev, callback) {
             let _sel = this.sel;
