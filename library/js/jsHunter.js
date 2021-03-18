@@ -89,6 +89,8 @@
         if(p.hasOwnProperty("position"))  { s += "position: "+p.position+";"; }
         if(p.hasOwnProperty("z_index"))   { s += "z-index: "+p.z_index+";"; }
         if(p.hasOwnProperty("top"))       { s += "top: "+p.top+";"; }
+        if(p.hasOwnProperty("right"))      { s += "right: "+p.right+";"; }
+        if(p.hasOwnProperty("bottom"))      { s += "bottom: "+p.bottom+";"; }
         if(p.hasOwnProperty("left"))      { s += "left: "+p.left+";"; }
         if(p.hasOwnProperty("margin"))    { s += "margin: "+p.margin+";"; }
         if(p.hasOwnProperty("margin_left"))    { s += "margin-left: "+p.margin_left+";"; }
@@ -898,7 +900,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE
+        },//DONE & DOCUMENTATION
 
         append: function(text) {
             try {
@@ -912,7 +914,7 @@
                 console.error(err);
             }
             return this;
-        }, //DONE
+        }, //DONE & DOCUMENTATION
 
         addClass: function(classname, index) {
             let _sel    = this.sel;
@@ -945,13 +947,13 @@
                         element.className = " " + classname;
                     }
                 } else { console.log("ELSE");
-                    jsHunter.fn.exception("addClass error, nodes and selector is undefined !");
+                    jsHunter.fn.exception("addClass() error, nodes and selector is undefined !");
                 }
             } catch(err) {
                 console.error(err);
             }
             return this;
-        }, //DONE
+        }, //DONE & DOCUMENTATION
 
         removeClass: function(classname, index) {
             let _sel    = this.sel;
@@ -972,16 +974,41 @@
                             }) :
                             (element) ?
                                 element.classList.remove(classname) :
-                                jsHunter.fn.exception("removeClass error, nodes is undefined !");
+                                jsHunter.fn.exception("removeClass() error, nodes is undefined !");
             } catch(err) {
                 console.error(err);
             }
             return this;
-        }, //DONE
+        }, //DONE & DOCUMENTATION
 
-        setClass: function() {
-
-        }, //TODO: Programar função para receber e aplicar uma unica classe a um elemento
+        setClass: function(classname, index) {
+            let _sel    = this.sel;
+            let keys    = (_sel) ? Object.keys(_sel) : "";
+            let element = (keys.length > 0) ?
+                (index) || (index >= 0) ? _sel[index] : _sel : _sel;
+            try {
+                if((index || index >=0) && nodes.length > 0) { console.log("IF1");
+                    nodes[index].className = classname;
+                } else if(nodes.length > 0 && !index) { console.log("IF2");
+                    nodes.forEach(function(inode) {
+                        inode.className = classname;
+                    });
+                } else if(node) { console.log("IF3");
+                    node.className = classname;
+                } else if(element.length > 0) { console.log("IF4");
+                    keys.forEach(function(inode) {
+                        element[inode].className = classname;
+                    });
+                } else if(element) { console.log("IF5");
+                    element.className = classname;
+                } else { console.log("ELSE");
+                    jsHunter.fn.exception("setClass() error, nodes and selector is undefined !");
+                }
+            } catch(err) {
+                console.error(err);
+            }
+            return this;
+        }, //DONE & DOCUMENTATION
 
         resetStyle: function(index) {
             let _sel    = this.sel;
@@ -1010,10 +1037,16 @@
                 console.error(err);
             }
             return this;
-        }, //DONE
+        }, //DONE & DOCUMENTATION
 
         create: function(params) {
             _createHtmlElement(params);
+            (params.hasOwnProperty('timeout') && params.timeout > 0) ?
+                (function(){
+                    setTimeout(function(){
+                        jsHunter.fn.remove(params.append, params.attr_name);
+                    }, params.timeout);
+                })() : (function(){void (0)})();
             return this;
         }, //DONE
 
@@ -1657,7 +1690,7 @@
 
             return this;
 
-        }, //WORK
+        }, //DONE E DOCUMENTATION
 
         /***
          * Advanced Components
