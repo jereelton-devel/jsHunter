@@ -800,6 +800,22 @@
             return this;
         },//DONE & DOCUMENTATION
 
+        sizerScreen: function(params) {
+            try {
+                let _sel = this.sel;
+                (_sel && typeof  _sel === "object" || Array.isArray(_sel)) ?
+                    (function() {
+                        _doAttr(_sel, type, value, "nodeList");
+                    })() : (_sel) ?
+                    (function(){
+                        _doAttr(_sel, type, value, "node");
+                    })() : jsHunter.fn.exception("sizerScreen() error " + type);
+            } catch(err) {
+                console.error(err);
+            }
+            return this;
+        },//TODO
+
         /***
          * Events Listener
          * */
