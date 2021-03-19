@@ -1048,7 +1048,7 @@
                     }, params.timeout);
                 })() : (function(){void (0)})();
             return this;
-        }, //DONE
+        }, //DONE & DOCUMENTATION
 
         remove: function(parent, children) {
 
@@ -1061,20 +1061,20 @@
 
             return this;
 
-        }, //DONE
+        }, //DONE & DOCUMENTATION
 
         /***
-         * Get Data and Information
+         * Information Data
          * */
 
         text: function(i) {
-            return (i >= 0) ? this.sel[i].textContent :
-                (this.sel.textContent) ? this.sel.textContent :
+            return (i >= 0) ? this.sel[i].textContent || this.sel[i].text :
+                (this.sel[0].textContent || this.sel[0].text) ? this.sel[0].textContent || this.sel[0].text :
                     jsHunter.fn.exception("text() error " + this.sel);
 
-        }, //DONE
+        }, //DONE & DOCUMENTATION
 
-        getData: function(a, e) {
+        getData: function(a, e) {console.log(a, e)
             switch(a) {
                 case "undefined":
                     return e;
@@ -1103,11 +1103,11 @@
                 default:
                     throw err = "Invalid argument [" + a + "] on getData !";
             }
-        }, //DONE
+        }, //DONE & DOCUMENTATION
 
         screen: function() {
             return {width: window.innerWidth, height: window.innerHeight};
-        }, //TODO
+        }, //DONE & DOCUMENTATION
 
         /***
          * Visual and Styles
