@@ -722,7 +722,7 @@
          * */
 
         // for test your application, see:
-        // http://joticode.com/jsforth/docs/test
+        // http://joticode.com/works/jshunter/#_test_-installation
         _test_: function(param) {
             console.log("Test is running...", param);
             let _sel = this.sel || nodes;
@@ -1158,8 +1158,28 @@
         }, //DONE & DOCUMENTATION
 
         /***
-         * Visual and Styles
+         * Visual Handlers
          * */
+
+        anime: function(transition) {
+            try {
+                let _sel = this.sel;
+                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+                    _sel.forEach(function(a, index, el) {
+                        _sel[index].style.transition = transition;
+                    }) : (_sel) ?
+                    (function(){
+                        _sel.style.transition = transition;
+                    })() : jsHunter.fn.exception("anime() error " + _sel);
+            } catch(err) {
+                console.error(err);
+            }
+            return this;
+        }, //DONE & DOCUMENTATION
+
+        code: function() {
+
+        }, //TODO PROGRAMAT FUNÇÃO PARA MOSTRAR CODIGO FORMATADO NO ELEMENTO
 
         display: function(value) {
             try {
@@ -1262,6 +1282,20 @@
             return this;
         }, //DONE
 
+        height: function(value) {
+            try {
+                let _sel = this.sel;
+                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+                    _sel.forEach(function(a, index, el) {
+                        _sel[index].style.height = value;
+                    }) : (_sel) ?
+                    _sel.style.height = value : jsHunter.fn.exception("height() error " + _sel);
+            } catch(err) {
+                console.error(err);
+            }
+            return this;
+        }, //TODO PROGRAMAR FUNÇÃO PARA RETORNAR ALTURA DO ELEMENTO
+
         hidden: function(element) {
 
             let _el_ = document.querySelectorAll(element);
@@ -1272,20 +1306,6 @@
             });
 
         }, //DONE
-
-        anime: function(value) {
-            try {
-                let _sel = this.sel;
-                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
-                    _sel.forEach(function(a, index, el) {
-                        _sel[index].style.transition = value;
-                    }) : (_sel) ?
-                    _sel.style.transition = value : jsHunter.fn.exception("anime() error " + _sel);
-            } catch(err) {
-                console.error(err);
-            }
-            return this;
-        }, //TODO
 
         margin: function(orientation, value, measure) {
             try {
@@ -1342,22 +1362,6 @@
             }
             return this;
         }, //TODO PROGRAMAR FUNÇÃO PARA RETORNAR LARGURA DO ELEMENTO
-
-        height: function(value) {
-            try {
-                let _sel = this.sel;
-                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
-                    _sel.forEach(function(a, index, el) {
-                        _sel[index].style.height = value;
-                    }) : (_sel) ?
-                    _sel.style.height = value : jsHunter.fn.exception("height() error " + _sel);
-            } catch(err) {
-                console.error(err);
-            }
-            return this;
-        }, //TODO PROGRAMAR FUNÇÃO PARA RETORNAR ALTURA DO ELEMENTO
-
-        code: function() {}, //TODO
 
         /***
          * Modals Components
