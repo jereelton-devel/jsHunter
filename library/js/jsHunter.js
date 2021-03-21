@@ -58,7 +58,8 @@
         node      = "",
         fadeCtrl  = null, //FadeIn FadeOut Effects Controls
         modalCtrl = null, //Modal Controls
-        loopCtrl  = 0;
+        loopCtrl  = 0,
+        sizeCtrl  = null;
 
     /***
      * Private Generic Funcions
@@ -800,21 +801,52 @@
             return this;
         },//DONE & DOCUMENTATION
 
-        sizerScreen: function(params) {
-            try {
-                let _sel = this.sel;
-                (_sel && typeof  _sel === "object" || Array.isArray(_sel)) ?
-                    (function() {
-                        _doAttr(_sel, type, value, "nodeList");
-                    })() : (_sel) ?
-                    (function(){
-                        _doAttr(_sel, type, value, "node");
-                    })() : jsHunter.fn.exception("sizerScreen() error " + type);
-            } catch(err) {
-                console.error(err);
+        screenSizer: function(params) {
+            sizeCtrl = setInterval(function() {
+                let s = $$.screen();
+                let w = 0;
+                let h = 0;
+                /*Width*/
+                if(params.hasOwnProperty('width') && params.width.hasOwnProperty('calc')) {
+                    w = Math.ceil(100 - (($$.intNumber(params.width.calc) / s.width) * 100)) + (params.width.adjust || 0);
+                    w = w + "%";
+                } else if(params.hasOwnProperty('width') && params.width.hasOwnProperty('fixed')) {
+                    w = params.width.fixed;
+                } else {
+                    console.exception("Invalid value to parameter width in function screenSizer()");
+                }
+                /*Height*/
+                if(params.hasOwnProperty('height') && params.height.hasOwnProperty('calc')) {
+                    h = Math.ceil(100 - (($$.intNumber(params.height.calc) / s.height) * 100)) + (params.height.adjust || 0);
+                    h = h + "%";
+                } else if(params.hasAttribute('height') && params.height.hasOwnProperty('fixed')) {
+                    h = params.height.fixed;
+                } else {
+                    console.exception("Invalid value to parameter height in function screenSizer()");
+                }
+
+                jX(params.target).width(w);
+                jX(params.target).height(h);
+
+                console.log("screenSizer", w, h);
+            }, 500);
+
+            if(params.state === false) {
+                clearInterval(sizeCtrl);
             }
-            return this;
-        },//TODO
+
+            if(params.timeout > 0) {
+                setTimeout(function() {
+                    clearInterval(sizeCtrl);
+                }, params.timeout);
+            }
+            return null;
+        },//DONE & DOCUMENTATION
+
+        screenSizerStop: function() {
+            clearInterval(sizeCtrl);
+            return null;
+        },//DONE & DOCUMENTATION
 
         /***
          * Events Listener
@@ -1296,6 +1328,20 @@
             }
             return this;
         }, //TODO
+
+        width: function(value) {
+            try {
+                let _sel = this.sel;
+                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+                    _sel.forEach(function(a, index, el) {
+                        _sel[index].style.width = value;
+                    }) : (_sel) ?
+                    _sel.style.width = value : jsHunter.fn.exception("width() error " + _sel);
+            } catch(err) {
+                console.error(err);
+            }
+            return this;
+        }, //TODO PROGRAMAR FUNÇÃO PARA RETORNAR LARGURA DO ELEMENTO
 
         height: function(value) {
             try {
