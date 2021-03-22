@@ -964,7 +964,7 @@
             return this;
         }, //DONE & DOCUMENTATION
 
-        addClass: function(classname, index) {
+        addClass: function(classname, index) {console.log("CLASSNAME::: ",classname);
             let _sel    = this.sel;
             let keys    = (_sel) ? Object.keys(_sel) : "";
             let element = (keys.length > 0) ?
@@ -990,9 +990,9 @@
                             element[inode].className += " " + classname;
                         }
                     });
-                } else if(element) { console.log("IF5");
+                } else if(element && element.length > 0) { console.log("IF5");
                     if(!jsHunter.fn.matchClass(element, classname)) {
-                        element.className = " " + classname;
+                        element.className += " " + classname;
                     }
                 } else { console.log("ELSE");
                     jsHunter.fn.exception("addClass() error, nodes and selector is undefined !");
@@ -1122,19 +1122,25 @@
 
         }, //DONE & DOCUMENTATION
 
-        getData: function(a, e) {console.log(a, e)
+        getData: function(a, e) {
             switch(a) {
                 case "undefined":
                     return e;
                     break;
                 case "text":
-                    return e.text;
+                    return e.text || e.textContent || e.innerText;
                     break;
                 case "textContent":
-                    return e.textContent;
+                    return e.textContent || e.text || e.innerText;
                     break;
                 case "value":
                     return e.value;
+                    break;
+                case "html":
+                    return e.innerHTML;
+                    break;
+                case "outer":
+                    return e.outerHTML;
                     break;
                 case "src":
                     return e.src;
@@ -1178,8 +1184,66 @@
         }, //DONE & DOCUMENTATION
 
         code: function() {
+            try {
+                let _sel = this.sel;
+                let _arr = [];
+                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+                    _sel.forEach(function(a, index, el) {
 
-        }, //TODO PROGRAMAT FUNÇÃO PARA MOSTRAR CODIGO FORMATADO NO ELEMENTO
+                        jX("."+_sel[index].className).addClass('back-dark-code');
+                        //jX("."+_sel[index].className).addClass('back-light-code');
+
+                        _arr = (jX.fn.getData("text", _sel[index])).split("\n");
+                        console.log("forEach: code()", _sel[index], _sel[index].className);
+
+                        //$$.html("");
+                        _sel[index].innerHTML = "";
+                        _arr.forEach(function(node, idx, e){
+                            console.log(idx, _arr[idx]);
+                            //$$.append(idx +": "+ _arr[idx]);
+                            _sel[index].innerHTML +=
+                                (idx+1) +": "+
+                                (_arr[idx])
+                                    //Function Declare
+                                    .replace(/function/gi, '<span class="function">function</span>')
+                                    //Strings
+                                    //.replace(/\("(.*)"?\);/gi, '<span class="string">(&&&[{$1}]&&&)</span>')
+                                    //Comments
+                                    .replace(/(\/\/[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
+                                    .replace(/(\/\*[0-9a-zA-Z ,-_:+]+\*\/)/, '<span class="comment-blue">$1</span>')
+                                    //Aliases
+                                    .replace(/\$/gi, '<span class="alias">$</span>')
+                                    .replace(/\$J/gi, '<span class="alias">$J</span>')
+                                    .replace(/jX/, '<span class="alias">jX</span>')
+                                    .replace(/jQuery/gi, '<span class="alias">jQuery</span>')
+                                    //Functions
+                                    .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">$1</span>(')
+                                    .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">$1</span>(')
+                                    //Arguments and Parameters
+                                    .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\)/gi, '(<span class="params">$1</span>)')
+                                    .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\,/gi, '(<span class="params">$1</span>,')
+                                    .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')\,/gi, '(<span class="params">$1</span>,')
+                                    .replace(/\(([0-9a-zA-Z ,-_.#\[\]%+:]+)\)/gi, '(<span class="params">$1</span>)')
+                                    //Properties
+                                    .replace(/([a-zA-Z_\-]+):/, '<span class="property">$1</span>:')
+                                    //Value to object properties
+                                    .replace(/:\s+([0-9]+),?/, ': <span class="value">$1</span>,')
+                                    .replace(/:\s+([a-zA-Z_\-]+),/, ': <span class="value">$1</span>,')
+                                    .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/, ': <span class="value">\'$1\'</span>')
+                                    .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/, ': <span class="value">"$1"</span>')
+                                    //Links
+                                    .replace(/"(http:\/\/|https:\/\/)([.*]+)"/, '"<span class="link">$1$2</span>"') + "\n";
+                        });
+
+                    }) : (_sel) ?
+                    (function(){
+                        console.log("Single: code()", _sel);
+                    })() : jsHunter.fn.exception("code() error " + _sel);
+            } catch(err) {
+                console.error(err);
+            }
+            return this;
+        }, //WORK: PROGRAMAR FUNÇÃO PARA MOSTRAR CODIGO FORMATADO NO ELEMENTO
 
         display: function(value) {
             try {

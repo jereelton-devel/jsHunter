@@ -420,3 +420,110 @@
 .back-white {
     background: #FFFFFF !important;
 }
+
+/*Code Styles - Dark*/
+.back-dark-code {
+    background: #383a48 !important;
+    color: #B6DAEF !important;
+}
+.back-dark-code .function {
+    color: #d27510 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
+.back-dark-code .alias {
+    color: #d90b34 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
+.back-dark-code .function-name {
+    color: #ecf306 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-dark-code .params {
+    color: #61ae63 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-dark-code .property {
+    color: #8865ef !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-dark-code .value {
+    color: #1bf526 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-dark-code .comment {
+    color: #acacac !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-dark-code .comment-blue {
+    color: #1da8e9 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-dark-code .string {
+    color: #ffffff !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-dark-code .links {
+    color: #15bde5 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+    text-decoration: underline;
+}
+/*Code Styles - Light*/
+.back-light-code {
+    background: #F5F9F9 !important;
+    color: #4d4f4f !important;
+}
+.back-light-code .function {
+    color: #3f2d80 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
+.back-light-code .alias {
+    color: #561323 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
+.back-light-code .function-name {
+    color: #474818 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-light-code .params {
+    color: #286b9d !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-light-code .property {
+    color: #2e1281 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-light-code .value {
+    color: #345635 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-light-code .comment {
+    color: #565656 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-light-code .comment-blue {
+    color: #355830 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-light-code .string {
+    color: #053086 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
