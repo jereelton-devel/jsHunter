@@ -421,7 +421,27 @@
     background: #FFFFFF !important;
 }
 
-/*Code Styles - Dark*/
+/*Code Styles*/
+.codes,
+.html,
+.css,
+.javascript,
+.php,
+.sql,
+.python {
+    padding: 1%;
+    border: dashed #DEDEDE 1px;
+    font-family: "Courier New", "courier", sans-serif;
+    text-align: left !important;
+    width: 97%;
+    height: auto;
+    min-height: 100px;
+    max-height: 500px;
+    margin: 20px auto;
+    font-style: normal !important;
+    overflow: auto;
+}
+/*Dark*/
 .back-dark-code {
     background: #383a48 !important;
     color: #B6DAEF !important;
@@ -451,6 +471,11 @@
     font-family: inherit !important;
     font-weight: normal !important;
 }
+.back-dark-code .object {
+    color: #5978ec !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
 .back-dark-code .value {
     color: #1bf526 !important;
     font-family: inherit !important;
@@ -466,10 +491,9 @@
     font-family: inherit !important;
     font-weight: normal !important;
 }
-.back-dark-code .string {
-    color: #ffffff !important;
+.back-dark-code .boolean {
+    color: #d27510 !important;
     font-family: inherit !important;
-    font-weight: normal !important;
 }
 .back-dark-code .links {
     color: #15bde5 !important;
@@ -477,7 +501,62 @@
     font-weight: normal !important;
     text-decoration: underline;
 }
-/*Code Styles - Light*/
+/*Blue*/
+.back-blue-code {
+    background: #03427a !important;
+    color: #e0d185 !important;
+}
+.back-blue-code .function {
+    color: #d27510 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
+.back-blue-code .alias {
+    color: #d90b34 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
+.back-blue-code .function-name {
+    color: #ecf306 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-blue-code .params {
+    color: #00ff04 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-blue-code .property {
+    color: #d00ef1 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
+.back-blue-code .value {
+    color: #00f80d !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-blue-code .comment {
+    color: #acacac !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-blue-code .comment-blue {
+    color: #1da8e9 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-blue-code .boolean {
+    color: #d27510 !important;
+    font-family: inherit !important;
+}
+.back-blue-code .links {
+    color: #15bde5 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+    text-decoration: underline;
+}
+/*Light*/
 .back-light-code {
     background: #F5F9F9 !important;
     color: #4d4f4f !important;
@@ -522,8 +601,9 @@
     font-family: inherit !important;
     font-weight: normal !important;
 }
-.back-light-code .string {
-    color: #053086 !important;
+.back-light-code .links {
+    color: #00008B !important;
     font-family: inherit !important;
     font-weight: normal !important;
+    text-decoration: underline;
 }

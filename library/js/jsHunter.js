@@ -715,6 +715,244 @@
 
     }
 
+    /***
+     * Code Format and Filters
+     * */
+
+    function _codeFormat(c, l) {
+        if(l === 'html') {
+            return _codeFormat_HTML(c);
+        } else if(l === 'css') {
+            return _codeFormat_CSS(c);
+        } else if(l === 'javascript') {
+            return _codeFormat_JAVASCRIPT(c);
+        } else if(l === 'php') {
+            return _codeFormat_PHP(c);
+        } else if(l === 'sql') {
+            return _codeFormat_SQL(c);
+        }
+    }
+
+    function _codeFormat_HTML(c) {
+
+        let code = (c)
+            //Links
+            .replace(/(http[s]?:\/\/[0-9a-zA-Z/ _.-]+)/, '<span class="links">$1</span>')
+            .replace(/(http[s]?):/, '$1+')
+            //Comments
+            .replace(/([^:]+\/\/[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
+            .replace(/(\/\*[0-9a-zA-Z ,-_:+]+\*\/)/, '<span class="comment-blue">$1</span>')
+            //Functions
+            .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">$1</span>(')
+            .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">$1</span>(')
+            //Arguments and parameters
+            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\)/gi, '(<span class="params">$1</span>)')
+            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\,/gi, '(<span class="params">$1</span>,')
+            .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')\,/gi, '(<span class="params">$1</span>,')
+            .replace(/\(([0-9a-zA-Z ,-_.#\[\]%+:]+)\)/gi, '(<span class="params">$1</span>)')
+            //Properties
+            .replace(/([a-zA-Z_\-]+):/, '<span class="property">$1</span>:')
+            //Value to object properties
+            .replace(/:\s+([0-9]+),?/, ': <span class="value">$1</span>,')
+            .replace(/:\s+([a-zA-Z_\-]+),/, ': <span class="value">$1</span>,')
+            .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/, ': <span class="value">\'$1\'</span>')
+            .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/, ': <span class="value">"$1"</span>')
+            //Adjusts
+            .replace(/(http[s]?)\+/, '$1:') + "\n";
+
+        return code;
+    }
+
+    function _codeFormat_CSS(c) {
+
+        let code = (c)
+            //Links
+            .replace(/(http[s]?:\/\/[0-9a-zA-Z/ _.-]+)/, '<span class="links">$1</span>')
+            .replace(/(http[s]?):/, '$1+')
+            //Comments
+            .replace(/([^:]+\/\/[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
+            .replace(/(\/\*[0-9a-zA-Z ,-_:+]+\*\/)/, '<span class="comment-blue">$1</span>')
+            //Aliases
+            .replace(/\$/gi, '<span class="alias">$</span>')
+            .replace(/\$J/gi, '<span class="alias">$J</span>')
+            .replace(/jX/, '<span class="alias">jX</span>')
+            .replace(/jQuery/gi, '<span class="alias">jQuery</span>')
+            //Functions
+            .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">$1</span>(')
+            .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">$1</span>(')
+            //Arguments and parameters
+            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\)/gi, '(<span class="params">$1</span>)')
+            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\,/gi, '(<span class="params">$1</span>,')
+            .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')\,/gi, '(<span class="params">$1</span>,')
+            .replace(/\(([0-9a-zA-Z ,-_.#\[\]%+:]+)\)/gi, '(<span class="params">$1</span>)')
+            //Properties
+            .replace(/([a-zA-Z_\-]+):/, '<span class="property">$1</span>:')
+            //Value to object properties
+            .replace(/:\s+([0-9]+),?/, ': <span class="value">$1</span>,')
+            .replace(/:\s+([a-zA-Z_\-]+),/, ': <span class="value">$1</span>,')
+            .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/, ': <span class="value">\'$1\'</span>')
+            .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/, ': <span class="value">"$1"</span>')
+            //Adjusts
+            .replace(/(http[s]?)\+/, '$1:') + "\n";
+
+        return code;
+    }
+
+    function _codeFormat_JAVASCRIPT(c) {
+
+        let code = (c)
+            //Links
+            .replace(/(http[s]?:\/\/[0-9a-zA-Z/ _.-]+)/, '<span class="links">$1</span>')
+            .replace(/(http[s]?):/, '$1+')
+            //Function declare
+            .replace(/function/gi, '<span class="function">function</span>')
+            //Variable declare
+            .replace(/(var|let|const)/gi, '<span class="function">$1</span>')
+            //DOM elements
+            .replace(/(document|ready|getElementById|querySelector|querySelectorAll|getElementsByName|getElementsByClass)/gi, '<span class="object">$1</span>')
+            //Boolean
+            .replace(/,\s?(true|false)\s?\)/gi, ',<span class="boolean"> $1</span>)')
+            .replace(/:\s?(true|false)\s?\}/gi, ': <span class="boolean"> $1</span>}')
+            //Comments
+            .replace(/([^:]+\/\/[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
+            .replace(/(\/\*[0-9a-zA-Z ,-_:+]+\*\/)/, '<span class="comment-blue">$1</span>')
+            //Aliases
+            .replace(/\$/gi, '<span class="alias">$</span>')
+            .replace(/\$J/gi, '<span class="alias">$J</span>')
+            .replace(/jX/gi, '<span class="alias">jX</span>')
+            .replace(/jQuery/gi, '<span class="alias">jQuery</span>')
+            //Functions
+            .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">$1</span>(')
+            .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">$1</span>(')
+            //Arguments and parameters
+            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")([),])?/gi, '(<span class="params">$1</span>$2')
+            .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')([),])?/gi, '(<span class="params">$1</span>$2')
+            .replace(/\(([0-9a-zA-Z ,-_.#\[\]%+:]+)\)/gi, '(<span class="params">$1</span>)')
+            //Properties
+            .replace(/([^"0-9a-zA-Z_]+ )+([0-9a-zA-Z_]+)\s?:\s?/gi, '<span class="property">$1$2</span>: ')
+            .replace(/{([0-9a-zA-Z_]):\s?/gi, '{<span class="property">$1</span>: ')
+            //Value to object properties
+            .replace(/:\s+([0-9]+),?/gi, ': <span class="value">$1</span>,')
+            .replace(/:\s+([a-zA-Z_\-]+),/gi, ': <span class="value">$1</span>,')
+            .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/gi, ': <span class="value">\'$1\'</span>')
+            .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/gi, ': <span class="value">"$1"</span>')
+            //Final Adjusts
+            .replace(/(http[s]?)\+/, '$1:') + "\n";
+
+        return code;
+    }
+
+    function _codeFormat_PHP(c) {
+
+        let code = (c)
+            //Links
+            .replace(/(http[s]?:\/\/[0-9a-zA-Z/ _.-]+)/, '<span class="links">$1</span>')
+            .replace(/(http[s]?):/, '$1+')
+            //Function declare
+            .replace(/function/gi, '<span class="function">function</span>')
+            //Boolean
+            .replace(/,\s?(true|false)\s?\)/gi, ',<span class="boolean"> $1</span>)')
+            //Comments
+            .replace(/([^:]+\/\/[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
+            .replace(/(\/\*[0-9a-zA-Z ,-_:+]+\*\/)/, '<span class="comment-blue">$1</span>')
+            //Aliases
+            /*.replace(/\$/gi, '<span class="alias">$</span>')
+            .replace(/\$J/gi, '<span class="alias">$J</span>')
+            .replace(/jX/, '<span class="alias">jX</span>')
+            .replace(/jQuery/gi, '<span class="alias">jQuery</span>')*/
+            //Functions
+            .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">$1</span>(')
+            .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">$1</span>(')
+            //Arguments and parameters
+            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\)/gi, '(<span class="params">$1</span>)')
+            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\,/gi, '(<span class="params">$1</span>,')
+            .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')\,/gi, '(<span class="params">$1</span>,')
+            .replace(/\(([0-9a-zA-Z ,-_.#\[\]%+:]+)\)/gi, '(<span class="params">$1</span>)')
+            //Properties
+            .replace(/([a-zA-Z_\-]+):/, '<span class="property">$1</span>:')
+            //Value to object properties
+            .replace(/:\s+([0-9]+),?/, ': <span class="value">$1</span>,')
+            .replace(/:\s+([a-zA-Z_\-]+),/, ': <span class="value">$1</span>,')
+            .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/, ': <span class="value">\'$1\'</span>')
+            .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/, ': <span class="value">"$1"</span>')
+            //Adjusts
+            .replace(/(http[s]?)\+/, '$1:') + "\n";
+
+        return code;
+    }
+
+    function _codeFormat_SQL(c) {
+
+        let code = (c)
+            //Clause Main
+            .replace(/(FUNCTION|SELECT|FROM|INSERT|DELETE|WHERE|ON|GROUP BY)/gi, '<span class="function">$1</span>')
+            //NULL Values
+            .replace(/(NULL)/gi, '<span class="property">$1</span>')
+            //Boolean
+            .replace(/,\s?(TRUE|FALSE)\s?\)/gi, ',<span class="boolean"> $1</span>)')
+            //Comments
+            .replace(/([^:]+\/\/[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
+            .replace(/(\/\*[0-9a-zA-Z ,-_:+]+\*\/)/, '<span class="comment">$1</span>')
+            .replace(/(#\s+[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
+            .replace(/(--\s+[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
+            //Fields
+            .replace(/([0-9a-z-A-Z]+)\.([0-9a-zA-Z]+)(,?)/gi, '<span class="value">$1.$2</span>$3')
+            //Aliases
+            /*.replace(/(FROM.*)?([0-9a-z-A-Z]+)\s([0-9a-zA-Z]+)\s(ON|INNER|\n|\n\t)?/gi, ' $1 <span class="alias"> $2 $3 </span>')*/
+            //Functions
+            .replace(/(INNER|INNER JOIN|LEFT|LEFT JOIN|JOIN)/gi, '<span class="function-name">$1</span>')
+            //Arguments and parameters
+            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\)/gi, '(<span class="params">$1</span>)')
+            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\,/gi, '(<span class="params">$1</span>,')
+            .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')\,/gi, '(<span class="params">$1</span>,')
+            .replace(/\(([0-9a-zA-Z ,-_.#\[\]%+:]+)\)/gi, '(<span class="params">$1</span>)')
+            //Properties
+            .replace(/([a-zA-Z_\-]+):/, '<span class="property">$1</span>:')
+            //Value to object properties
+            .replace(/:\s+([0-9]+),?/, ': <span class="value">$1</span>,')
+            .replace(/:\s+([a-zA-Z_\-]+),/, ': <span class="value">$1</span>,')
+            .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/, ': <span class="value">\'$1\'</span>')
+            .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/, ': <span class="value">"$1"</span>')
+            //Adjusts
+            .replace(/(http[s]?)\+/, '$1:') + "\n";
+
+        return code;
+    }
+
+    function _codeFormat_PYTHON(c) {
+
+        let code = (c)
+            //Links
+            .replace(/(http[s]?:\/\/[0-9a-zA-Z/ _.-]+)/, '<span class="links">$1</span>')
+            .replace(/(http[s]?):/, '$1+')
+            //Function declare
+            .replace(/def/gi, '<span class="function">def</span>')
+            //Boolean
+            .replace(/,\s?(true|false)\s?\)/gi, ',<span class="boolean"> $1</span>)')
+            //Comments
+            .replace(/([^:]+\/\/[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
+            .replace(/(\/\*[0-9a-zA-Z ,-_:+]+\*\/)/, '<span class="comment-blue">$1</span>')
+            //Functions
+            .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">$1</span>(')
+            .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">$1</span>(')
+            //Arguments and parameters
+            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\)/gi, '(<span class="params">$1</span>)')
+            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\,/gi, '(<span class="params">$1</span>,')
+            .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')\,/gi, '(<span class="params">$1</span>,')
+            .replace(/\(([0-9a-zA-Z ,-_.#\[\]%+:]+)\)/gi, '(<span class="params">$1</span>)')
+            //Properties
+            .replace(/([a-zA-Z_\-]+):/, '<span class="property">$1</span>:')
+            //Value to object properties
+            .replace(/:\s+([0-9]+),?/, ': <span class="value">$1</span>,')
+            .replace(/:\s+([a-zA-Z_\-]+),/, ': <span class="value">$1</span>,')
+            .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/, ': <span class="value">\'$1\'</span>')
+            .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/, ': <span class="value">"$1"</span>')
+            //Adjusts
+            .replace(/(http[s]?)\+/, '$1:') + "\n";
+
+        return code;
+    }
+
     jsHunter.fn = jsHunter.prototype = {
 
         /***
@@ -1183,62 +1421,51 @@
             return this;
         }, //DONE & DOCUMENTATION
 
-        code: function() {
+        code: function(params) {
             try {
                 let _sel = this.sel;
                 let _arr = [];
+                let _sav = [];
+                let _lan = (params.hasOwnProperty('lang')) ? params.lang : false;
+                let _thm = (params.hasOwnProperty('theme')) ? params.theme : 'back-dark-code';
+
+                if(!_lan) {
+                    console.error('[Error] Missing Language for code() !');
+                    return;
+                }
+
                 (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+
+                    //Current Element
                     _sel.forEach(function(a, index, el) {
+                        console.log("CODE::: ", _sel[index].className);
 
-                        jX("."+_sel[index].className).addClass('back-dark-code');
-                        //jX("."+_sel[index].className).addClass('back-light-code');
+                        //Theme apply
+                        jX("." + _sel[index].className).addClass(_thm);
 
+                        //Data save
+                        _sav.push(jX.fn.getData("text", _sel[index]));
+
+                        //Lines from codes
                         _arr = (jX.fn.getData("text", _sel[index])).split("\n");
-                        console.log("forEach: code()", _sel[index], _sel[index].className);
 
-                        //$$.html("");
+                        //Element reset
                         _sel[index].innerHTML = "";
-                        _arr.forEach(function(node, idx, e){
-                            console.log(idx, _arr[idx]);
-                            //$$.append(idx +": "+ _arr[idx]);
-                            _sel[index].innerHTML +=
-                                (idx+1) +": "+
-                                (_arr[idx])
-                                    //Function Declare
-                                    .replace(/function/gi, '<span class="function">function</span>')
-                                    //Strings
-                                    //.replace(/\("(.*)"?\);/gi, '<span class="string">(&&&[{$1}]&&&)</span>')
-                                    //Comments
-                                    .replace(/(\/\/[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
-                                    .replace(/(\/\*[0-9a-zA-Z ,-_:+]+\*\/)/, '<span class="comment-blue">$1</span>')
-                                    //Aliases
-                                    .replace(/\$/gi, '<span class="alias">$</span>')
-                                    .replace(/\$J/gi, '<span class="alias">$J</span>')
-                                    .replace(/jX/, '<span class="alias">jX</span>')
-                                    .replace(/jQuery/gi, '<span class="alias">jQuery</span>')
-                                    //Functions
-                                    .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">$1</span>(')
-                                    .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">$1</span>(')
-                                    //Arguments and Parameters
-                                    .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\)/gi, '(<span class="params">$1</span>)')
-                                    .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\,/gi, '(<span class="params">$1</span>,')
-                                    .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')\,/gi, '(<span class="params">$1</span>,')
-                                    .replace(/\(([0-9a-zA-Z ,-_.#\[\]%+:]+)\)/gi, '(<span class="params">$1</span>)')
-                                    //Properties
-                                    .replace(/([a-zA-Z_\-]+):/, '<span class="property">$1</span>:')
-                                    //Value to object properties
-                                    .replace(/:\s+([0-9]+),?/, ': <span class="value">$1</span>,')
-                                    .replace(/:\s+([a-zA-Z_\-]+),/, ': <span class="value">$1</span>,')
-                                    .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/, ': <span class="value">\'$1\'</span>')
-                                    .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/, ': <span class="value">"$1"</span>')
-                                    //Links
-                                    .replace(/"(http:\/\/|https:\/\/)([.*]+)"/, '"<span class="link">$1$2</span>"') + "\n";
+
+                        //Line to line from codes
+                        _arr.forEach(function (node, idx, e) {
+
+                            //Data Append in element + Filters
+                            _sel[index].innerHTML += (idx + 1) + ": " + _codeFormat(_arr[idx], _lan);
+
                         });
 
                     }) : (_sel) ?
+
                     (function(){
                         console.log("Single: code()", _sel);
                     })() : jsHunter.fn.exception("code() error " + _sel);
+
             } catch(err) {
                 console.error(err);
             }
@@ -1932,6 +2159,10 @@
             }
             return parseInt(data);
         }, //DONE
+
+        trim: function(data) {
+            return data.replace(/^( +)([0-9a-zA-Z ,'"\\\/_\[\-\].!@#$%&*()]+)( +)$/gi, '$2').replace(/ +$/, '');
+        }, //TODO
 
         hexToRgb: function(color_hex) {
 
