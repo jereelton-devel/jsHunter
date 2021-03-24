@@ -802,12 +802,18 @@
 
         let code = (c)
             //Links
-            .replace(/(http[s]?:\/\/[0-9a-zA-Z/ _.-]+)/, '<span class="links">$1</span>')
-            .replace(/(http[s]?):/, '$1+')
+            .replace(/(http[s]?:\/\/[0-9a-zA-Z/ _.-]+)/gi, '<span class="links">$1</span>')
+            .replace(/(http[s]?):/gi, '$1+')
             //Function declare
             .replace(/function/gi, '<span class="function">function</span>')
+            //Class declare
+            .replace(/(class )([0-9a-zA-Z_]+)\s?{/gi, '<span class="class">$1</span>$2 {')
+            //Constructor declare
+            .replace(/constructor/gi, '<span class="constructor">constructor</span>')
             //Variable declare
-            .replace(/(var|let|const)/gi, '<span class="function">$1</span>')
+            .replace(/(var|let|const |this)/gi, '<span class="function">$1</span>')
+            //Return
+            .replace(/return/gi, '<span class="return">return</span>')
             //DOM elements
             .replace(/(document|ready|getElementById|querySelector|querySelectorAll|getElementsByName|getElementsByClass)/gi, '<span class="object">$1</span>')
             //Boolean
@@ -824,20 +830,23 @@
             //Functions
             .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">$1</span>(')
             .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">$1</span>(')
+            //Object Attributes
+            .replace(/(\)\.|\.)([a-zA-Z]+)(\s)(=?)(\s)([";]?)/gi, '$1<span class="object-attribute">$2</span>$3$4$5$6')
+            .replace(/(\.)([a-zA-Z]+)([.;]+)/gi, '$1<span class="object-attribute">$2</span>$3')
             //Arguments and parameters
             .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")([),])?/gi, '(<span class="params">$1</span>$2')
             .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')([),])?/gi, '(<span class="params">$1</span>$2')
             .replace(/\(([0-9a-zA-Z ,-_.#\[\]%+:]+)\)/gi, '(<span class="params">$1</span>)')
             //Properties
-            .replace(/([^"0-9a-zA-Z_]+ )+([0-9a-zA-Z_]+)\s?:\s?/gi, '<span class="property">$1$2</span>: ')
-            .replace(/{([0-9a-zA-Z_]):\s?/gi, '{<span class="property">$1</span>: ')
+            .replace(/([^"0-9a-zA-Z_:]+ )+([0-9a-zA-Z_]+)\s?:\s?/gi, '<span class="property">$1$2</span>: ')
+            .replace(/{([0-9a-zA-Z_]+):\s?/gi, '{<span class="property">$1</span>: ')
             //Value to object properties
             .replace(/:\s+([0-9]+),?/gi, ': <span class="value">$1</span>,')
             .replace(/:\s+([a-zA-Z_\-]+),/gi, ': <span class="value">$1</span>,')
             .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/gi, ': <span class="value">\'$1\'</span>')
             .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/gi, ': <span class="value">"$1"</span>')
             //Final Adjusts
-            .replace(/(http[s]?)\+/, '$1:') + "\n";
+            .replace(/(http[s]?)\+/gi, '$1:') + "\n";
 
         return code;
     }

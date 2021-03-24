@@ -446,8 +446,23 @@
     background: #383a48 !important;
     color: #B6DAEF !important;
 }
+.back-dark-code .class {
+    color: #e216e9 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
+.back-dark-code .constructor {
+    color: #9f0a97 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
 .back-dark-code .function {
     color: #d27510 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
+.back-dark-code .return {
+    color: #9f0a97 !important;
     font-family: inherit !important;
     font-weight: bold !important;
 }
@@ -458,6 +473,11 @@
 }
 .back-dark-code .function-name {
     color: #ecf306 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-dark-code .object-attribute {
+    color: #8865ef !important;
     font-family: inherit !important;
     font-weight: normal !important;
 }
