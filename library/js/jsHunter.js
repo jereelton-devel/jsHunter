@@ -802,51 +802,55 @@
 
         let code = (c)
             //Links
-            .replace(/(http[s]?:\/\/[0-9a-zA-Z/ _.-]+)/gi, '<span class="links">$1</span>')
-            .replace(/(http[s]?):/gi, '$1+')
+            .replace(/(http[s]?:)(\/\/)([0-9a-zA-Z/ _.?#=-]+)/gi, '<span class="links">$1/+-+/$3</span>')
+            .replace(/(http[s]?):/gi, '$1++')
+            .replace(/\.([0-9a-zA-Z/ _.?#=-]+)/gi, '+++$1')
             //Function declare
-            .replace(/function/gi, '<span class="function">function</span>')
+            .replace(/"([0-9a-zA-Z]+)?(\s)?(function)(\s)?([0-9a-zA-Z_+\-:;.,()@#$%!&"]+)?/gi, '"$1$2F_U_N_C_T_I_O_N$4$5')
+            .replace(/(function)/gi, '<span class="function">$1</span>')
+            .replace(/"(.*)([0-9a-zA-Z_]+)(\(\))(.*)"/gi, '"$1$2>::-::<$4"')
             //Class declare
             .replace(/(class )([0-9a-zA-Z_]+)\s?{/gi, '<span class="class">$1</span>$2 {')
             //Constructor declare
-            .replace(/constructor/gi, '<span class="constructor">constructor</span>')
+            .replace(/(constructor|console)/gi, '<span class="constructor">$1</span>')
             //Variable declare
             .replace(/(var|let|const |this)/gi, '<span class="function">$1</span>')
             //Return
-            .replace(/return/gi, '<span class="return">return</span>')
+            .replace(/(return)/gi, '<span class="return">$1</span>')
             //DOM elements
             .replace(/(document|ready|getElementById|querySelector|querySelectorAll|getElementsByName|getElementsByClass)/gi, '<span class="object">$1</span>')
             //Boolean
             .replace(/,\s?(true|false)\s?\)/gi, ',<span class="boolean"> $1</span>)')
             .replace(/:\s?(true|false)\s?\}/gi, ': <span class="boolean"> $1</span>}')
             //Comments
-            .replace(/([^:]+\/\/[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
+            .replace(/(\/\/[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
             .replace(/(\/\*[0-9a-zA-Z ,-_:+]+\*\/)/, '<span class="comment-blue">$1</span>')
             //Aliases
-            .replace(/\$/gi, '<span class="alias">$</span>')
-            .replace(/\$J/gi, '<span class="alias">$J</span>')
-            .replace(/jX/gi, '<span class="alias">jX</span>')
-            .replace(/jQuery/gi, '<span class="alias">jQuery</span>')
-            //Functions
+            .replace(/(\$|\$J|jX|jQuery)/gi, '<span class="alias">$1</span>')
+            //Functions Name
             .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">$1</span>(')
             .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">$1</span>(')
             //Object Attributes
             .replace(/(\)\.|\.)([a-zA-Z]+)(\s)(=?)(\s)([";]?)/gi, '$1<span class="object-attribute">$2</span>$3$4$5$6')
             .replace(/(\.)([a-zA-Z]+)([.;]+)/gi, '$1<span class="object-attribute">$2</span>$3')
-            //Arguments and parameters
+            /*//Arguments and parameters
             .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")([),])?/gi, '(<span class="params">$1</span>$2')
             .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')([),])?/gi, '(<span class="params">$1</span>$2')
             .replace(/\(([0-9a-zA-Z ,-_.#\[\]%+:]+)\)/gi, '(<span class="params">$1</span>)')
             //Properties
             .replace(/([^"0-9a-zA-Z_:]+ )+([0-9a-zA-Z_]+)\s?:\s?/gi, '<span class="property">$1$2</span>: ')
             .replace(/{([0-9a-zA-Z_]+):\s?/gi, '{<span class="property">$1</span>: ')
-            //Value to object properties
+            //Values
             .replace(/:\s+([0-9]+),?/gi, ': <span class="value">$1</span>,')
             .replace(/:\s+([a-zA-Z_\-]+),/gi, ': <span class="value">$1</span>,')
             .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/gi, ': <span class="value">\'$1\'</span>')
-            .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/gi, ': <span class="value">"$1"</span>')
+            .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/gi, ': <span class="value">"$1"</span>')*/
             //Final Adjusts
-            .replace(/(http[s]?)\+/gi, '$1:') + "\n";
+            .replace(/(http[s]?)[+]{2}/gi, '$1:')
+            .replace(/(\/\+-\+\/)/gi, '//')
+            .replace(/([+]{3})/gi, '.')
+            .replace(/(>::-::<)/gi, '()')
+            .replace(/(F_U_N_C_T_I_O_N)/gi, 'function') + "\n";
 
         return code;
     }
@@ -1447,7 +1451,6 @@
 
                     //Current Element
                     _sel.forEach(function(a, index, el) {
-                        console.log("CODE::: ", _sel[index].className);
 
                         //Theme apply
                         jX("." + _sel[index].className).addClass(_thm);
@@ -1465,7 +1468,13 @@
                         _arr.forEach(function (node, idx, e) {
 
                             //Data Append in element + Filters
-                            _sel[index].innerHTML += (idx + 1) + ": " + _codeFormat(_arr[idx], _lan);
+                            /*_sel[index].innerHTML += (idx + 1) + ": " + _codeFormat(_arr[idx], _lan);*/
+
+                            /*_sel[index].innerHTML += "<span class='line-number'>" + (idx + 1) + ":</span>";
+                            _sel[index].innerHTML += _codeFormat(_arr[idx], _lan);*/
+
+                            _sel[index].innerHTML += "<span class='line-number'>" + (idx + 1) + "</span>";
+                            _sel[index].innerHTML += "<span class='line-code'>" + _codeFormat(_arr[idx], _lan) + "</span>";
 
                         });
 

@@ -441,10 +441,33 @@
     font-style: normal !important;
     overflow: auto;
 }
+.line-number {
+    text-align: right !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    overflow: hidden !important;
+    font-family: inherit !important;
+    display: block !important;
+    width: 5% !important;
+    float: left !important;
+    border-right: solid 1px !important;
+    margin-right: 10px !important;
+}
+.line-code {
+    font-family: inherit !important;
+    padding-top: -10px !important;
+    display: block !important;
+    width: 91% !important;
+    float: left !important;
+}
 /*Dark*/
 .back-dark-code {
     background: #383a48 !important;
-    color: #B6DAEF !important;
+    color: #B6DAEF /*#de96d0*/ !important;
+}
+.back-dark-code .line-number {
+    color: #b08816 !important;
+    border-right: solid #b08816 1px !important;
 }
 .back-dark-code .class {
     color: #e216e9 !important;
