@@ -800,7 +800,7 @@
 
     function _codeFormat_JAVASCRIPT(c) {
 
-        let code = (c)
+        /*let code = (c)
             //Links
             .replace(/(http[s]?:)(\/\/)([0-9a-zA-Z/ _.?#=-]+)/gi, '<span class="links">$1/+-+/$3</span>')
             .replace(/(http[s]?):/gi, '$1++')
@@ -828,11 +828,13 @@
             //Aliases
             .replace(/(\$|\$J|jX|jQuery)/gi, '<span class="alias">$1</span>')
             //Functions Name
-            .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">$1</span>(')
-            .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">$1</span>(')
+            .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">[__fn__]$1[__fn__]</span>(')
+            .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">[__fn__]$1[__fn__]</span>(')*/
             //Object Attributes
-            .replace(/(\)\.|\.)([a-zA-Z]+)(\s)(=?)(\s)([";]?)/gi, '$1<span class="object-attribute">$2</span>$3$4$5$6')
-            .replace(/(\.)([a-zA-Z]+)([.;]+)/gi, '$1<span class="object-attribute">$2</span>$3')
+            //.replace(/(\)\.|\.)([a-zA-Z]+)(\s?)(=?)(\s?)([";]?)/gi, '$1<span class="object-attribute">$2</span>$3$4$5$6')
+            //.replace(/(\.)([a-zA-Z]+)([.;]+)/gi, '$1<span class="object-attribute">$2</span>$3')
+            //.replace(/(\.)([a-zA-Z_]+)/gmi, '$1<span class="object-attribute">$2</span>')
+
             /*//Arguments and parameters
             .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")([),])?/gi, '(<span class="params">$1</span>$2')
             .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')([),])?/gi, '(<span class="params">$1</span>$2')
@@ -845,14 +847,125 @@
             .replace(/:\s+([a-zA-Z_\-]+),/gi, ': <span class="value">$1</span>,')
             .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/gi, ': <span class="value">\'$1\'</span>')
             .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/gi, ': <span class="value">"$1"</span>')*/
+
+            //Final Adjusts
+            /*.replace(/(http[s]?)[+]{2}/gi, '$1:')
+            .replace(/(\/\+-\+\/)/gi, '//')
+            .replace(/([+]{3})/gi, '.')
+            .replace(/(>::-::<)/gi, '()')
+            .replace(/(F_U_N_C_T_I_O_N)/gi, 'function') + "\n";*/
+
+        let cl = {/*Code Label*/
+
+            A1: {i:'[__A1__]', f:'[__/A1__]'}, //aliases
+
+            B1: {i:'[__B1__]', f:'[__/B1__]'}, //boolean
+
+            C1: {i:'[__C1__]', f: '[__/C1__]'}, //class
+            C2: {i:'[__C2__]', f: '[__/C2__]'}, //constructor
+            C3: {i:'[__C3__]', f: '[__/C3__]'}, //class-name
+
+            C4: {i:'[__C4__]', f: '[__/C4__]'}, //comments-in-block
+            C5: {i:'[__C5__]', f: '[__/C5__]'}, //comments-inline
+
+            D1: {i:'[__D1__]', f: '[__/D1__]'}, //dom-elements
+
+            F1: {i:'[__F1__]', f: '[__/F1__]'}, //function
+            F2: {i:'[__F2__]', f: '[__/F2__]'}, //function-name
+            F3: {i:'[__F3__]', f: '[__/F3__]'}, //function in text
+            F4: {i:'[__F4__]', f: '[__/F4__]'}, //function-name in text
+
+            L1: {i:'[__L1__]', f: '[__/L1__]'}, //links
+
+            O1: {i:'[__O1__]', f: '[__/O1__]'}, //object-attributes
+
+            P1: {i:'[__P1__]', f: '[__/P1__]'}, //params and args
+
+            R1: {i:'[__R1__]', f: '[__/R1__]'}, //return
+
+            S1: {i:'[__S1__]', f: '[__/S1__]'}, //strings
+
+            V1: {i:'[__V1__]', f: '[__/V1__]'}, //variables and this
+
+        };
+
+        return (c)
+            //Strings
+            .replace(/\((["]|['])([0-9a-zA-Z \]\[!@#$%*()_+:.,-]+)(["]|['])([)]|[,])/gi, '($1'+cl.S1.i+'$2'+cl.S1.f+'$3$4')
+            //Links
+            .replace(/(http[s]?:)(\/\/)([0-9a-zA-Z/ _.?#=-]+)/gi, cl.L1.i+'$1[__/:/__]$3'+cl.L1.f)
+            //Function in text
+            .replace(/"([0-9a-zA-Z]+)?(\s)?(function)(\s)?([0-9a-zA-Z_+\-:;.,()@#$%!&"]+)?/gi, '"$1$2'+cl.F3.i+cl.F3.f+'$4$5')
+            //Function declare
+            .replace(/(function)/gi, cl.F1.i+'$1'+cl.F1.f)
+            //Function name in text
+            .replace(/"(.*)([0-9a-zA-Z_]+)(\(\))(.*)"/gi, '"$1$2'+cl.F4.i+cl.F4.f+'$4"')
+            //Class declare
+            .replace(/(class)\s([0-9a-zA-Z_]+)\s?{/gi, cl.C1.i+'$1'+cl.C1.f+' '+cl.C3.i+'$2'+cl.C3.f+' {')
+            //Constructor declare
+            .replace(/(constructor)/gi, cl.C2.i+'$1'+cl.C2.f)
+            //Variable declare
+            .replace(/(var|let|const |this)/gi, cl.V1.i+'$1'+cl.V1.f)
+            //Return
+            .replace(/(return)/gi, cl.R1.i+'$1'+cl.R1.f)
+            //DOM elements
+            .replace(/(console|document|ready|getElementById|querySelector|querySelectorAll|getElementsByName|getElementsByClass)/gi, cl.D1.i+'$1'+cl.D1.f)
+            //Boolean
+            .replace(/,\s?(true|false)\s?\)/gi, ', '+cl.B1.i+'$1'+cl.B1.f+')')
+            .replace(/:\s?(true|false)\s?}/gi, ': '+cl.B1.i+'$1'+cl.B1.f+'}')
+            //Arguments and parameters
+            .replace(/\(("[0-9a-zA-Z ,\-_.#\[\]%+:]+")([),])?/gi, '('+cl.P1.i+'$1'+cl.P1.f+'$2')
+            .replace(/\(('[0-9a-zA-Z ,\-_.#\[\]%+:]+')([),])?/gi, '('+cl.P1.i+'$1'+cl.P1.f+'$2')
+            .replace(/\s?([(]|[,])\s?([0-9a-zA-Z_]+)\s?(|[,]|[)])/gi, '$1'+cl.P1.i+'$2'+cl.P1.f+'$3')
+            //Comments
+            .replace(/\/\/([0-9a-zA-Z ,\-_:+]+)/, cl.C5.i+'$1'+cl.C5.f)
+            .replace(/\/\*([0-9a-zA-Z ,\-_:+]+)\*\//, cl.C4.i+'$1'+cl.C4.f)
+            //Aliases
+            .replace(/(\${2}|\$|\$J|jX|jQuery)([.]|[(])/gi, cl.A1.i+'$1'+cl.A1.f+'$2')
+            //Functions Name
+            .replace(/(\.)?([0-9a-zA-Z_]+)(\()/gi, '$1'+cl.F2.i+'$2'+cl.F2.f+'$3')
+            //Object Attributes
+            .replace(/\.([0-9a-zA-Z_]+)(?!.*([(]|["]))/gi, '.'+cl.O1.i+'$1'+cl.O1.f)
+            /*.replace(/(\)\.|\.)([a-zA-Z]+)(\s?)(=?)(\s?)([";]?)/gi, '$1'+cl.O1.i+'$2'+cl.O1.f+'$3$4$5$6')
+            .replace(/(\.)([a-zA-Z]+)([.;]+)/gi, '$1'+cl.O1.i+'$2'+cl.O1.i+'$3')
+            .replace(/(\.)([a-zA-Z_]+)/gi, '$1'+cl.O1.i+'$2'+cl.O1.i)*/
+
+            /*
+
+            \.([0-9a-zA-Z_]+)(?!.*([(]|["]|[']))
+
+            f().init;
+            f().init = "123";
+            f("tests").init = "123";
+            f.init;
+            f.init.test.new;
+            f.test = "";
+            f.test = '';
+            f.test="";
+            f.test='';
+            f.test=10;
+            f.test = 10;
+            init.test;
+            jX("#iframe_test").attr("src", "https://www.google.com");
+            jX("#iframe_test").test.attr("src", "https://www.google.com").test;
+            */
+
+
+            /*//Properties
+            .replace(/([^"0-9a-zA-Z_:]+ )+([0-9a-zA-Z_]+)\s?:\s?/gi, '<span class="property">$1$2</span>: ')
+            .replace(/{([0-9a-zA-Z_]+):\s?/gi, '{<span class="property">$1</span>: ')
+            //Values
+            .replace(/:\s+([0-9]+),?/gi, ': <span class="value">$1</span>,')
+            .replace(/:\s+([a-zA-Z_\-]+),/gi, ': <span class="value">$1</span>,')
+            .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/gi, ': <span class="value">\'$1\'</span>')
+            .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/gi, ': <span class="value">"$1"</span>')
+
             //Final Adjusts
             .replace(/(http[s]?)[+]{2}/gi, '$1:')
             .replace(/(\/\+-\+\/)/gi, '//')
             .replace(/([+]{3})/gi, '.')
             .replace(/(>::-::<)/gi, '()')
-            .replace(/(F_U_N_C_T_I_O_N)/gi, 'function') + "\n";
-
-        return code;
+            .replace(/(F_U_N_C_T_I_O_N)/gi, 'function')*/ + "\n";
     }
 
     function _codeFormat_PHP(c) {
