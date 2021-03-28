@@ -889,11 +889,22 @@
 
         };
 
-        return (c)
+        let swap = '';
+        let code = (c)
             //Strings
-            .replace(/\((["]|['])([0-9a-zA-Z \]\[!@#$%*()_+:.,-]+)(["]|['])([)]|[,])/gi, '($1'+cl.S1.i+'$2'+cl.S1.f+'$3$4')
+            .replace(/(["]|['])(.*)(["]|['])/gi, '$1'+cl.S1.i+'$2'+cl.S1.f+'$3')
             //Links
-            .replace(/(http[s]?:)(\/\/)([0-9a-zA-Z/ _.?#=-]+)/gi, cl.L1.i+'$1[__/:/__]$3'+cl.L1.f)
+            .replace(/(http[s]?:)(\/\/)([0-9a-zA-Z/ _.?#=-]+)/gi, cl.L1.i+'$1[__/:/__]$3'+cl.L1.f);
+
+        //Links adjusts
+        if(code.search(/(\[__L1__\]http[s]?:\[__\/\:\/__\])(.*)(?=(\.))(.*\[__\/L1__\])/gi) !== -1) {
+            swap = code.split(/\[__L1__\]/);
+            swap = swap[1].split(/\[__\/L1__\]/)[0];
+            swap = swap.replace(/\./gi, '[__/./__]');console.log("["+swap+"]");
+            code = code.replace(/(\[__L1__\]http[s]?:\[__\/\:\/__\])(.*)(.*\[__\/L1__\])/, '$1'+swap+'$3');
+        }
+
+        code = (code)
             //Function in text
             .replace(/"([0-9a-zA-Z]+)?(\s)?(function)(\s)?([0-9a-zA-Z_+\-:;.,()@#$%!&"]+)?/gi, '"$1$2'+cl.F3.i+cl.F3.f+'$4$5')
             //Function declare
@@ -918,36 +929,50 @@
             .replace(/\(('[0-9a-zA-Z ,\-_.#\[\]%+:]+')([),])?/gi, '('+cl.P1.i+'$1'+cl.P1.f+'$2')
             .replace(/\s?([(]|[,])\s?([0-9a-zA-Z_]+)\s?(|[,]|[)])/gi, '$1'+cl.P1.i+'$2'+cl.P1.f+'$3')
             //Comments
-            .replace(/\/\/([0-9a-zA-Z ,\-_:+]+)/, cl.C5.i+'$1'+cl.C5.f)
-            .replace(/\/\*([0-9a-zA-Z ,\-_:+]+)\*\//, cl.C4.i+'$1'+cl.C4.f)
+            .replace(/\/\/(.*)+/, cl.C5.i+'$1'+cl.C5.f)
+            .replace(/\/\*(.*)/gi, cl.C4.i+'$1')
+            .replace(/(\*\/)/gi, cl.C4.f)
             //Aliases
             .replace(/(\${2}|\$|\$J|jX|jQuery)([.]|[(])/gi, cl.A1.i+'$1'+cl.A1.f+'$2')
             //Functions Name
             .replace(/(\.)?([0-9a-zA-Z_]+)(\()/gi, '$1'+cl.F2.i+'$2'+cl.F2.f+'$3')
             //Object Attributes
-            .replace(/\.([0-9a-zA-Z_]+)(?!.*([(]|["]))/gi, '.'+cl.O1.i+'$1'+cl.O1.f)
-            /*.replace(/(\)\.|\.)([a-zA-Z]+)(\s?)(=?)(\s?)([";]?)/gi, '$1'+cl.O1.i+'$2'+cl.O1.f+'$3$4$5$6')
-            .replace(/(\.)([a-zA-Z]+)([.;]+)/gi, '$1'+cl.O1.i+'$2'+cl.O1.i+'$3')
-            .replace(/(\.)([a-zA-Z_]+)/gi, '$1'+cl.O1.i+'$2'+cl.O1.i)*/
+            .replace(/\.([0-9a-zA-Z_]+)(?=([;]|[.]|\s?[=]\s?))/gi, '.'+cl.O1.i+'$1'+cl.O1.f)
+            //.replace(/\.([0-9a-zA-Z_]+)(?!.*([(]|["]))/gi, '.'+cl.O1.i+'$1'+cl.O1.f)
+            //.replace(/(\)\.|\.)([a-zA-Z]+)(\s?)(=?)(\s?)([";]?)/gi, '$1'+cl.O1.i+'$2'+cl.O1.f+'$3$4$5$6')
+            //.replace(/(\.)([a-zA-Z]+)([.;]+)/gi, '$1'+cl.O1.i+'$2'+cl.O1.i+'$3')
+            //.replace(/(\.)([a-zA-Z_]+)/gi, '$1'+cl.O1.i+'$2'+cl.O1.i)
 
             /*
+            precedencia:
+                comentario-bloco
+                comentario-inline
+                strings
+                links
+                parametros
+                function
 
-            \.([0-9a-zA-Z_]+)(?!.*([(]|["]|[']))
 
-            f().init;
-            f().init = "123";
-            f("tests").init = "123";
-            f.init;
-            f.init.test.new;
-            f.test = "";
-            f.test = '';
-            f.test="";
-            f.test='';
-            f.test=10;
-            f.test = 10;
-            init.test;
-            jX("#iframe_test").attr("src", "https://www.google.com");
-            jX("#iframe_test").test.attr("src", "https://www.google.com").test;
+            /\/\*\n?(.*)+\n?\*\/|\.([0-9a-zA-Z_]+)(?=([;]|[.]|\s?[=]\s?))|\/\/(.*)|"(.*)"/gmi
+
+            */
+
+            /*
+            comentario bloco
+            */
+            //comentario inline
+            /*
+                    "String"//comentario teste
+                    f().init.test;
+                    f("").init.test;
+                    f().init.test = "";
+                    f().init.test="";
+                    f.init;
+                    f.init.test;
+                    f.init.test = "";
+                    "http://www.jshunter.test.com"
+                    f.func(".test").test;
+            //test.func().param;
             */
 
 
@@ -966,6 +991,8 @@
             .replace(/([+]{3})/gi, '.')
             .replace(/(>::-::<)/gi, '()')
             .replace(/(F_U_N_C_T_I_O_N)/gi, 'function')*/ + "\n";
+
+        return code;
     }
 
     function _codeFormat_PHP(c) {
