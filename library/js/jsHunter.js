@@ -59,7 +59,8 @@
         fadeCtrl  = null, //FadeIn FadeOut Effects Controls
         modalCtrl = null, //Modal Controls
         loopCtrl  = 0,
-        sizeCtrl  = null;
+        sizeCtrl  = null,
+        codeCtrlC = 0;
 
     /***
      * Private Generic Funcions
@@ -890,19 +891,57 @@
         };
 
         let swap = '';
-        let code = (c)
-            //Strings
-            .replace(/(["]|['])(.*)(["]|['])/gi, '$1'+cl.S1.i+'$2'+cl.S1.f+'$3')
-            //Links
-            .replace(/(http[s]?:)(\/\/)([0-9a-zA-Z/ _.?#=-]+)/gi, cl.L1.i+'$1[__/:/__]$3'+cl.L1.f);
+        let code = c;
+
+        //Comment in block
+        if(code.search(/\/\*(.*)\*\//gi) !== -1) { //Start/End comment in block
+            code = (code).replace(/\/\*(.*)\*\//gi, cl.C4.i+'$1'+cl.C4.f);
+            codeCtrlC = 0;
+        } else if(code.search(/\/\*/gi) !== -1) { //Start comment in block
+            code = (code).replace(/\/\*/gi, cl.C4.i);
+            codeCtrlC = 1;
+        } else if(code.search(/(\*\/)/gi) !== -1) { //End Comment in block
+            code = (code).replace(/(\*\/)/gi, cl.C4.f);
+            codeCtrlC = 0;
+        }
+
+        if(codeCtrlC === 1) {//Control comment in block
+            return code + "\n";
+        }
+
+        //Strings
+        code = (code)
+            .replace(/"([0-9a-zA-Z\[\]\\.,'()+\-=\/$?|!@#%&_*:;{}^ ]+)"/gi, '"'+cl.S1.i+'$1'+cl.S1.f+'"')
+            .replace(/'([0-9a-zA-Z\[\]\\.,"()+\-=\/$?|!@#%&_*:;{}^ ]+)'/gi, "'"+cl.S1.i+'$1'+cl.S1.f+"'");
+
+        //String adjust
+        if(code.search(/(\[__C[45]__])(.*)"(\[__S1__])(.*)(\[__\/S1__])"(.*)(\[__\/C[45]__])/gi) !== -1) {
+            //Clear comment in block
+            swap = code.match(/(\[__C[45]__])(.*)"(\[__S1__])(.*)(\[__\/S1__])"(.*)(\[__\/C[45]__])/gi)[0];
+            swap = swap.replace(/(\[__[\/]?S1__])/gi, '');
+            code = code.replace(/(\[__C[45]__].*"\[__S1__].*\[__\/S1__]".*\[__\/C[45]__])/gi, swap);
+        } else if(code.search(/\/\/(.*)"(\[__S1__])(.*)(\[__\/S1__])"(.*)/gi) !== -1) {
+            //Clear comment inline
+            swap = code.match(/\/\/(.*)"(\[__S1__])(.*)(\[__\/S1__])"(.*)/gi)[0];
+            swap = swap.replace(/(\[__[\/]?S1__])/gi, '');
+            code = code.replace(/\/\/(.*"\[__S1__].*\[__\/S1__]".*)/gi, swap);
+        }
+
+        //Links
+        code = (code)
+            .replace(/"(\[__S1__])?(http[s]?)(:\/\/)([0-9a-zA-Z/ _.?#=-]+)(\[__\/S1__])?"/gi, '"'+cl.L1.i+'$2[__/:/__]$4'+cl.L1.f+'"')
+            .replace(/'(\[__S1__])?(http[s]?)(:\/\/)([0-9a-zA-Z/ _.?#=-]+)(\[__\/S1__])?'/gi, "'"+cl.L1.i+'$2[__/:/__]$4'+cl.L1.f+"'");
 
         //Links adjusts
-        if(code.search(/(\[__L1__\]http[s]?:\[__\/\:\/__\])(.*)(?=(\.))(.*\[__\/L1__\])/gi) !== -1) {
-            swap = code.split(/\[__L1__\]/);
-            swap = swap[1].split(/\[__\/L1__\]/)[0];
-            swap = swap.replace(/\./gi, '[__/./__]');console.log("["+swap+"]");
-            code = code.replace(/(\[__L1__\]http[s]?:\[__\/\:\/__\])(.*)(.*\[__\/L1__\])/, '$1'+swap+'$3');
+        if(code.search(/(\[__L1__]http[s]?\[__\/:\/__])(.*)(?=(\.))(.*\[__\/L1__])/gi) !== -1) {
+            swap = code.match(/(\[__L1__]http[s]?\[__\/:\/__])(.*)(?=(\.))(.*\[__\/L1__])/gi)[0];
+            swap = swap.replace(/\[__([\/]?)L1__](http[s]?\[__\/:\/__])?/gi, '');
+            swap = swap.replace(/\./gi, '[__/./__]');
+            code = code.replace(/(\[__L1__]http[s]?\[__\/:\/__])(.*)(.*\[__\/L1__])/, '$1' + swap + '$3');
         }
+
+        //Comments inline
+        code = (code).replace(/\/\/(.*)+/, cl.C5.i+'$1'+cl.C5.f);
 
         code = (code)
             //Function in text
@@ -928,10 +967,6 @@
             .replace(/\(("[0-9a-zA-Z ,\-_.#\[\]%+:]+")([),])?/gi, '('+cl.P1.i+'$1'+cl.P1.f+'$2')
             .replace(/\(('[0-9a-zA-Z ,\-_.#\[\]%+:]+')([),])?/gi, '('+cl.P1.i+'$1'+cl.P1.f+'$2')
             .replace(/\s?([(]|[,])\s?([0-9a-zA-Z_]+)\s?(|[,]|[)])/gi, '$1'+cl.P1.i+'$2'+cl.P1.f+'$3')
-            //Comments
-            .replace(/\/\/(.*)+/, cl.C5.i+'$1'+cl.C5.f)
-            .replace(/\/\*(.*)/gi, cl.C4.i+'$1')
-            .replace(/(\*\/)/gi, cl.C4.f)
             //Aliases
             .replace(/(\${2}|\$|\$J|jX|jQuery)([.]|[(])/gi, cl.A1.i+'$1'+cl.A1.f+'$2')
             //Functions Name
@@ -942,40 +977,6 @@
             //.replace(/(\)\.|\.)([a-zA-Z]+)(\s?)(=?)(\s?)([";]?)/gi, '$1'+cl.O1.i+'$2'+cl.O1.f+'$3$4$5$6')
             //.replace(/(\.)([a-zA-Z]+)([.;]+)/gi, '$1'+cl.O1.i+'$2'+cl.O1.i+'$3')
             //.replace(/(\.)([a-zA-Z_]+)/gi, '$1'+cl.O1.i+'$2'+cl.O1.i)
-
-            /*
-            precedencia:
-                comentario-bloco
-                comentario-inline
-                strings
-                links
-                parametros
-                function
-
-
-            /\/\*\n?(.*)+\n?\*\/|\.([0-9a-zA-Z_]+)(?=([;]|[.]|\s?[=]\s?))|\/\/(.*)|"(.*)"/gmi
-
-            */
-
-            /*
-            comentario bloco
-            */
-            //comentario inline
-            /*
-                    "String"//comentario teste
-                    f().init.test;
-                    f("").init.test;
-                    f().init.test = "";
-                    f().init.test="";
-                    f.init;
-                    f.init.test;
-                    f.init.test = "";
-                    "http://www.jshunter.test.com"
-                    f.func(".test").test;
-            //test.func().param;
-            */
-
-
             /*//Properties
             .replace(/([^"0-9a-zA-Z_:]+ )+([0-9a-zA-Z_]+)\s?:\s?/gi, '<span class="property">$1$2</span>: ')
             .replace(/{([0-9a-zA-Z_]+):\s?/gi, '{<span class="property">$1</span>: ')
@@ -1578,7 +1579,6 @@
             try {
                 let _sel = this.sel;
                 let _arr = [];
-                let _sav = [];
                 let _lan = (params.hasOwnProperty('lang')) ? params.lang : false;
                 let _thm = (params.hasOwnProperty('theme')) ? params.theme : 'back-dark-code';
 
@@ -1595,10 +1595,7 @@
                         //Theme apply
                         jX("." + _sel[index].className).addClass(_thm);
 
-                        //Data save
-                        _sav.push(jX.fn.getData("text", _sel[index]));
-
-                        //Lines from codes
+                        //Lines from codes: Array
                         _arr = (jX.fn.getData("text", _sel[index])).split("\n");
 
                         //Element reset
@@ -1608,13 +1605,11 @@
                         _arr.forEach(function (node, idx, e) {
 
                             //Data Append in element + Filters
-                            /*_sel[index].innerHTML += (idx + 1) + ": " + _codeFormat(_arr[idx], _lan);*/
+                            /*_sel[index].innerHTML += "<span class='line-number'>" + (idx + 1) + "</span>";
+                            _sel[index].innerHTML += "<span class='line-code'>" + _codeFormat(_arr[idx], _lan) + "</span>";*/
 
-                            /*_sel[index].innerHTML += "<span class='line-number'>" + (idx + 1) + ":</span>";
-                            _sel[index].innerHTML += _codeFormat(_arr[idx], _lan);*/
-
-                            _sel[index].innerHTML += "<span class='line-number'>" + (idx + 1) + "</span>";
-                            _sel[index].innerHTML += "<span class='line-code'>" + _codeFormat(_arr[idx], _lan) + "</span>";
+                            //Tests
+                            _sel[index].innerHTML += _codeFormat(_arr[idx], _lan);
 
                         });
 

@@ -428,7 +428,8 @@
 .javascript,
 .php,
 .sql,
-.python {
+.python,
+.java {
     padding: 1%;
     border: dashed #DEDEDE 1px;
     font-family: "Courier New", "courier", sans-serif;
