@@ -94,9 +94,13 @@
         F3: {i:'[__F3__]', f: '[__/F3__]', t: '<span class="function-in-text">', d: 'function in text'},
         /*function-name in text*/
         F4: {i:'[__F4__]', f: '[__/F4__]', t: '<span class="function-name-in-text">', d: 'function-name in text'},
+        /*function-name in advanced*/
+        F5: {i:'[__F5__][[[', f: ']]][__/F5__]', t: '<span class="function-name">', d: 'function-name in advanced'},
 
         /*links*/
         L1: {i:'[__L1__]', f: '[__/L1__]', t: '<span class="links">', d: 'links'},
+        //two points for url links
+        L2: {i: '[__/:/__]', f: '[__/:/__]', t: '', d: 'two points for url links'},
 
         /*methods of class*/
         M1: {i:'[__M1__]', f: '[__/M1__]', t: '<span class="methods-of-class">', d: 'methods of class'},
@@ -106,6 +110,9 @@
 
         /*params and args*/
         P1: {i:'[__P1__]', f: '[__/P1__]', t: '<span class="param">', d: 'params and args'},
+
+        /*properties*/
+        P2: {i:'[__P2__]', f: '[__/P2__]', t: '<span class="property">', d: 'properties of object'},
 
         /*return*/
         R1: {i:'[__R1__]', f: '[__/R1__]', t: '<span class="return">', d: 'return'},
@@ -117,6 +124,9 @@
 
         /*variables and this*/
         V1: {i:'[__V1__]', f: '[__/V1__]', t: '<span class="variables">', d: 'variables and this'},
+
+        /*value to properties of object*/
+        V2: {i:'[__V2__]', f: '[__/V2__]', t: '<span class="value">', d: 'value to properties of object'},
 
         /*Others*/
         _T: {i:'', f: '', t: '<span class="test">', d: 'for test and development'},
@@ -782,7 +792,7 @@
      * Code Format and Filters
      * */
 
-    function _codeFormat(c, l) {
+    function _codeMapper(c, l) {
         if(l === 'html') {
             return _codeMapper_HTML(c);
         } else if(l === 'css') {
@@ -863,61 +873,6 @@
 
     function _codeMapper_JAVASCRIPT(c) {
 
-        /*let code = (c)
-            //Links
-            .replace(/(http[s]?:)(\/\/)([0-9a-zA-Z/ _.?#=-]+)/gi, '<span class="links">$1/+-+/$3</span>')
-            .replace(/(http[s]?):/gi, '$1++')
-            .replace(/\.([0-9a-zA-Z/ _.?#=-]+)/gi, '+++$1')
-            //Function declare
-            .replace(/"([0-9a-zA-Z]+)?(\s)?(function)(\s)?([0-9a-zA-Z_+\-:;.,()@#$%!&"]+)?/gi, '"$1$2F_U_N_C_T_I_O_N$4$5')
-            .replace(/(function)/gi, '<span class="function">$1</span>')
-            .replace(/"(.*)([0-9a-zA-Z_]+)(\(\))(.*)"/gi, '"$1$2>::-::<$4"')
-            //Class declare
-            .replace(/(class )([0-9a-zA-Z_]+)\s?{/gi, '<span class="class">$1</span>$2 {')
-            //Constructor declare
-            .replace(/(constructor|console)/gi, '<span class="constructor">$1</span>')
-            //Variable declare
-            .replace(/(var|let|const |this)/gi, '<span class="function">$1</span>')
-            //Return
-            .replace(/(return)/gi, '<span class="return">$1</span>')
-            //DOM elements
-            .replace(/(document|ready|getElementById|querySelector|querySelectorAll|getElementsByName|getElementsByClass)/gi, '<span class="object">$1</span>')
-            //Boolean
-            .replace(/,\s?(true|false)\s?\)/gi, ',<span class="boolean"> $1</span>)')
-            .replace(/:\s?(true|false)\s?\}/gi, ': <span class="boolean"> $1</span>}')
-            //Comments
-            .replace(/(\/\/[0-9a-zA-Z ,-_:+]+)/, '<span class="comment">$1</span>')
-            .replace(/(\/\*[0-9a-zA-Z ,-_:+]+\*\/)/, '<span class="comment-blue">$1</span>')
-            //Aliases
-            .replace(/(\$|\$J|jX|jQuery)/gi, '<span class="alias">$1</span>')
-            //Functions Name
-            .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">[__fn__]$1[__fn__]</span>(')
-            .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">[__fn__]$1[__fn__]</span>(')*/
-            //Object Attributes
-            //.replace(/(\)\.|\.)([a-zA-Z]+)(\s?)(=?)(\s?)([";]?)/gi, '$1<span class="object-attribute">$2</span>$3$4$5$6')
-            //.replace(/(\.)([a-zA-Z]+)([.;]+)/gi, '$1<span class="object-attribute">$2</span>$3')
-            //.replace(/(\.)([a-zA-Z_]+)/gmi, '$1<span class="object-attribute">$2</span>')
-
-            /*//Arguments and parameters
-            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")([),])?/gi, '(<span class="params">$1</span>$2')
-            .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')([),])?/gi, '(<span class="params">$1</span>$2')
-            .replace(/\(([0-9a-zA-Z ,-_.#\[\]%+:]+)\)/gi, '(<span class="params">$1</span>)')
-            //Properties
-            .replace(/([^"0-9a-zA-Z_:]+ )+([0-9a-zA-Z_]+)\s?:\s?/gi, '<span class="property">$1$2</span>: ')
-            .replace(/{([0-9a-zA-Z_]+):\s?/gi, '{<span class="property">$1</span>: ')
-            //Values
-            .replace(/:\s+([0-9]+),?/gi, ': <span class="value">$1</span>,')
-            .replace(/:\s+([a-zA-Z_\-]+),/gi, ': <span class="value">$1</span>,')
-            .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/gi, ': <span class="value">\'$1\'</span>')
-            .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/gi, ': <span class="value">"$1"</span>')*/
-
-            //Final Adjusts
-            /*.replace(/(http[s]?)[+]{2}/gi, '$1:')
-            .replace(/(\/\+-\+\/)/gi, '//')
-            .replace(/([+]{3})/gi, '.')
-            .replace(/(>::-::<)/gi, '()')
-            .replace(/(F_U_N_C_T_I_O_N)/gi, 'function') + "\n";*/
-
         let swap = '';
         let code = c;
 
@@ -939,12 +894,12 @@
 
         /*Strings*/
         code = (code)
-            .replace(/"([0-9a-zA-Z\[\]\\.,'()+\-=\/$?|!@#%&_*:;{}^ ]+)"/gi, cl.S1.i+'"$1"'+cl.S1.f)
-            .replace(/'([0-9a-zA-Z\[\]\\.,"()+\-=\/$?|!@#%&_*:;{}^ ]+)'/gi, cl.S2.i+"'$1'"+cl.S2.f);
+            .replace(/("[0-9a-zA-Z\[\]\\.,'()+\-=\/$?|!@#%&_*:;{}^ ]+")/gi, cl.S1.i+'$1'+cl.S1.f)
+            .replace(/('[0-9a-zA-Z\[\]\\.,"()+\-=\/$?|!@#%&_*:;{}^ ]+')/gi, cl.S2.i+'$1'+cl.S2.f);
 
         /*Links*/
         code = (code)
-            .replace(/(\[__S[12]__])"(http[s]?)(:\/\/)([0-9a-zA-Z/ _.?#=-]+)"(\[__\/S[12]__])/gi, cl.L1.i+'$2[__/:/__]$4'+cl.L1.f);
+            .replace(/(\[__S[12]__])"(http[s]?)(:\/\/)([0-9a-zA-Z/ _.?#=-]+)"(\[__\/S[12]__])/gi, cl.L1.i+'$2'+cl.L2.i+'$4'+cl.L1.f);
 
         /*Comments inline*/
         code = (code).replace(/\/\/(.*)+/g, cl.C5.i+'$1'+cl.C5.f);
@@ -971,7 +926,7 @@
         /*Function Name*/
         code = (code)
             .replace(/(\.)?([0-9a-zA-Z_]+)(\()/gi, '$1'+cl.F2.i+'$2'+cl.F2.f+'$3')
-            .replace(/(\[__\/[A-Z][0-9]+__]\))(\.)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(\(\[__[A-Z][0-9]+__])/gi, '$1$2'+cl.F2.i+'[[[$4]]]'+cl.F2.f+'$6');
+            .replace(/(\[__\/[A-Z][0-9]+__]\))(\.)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(\(\[__[A-Z][0-9]+__])/gi, '$1$2'+cl.F5.i+'$4'+cl.F5.f+'$6');
 
         // return code + "\n";
 
@@ -992,9 +947,8 @@
 
         //Arguments and parameters
         code = (code)
-            .replace(/\(("[0-9a-zA-Z ,\-_.#\[\]%+:]+")([),])?/gi, '('+cl.P1.i+'$1'+cl.P1.f+'$2')
-            .replace(/\(('[0-9a-zA-Z ,\-_.#\[\]%+:]+')([),])?/gi, '('+cl.P1.i+'$1'+cl.P1.f+'$2')
-            .replace(/\s?([(]|[,]|[\+])\s?([0-9a-zA-Z_]+)\s?(|[,]|[)])/gi, '$1'+cl.P1.i+'$2'+cl.P1.f+'$3');
+            .replace(/\(([0-9a-zA-Z_$]+)([),])?/gi, '('+cl.P1.i+'$1'+cl.P1.f+'$2')
+            .replace(/\(([0-9a-zA-Z_$]+)([),])?/gi, '('+cl.P1.i+'$1'+cl.P1.f+'$2');
 
         //Aliases
         code = (code)
@@ -1004,55 +958,57 @@
         code = (code)
             .replace(/\.([0-9a-zA-Z_]+)(?=([;]|[.]|\s?[=]\s?))/gi, '.'+cl.O1.i+'$1'+cl.O1.f);
 
-        //TODO: WORK HERE!!!
-        /*code = (code)
-            //Properties
-            .replace(/([^"0-9a-zA-Z_:]+ )+([0-9a-zA-Z_]+)\s?:\s?/gi, '<span class="property">$1$2</span>: ')
-            .replace(/{([0-9a-zA-Z_]+):\s?/gi, '{<span class="property">$1</span>: ')
-            //Values
-            .replace(/:\s+([0-9]+),?/gi, ': <span class="value">$1</span>,')
-            .replace(/:\s+([a-zA-Z_\-]+),/gi, ': <span class="value">$1</span>,')
-            .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/gi, ': <span class="value">\'$1\'</span>')
-            .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/gi, ': <span class="value">"$1"</span>');*/
+        //Properties
+        code = (code)
+            .replace(/([0-9a-zA-Z_]+)(\s?:\s?)/g, cl.P2.i+'$1'+cl.P2.f+'$2');
+
+        //Values
+        code = (code)
+            .replace(/:\s+([0-9]+),?/gi, ': '+cl.V1.i+'$1'+cl.V1.f+',')
+            .replace(/:\s+([a-zA-Z_\-]+),/gi, ': '+cl.V1.i+'$1'+cl.V1.f+',')
+            .replace(/:\s+'([0-9a-zA-Z_\- .#%$]+)'/gi, ": "+cl.V1.i+"'$1'"+cl.V1.f)
+            .replace(/:\s+"([0-9a-zA-Z_\- .#%$]+)"/gi, ': '+cl.V1.i+'"$1"'+cl.V1.f);
 
         /***
          * Final adjusts
          * */
 
-        //TODO: String adjust and clear
-        if(code.search(/(\[__C[45]__])(.*)(\[__S1__])(.*)(\[__\/S1__])(.*)(\[__\/C[45]__])/gi) !== -1) {
+        //String adjust and clear
+        if(code.search(/(\[__C[45]__])(.*)(\[__S1__])(.*)(\[__\/S1__])(.*)(\[__\/C[45]__])/g) !== -1) {
             //Clear comment in block
-            swap = code.match(/(\[__C[45]__])(.*)(\[__S1__])(.*)(\[__\/S1__])(.*)(\[__\/C[45]__])/gi)[0];
-            swap = swap.replace(/(\[__[\/]?S1__])/gi, '');
-            code = code.replace(/(\[__C[45]__].*\[__S1__].*\[__\/S1__].*\[__\/C[45]__])/gi, swap);
-        } else if(code.search(/\/\/(.*)(\[__S2__])(.*)(\[__\/S2__])(.*)/gi) !== -1) {
+            swap = code.match(/(\[__C[45]__])(.*)(\[__S1__])(.*)(\[__\/S1__])(.*)(\[__\/C[45]__])/g)[0];
+            swap = swap.replace(/(\[__[\/]?S1__])/g, '');
+            code = code.replace(/(\[__C[45]__].*\[__S1__].*\[__\/S1__].*\[__\/C[45]__])/g, swap);
+        } else if(code.search(/\/\/(.*)(\[__S2__])(.*)(\[__\/S2__])(.*)/g) !== -1) {
             //Clear comment inline
-            swap = code.match(/\/\/(.*)(\[__S2__])(.*)(\[__\/S2__])(.*)/gi)[0];
-            swap = swap.replace(/(\[__[\/]?S1__])/gi, '');
-            code = code.replace(/\/\/(.*\[__S2__].*\[__\/S2__].*)/gi, swap);
+            swap = code.match(/\/\/(.*)(\[__S2__])(.*)(\[__\/S2__])(.*)/g)[0];
+            swap = swap.replace(/(\[__[\/]?S1__])/g, '');
+            code = code.replace(/\/\/(.*\[__S2__].*\[__\/S2__].*)/g, swap);
         }
 
-        if(code.search(/(\[__S1__])"(.*)"(\[__\/S1__])/gi) !== -1) {
-            swap = code.match(/(\[__S1__])"(.*)"(\[__\/S1__])/gi)[0];
+        if(code.search(/(\[__S1__])"(.*)"(\[__\/S1__])/g) !== -1) {
+            //Clear string S1 removing S2
+            swap = code.match(/(\[__S1__])"(.*)"(\[__\/S1__])/g)[0];
             swap = swap
-                .replace(/\[__S1__]"/gi, cl.S1.i)
-                .replace(/"\[__\/S1__]/gi, cl.S1.f)
-                .replace(/\[__S2__]'/gi, "'")
-                .replace(/'\[__\/S2__]/gi, "'");
-            code = code.replace(/(\[__S1__])"(.*)"(\[__\/S1__])/gi, swap);
+                .replace(/\[__S1__]"/g, '[[/[!!]/]]')
+                .replace(/"\[__\/S1__]/g, '[[/[!!]/]]')
+                .replace(/\[__S2__]'/g, "'")
+                .replace(/'\[__\/S2__]/g, "'");
+            code = code.replace(/(\[__S1__])"(.*)"(\[__\/S1__])/g, swap);
         }
 
-        if(code.search(/(\[__S2__])'(.*)'(\[__\/S2__])/gi) !== -1) {
-            swap = code.match(/(\[__S2__])'(.*)'(\[__\/S2__])/gi)[0];
+        if(code.search(/(\[__S2__])'(.*)'(\[__\/S2__])/g) !== -1) {
+            //Clear string S2 removing S1
+            swap = code.match(/(\[__S2__])'(.*)'(\[__\/S2__])/g)[0];
             swap = swap
-                .replace(/\[__S2__]'/gi, cl.S2.i)
-                .replace(/'\[__\/S2__]/gi, cl.S2.f)
-                .replace(/\[__S1__]/gi, '"')
-                .replace(/\[__\/S1__]/gi, '"');
-            code = code.replace(/(\[__S2__])'(.*)'(\[__\/S2__])/gi, swap);
+                .replace(/\[__S2__]'/g, '[[/[!]/]]')
+                .replace(/'\[__\/S2__]/g, '[[/[!]/]]')
+                .replace(/\[__S1__]/g, '"')
+                .replace(/\[__\/S1__]/g, '"');
+            code = code.replace(/(\[__S2__])'(.*)'(\[__\/S2__])/g, swap);
         }
 
-        //TODO: Links adjusts
+        //Links adjusts
         if(code.search(/(\[__L1__]http[s]?\[__\/:\/__])(.*)(?=(\.))(.*\[__\/L1__])/g) !== -1) {
             swap = code.match(/(\[__L1__]http[s]?\[__\/:\/__])(.*)(?=(\.))(.*\[__\/L1__])/g)[0];
             swap = swap
@@ -1062,22 +1018,22 @@
             code = code.replace(/(\[__L1__]http[s]?\[__\/:\/__])(.*)(.*\[__\/L1__])/, '$1' + swap + '$3');
         }
 
-        //TODO: Function declare adjusts
-        if(code.search(/(\[__C[45]__])(.*)(\[__F1__])(function)(\[__\/F1__])(.*)(\[__\/C[45]__])/gi) !== -1) {1
-            swap = code.match(/(\[__C[45]__])(.*)(\[__F1__])(function)(\[__\/F1__])(.*)(\[__\/C[45]__])/gi)[0];
-            swap = swap.replace(/\[__([\/]?)F1__]/gi, '');
-            code = code.replace(/(\[__C[45]__])(.*)(\[__F1__])(function)(\[__\/F1__])(.*)(\[__\/C[45]__])/gi, swap);
+        //Function declare adjusts
+        if(code.search(/(\[__C[45]__])(.*)(\[__F1__])(function)(\[__\/F1__])(.*)(\[__\/C[45]__])/g) !== -1) {1
+            swap = code.match(/(\[__C[45]__])(.*)(\[__F1__])(function)(\[__\/F1__])(.*)(\[__\/C[45]__])/g)[0];
+            swap = swap.replace(/\[__([\/]?)F1__]/g, '');
+            code = code.replace(/(\[__C[45]__])(.*)(\[__F1__])(function)(\[__\/F1__])(.*)(\[__\/C[45]__])/g, swap);
         }
 
-        //TODO: Function name in text
-        if(code.search(/(\[__C[45]__])(.*)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(.*)(\[__\/C[45]__])/gi) !== -1) {
-            swap = code.match(/(\[__C[45]__])(.*)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(.*)(\[__\/C[45]__])/gi)[0];
-            swap = swap.replace(/\[__([\/]?)F2__]/gi, '');
-            code = code.replace(/(\[__C[45]__])(.*)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(.*)(\[__\/C[45]__])/gi, swap);
-        } else if(code.search(/(\[__S1__])(.*)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(.*)(\[__\/S1__])/gi) !== -1) {
-            swap = code.match(/(\[__S1__])(.*)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(.*)(\[__\/S1__])/gi)[0];
-            swap = swap.replace(/\[__([\/]?)F2__]/gi, '');
-            code = code.replace(/(\[__S1__])(.*)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(.*)(\[__\/S1__])/gi, swap);
+        //Function name in text
+        if(code.search(/(\[__C[45]__])(.*)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(.*)(\[__\/C[45]__])/g) !== -1) {
+            swap = code.match(/(\[__C[45]__])(.*)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(.*)(\[__\/C[45]__])/g)[0];
+            swap = swap.replace(/\[__([\/]?)F2__]/g, '');
+            code = code.replace(/(\[__C[45]__])(.*)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(.*)(\[__\/C[45]__])/g, swap);
+        } else if(code.search(/(\[__S1__])(.*)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(.*)(\[__\/S1__])/g) !== -1) {
+            swap = code.match(/(\[__S1__])(.*)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(.*)(\[__\/S1__])/g)[0];
+            swap = swap.replace(/\[__([\/]?)F2__]/g, '');
+            code = code.replace(/(\[__S1__])(.*)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(.*)(\[__\/S1__])/g, swap);
         }
 
         return code + "\n";
@@ -1693,12 +1649,14 @@
 
                             //Data Append in element + Filters
                             /*_sel[index].innerHTML += "<span class='line-number'>" + (idx + 1) + "</span>";
-                            _sel[index].innerHTML += "<span class='line-code'>" + _codeFormat(_arr[idx], _lan) + "</span>";*/
+                            _sel[index].innerHTML += "<span class='line-code'>" + _codeMapper(_arr[idx], _lan) + "</span>";*/
 
                             //Tests
-                            _sel[index].innerHTML += _codeFormat(_arr[idx], _lan);
+                            _sel[index].innerHTML += _codeMapper(_arr[idx], _lan);
 
                         });
+
+                        console.log("MAPPED",_sel[index].innerHTML, "FINISHED");
 
                     }) : (_sel) ?
 
