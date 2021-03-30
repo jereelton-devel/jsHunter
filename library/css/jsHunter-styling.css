@@ -466,6 +466,11 @@
     background: #383a48 !important;
     color: #B6DAEF /*#de96d0*/ !important;
 }
+.back-dark-code .test {
+    color: #FF0000 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
 .back-dark-code .line-number {
     color: #b08816 !important;
     border-right: solid #b08816 1px !important;
