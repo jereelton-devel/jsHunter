@@ -480,6 +480,16 @@
     font-family: inherit !important;
     font-weight: bold !important;
 }
+.back-dark-code .classname {
+    color: #2b94cd !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
+.back-dark-code .methods-of-class {
+     color: #d27510 !important;
+     font-family: inherit !important;
+     font-weight: normal !important;
+ }
 .back-dark-code .constructor {
     color: #9f0a97 !important;
     font-family: inherit !important;
@@ -490,10 +500,25 @@
     font-family: inherit !important;
     font-weight: bold !important;
 }
+.back-dark-code .loop-condition {
+    color: #d27510 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
+.back-dark-code .variables {
+    color: #d27510 !important;
+    font-family: inherit !important;
+    font-weight: bold !important;
+}
 .back-dark-code .return {
     color: #9f0a97 !important;
     font-family: inherit !important;
     font-weight: bold !important;
+}
+.back-dark-code .dom-elements {
+    color: #815eee !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
 }
 .back-dark-code .alias {
     color: #d90b34 !important;
@@ -510,8 +535,8 @@
     font-family: inherit !important;
     font-weight: normal !important;
 }
-.back-dark-code .params {
-    color: #61ae63 !important;
+.back-dark-code .param {
+    color: #99f2fa !important;
     font-family: inherit !important;
     font-weight: normal !important;
 }
@@ -530,12 +555,17 @@
     font-family: inherit !important;
     font-weight: normal !important;
 }
-.back-dark-code .comment {
+.back-dark-code .string {
+    color: #61ae63 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-dark-code .comments-inline {
     color: #acacac !important;
     font-family: inherit !important;
     font-weight: normal !important;
 }
-.back-dark-code .comment-blue {
+.back-dark-code .comment-in-block {
     color: #1da8e9 !important;
     font-family: inherit !important;
     font-weight: normal !important;
