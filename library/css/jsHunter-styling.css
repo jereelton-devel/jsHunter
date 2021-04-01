@@ -540,6 +540,11 @@
     font-family: inherit !important;
     font-weight: normal !important;
 }
+.back-dark-code .number {
+    color: #1865e9 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
 .back-dark-code .property {
     color: #8865ef !important;
     font-family: inherit !important;

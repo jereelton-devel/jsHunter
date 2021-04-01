@@ -110,6 +110,9 @@
         /*methods of class*/
         M1: {i:'[__M1__]', f: '[__/M1__]', t: '<span class="methods-of-class">', d: 'methods of class'},
 
+        /*number*/
+        N1: {i:'[__N1__]', f: '[__/N1__]', t: '<span class="number">', d: 'number'},
+
         /*object-attributes*/
         O1: {i:'[__O1__]', f: '[__/O1__]', t: '<span class="object-attribute">', d: 'object-attributes'},
 
@@ -894,10 +897,9 @@
         return code;
     }
 
-    function _codeMapper_JAVASCRIPT(c) {
+    function _codeMapper_JAVASCRIPT(code) {
 
         let swap = '';
-        let code = c;
 
         /*Comment in block*/
         if(code.search(/\/\*(.*)\*\//gi) !== -1) { //Start/End comment in block
@@ -973,8 +975,11 @@
 
         /*Arguments and parameters*/
         code = (code)
-            .replace(/\(([0-9a-zA-Z_$]+)([),])?/gi, '('+cl.P1.i+'$1'+cl.P1.f+'$2')
-            .replace(/\(([0-9a-zA-Z_$]+)([),])?/gi, '('+cl.P1.i+'$1'+cl.P1.f+'$2');
+            .replace(/(?!.*("|\[__[A-Z][0-9]+__]))(\(|\+ ?|, ?| )([0-9a-zA-Z_$]+)(\), )(?!.*("|\[__\/[A-Z][0-9]+__]))/gi, '$2'+cl.P1.i+'$3'+cl.P1.f+'$4');
+
+        /*Number*/ /*WORK HERE*/
+        /*code = (code)
+            .replace(/(?!.*("|\[__[A-Z][0-9]+__]))([0-9]+)/g, cl.N1.i+'$2'+cl.N1.f);*/
 
         /*Aliases*/
         code = (code)
@@ -1161,6 +1166,11 @@
         code = (code)
             .replace(/\[__P1__]([0-9a-zA-Z_$]+)/g, cl.P1.t+'$1')
             .replace(/\[__\/P1__]/g, cl._X.t);
+
+        /*Number*/
+        code = (code)
+            .replace(/\[__N1__]([0-9]+)/g, cl.N1.t+'$1')
+            .replace(/\[__\/N1__]/g, cl._X.t);
 
         /*Aliases*/
         code = (code)
