@@ -112,6 +112,10 @@
 
         /*number*/
         N1: {i:'[__N1__]', f: '[__/N1__]', t: '<span class="number">', d: 'number'},
+        /*number float or long*/
+        N2: {i:'[__N2__]', f: '[__/N2__]', t: '<span class="number">', d: 'long or float number'},
+        /*separator to float number*/
+        N3: {i:'[__[.]__]', f: '[__[.]__]', t: '', d: 'separator to float number'},
 
         /*object-attributes*/
         O1: {i:'[__O1__]', f: '[__/O1__]', t: '<span class="object-attribute">', d: 'object-attributes'},
@@ -937,7 +941,7 @@
 
         /*Conditions and Loop*/
         code = (code)
-            .replace(/(if|switch|while|for)(?=([ (]))(\s)?(\()?/g, cl.C6.i+'$1'+cl.C6.f+'$2$3')
+            .replace(/(if|switch|while|for)( ?\( ?)/g, cl.C6.i+'$1'+cl.C6.f+'$2')
             .replace(/(}?)(\s?)(else)(?=([ {]))(\s?)({?)/g, '$1$2'+cl.C6.i+'$3'+cl.C6.f+'$4$5');
 
         /*Methods of class*/
@@ -977,10 +981,20 @@
         code = (code)
             .replace(/(?!.*("|\[__[A-Z][0-9]+__]))(\(|\+ ?|, ?| )([0-9a-zA-Z_$]+)(\), )(?!.*("|\[__\/[A-Z][0-9]+__]))/gi, '$2'+cl.P1.i+'$3'+cl.P1.f+'$4');
 
+        /*Float Number*/
+        if((code).search(/(.*)?([0-9]+\.[0-9]+)+(\.[0-9]{2})?(.*)?/g) !== -1) {console.log("SEARCH", code);
+            let _tmp = code;
+            swap = (code).match(/(.*)?([0-9]+\.[0-9]+)+(\.[0-9]{2})?(.*)?/g);console.log("MATCH", swap);
+            swap = swap.join('').replace(/([0-9]+)(\.)/g, '$1'+cl.N3.i);console.log("JOIN-REPLACE", swap);
+            _tmp = _tmp.split(/(.*)?([0-9]+\.[0-9]+)+(\.[0-9]{2})?(.*)?/g).join('');console.log("TMP", _tmp);
+            code = code.replace(_tmp, swap);console.log("REPLACE", code);
+        }
+
         /*Number*/
         code = code + "\n";
         code = (code)
-            .replace(/([0-9]+)(?=( ?\+ ?[0-9]| ?- ?[0-9]| ?\/ ?[0-9]| ?\* ?[0-9]|;|,| ?\) ?|]| ?>|\n))/g, cl.N1.i+'$1'+cl.N1.f);
+            .replace(/([0-9]+)(?=( ?\+ ?[0-9]| ?- ?[0-9]| ?\/ ?[0-9]| ?\* ?[0-9]|\.|;|,| ?\) ?|]| ?>|\n))/g, cl.N1.i+'$1'+cl.N1.f)
+            .replace(/([0-9]+)(\[__\[\.]__])(?=((\[__N1__])?[0-9]+))/g, cl.N1.i+'$1'+cl.N1.f+'$2');
         code = (code).replace(/\n/g, '');
 
         /*Aliases*/
@@ -1006,7 +1020,7 @@
          * Final adjusts
          * */
 
-        /*String adjust and clear*/
+        /*Comments adjust and clear*/
         if(code.search(/(\[__C[45]__])(.*)(\[__S1__])(.*)(\[__\/S1__])(.*)(\[__\/C[45]__])/g) !== -1) {
             /*Clear comment in block*/
             swap = code.match(/(\[__C[45]__])(.*)(\[__S1__])(.*)(\[__\/S1__])(.*)(\[__\/C[45]__])/g)[0];
@@ -1019,10 +1033,20 @@
             code = code.replace(/\/\/(.*\[__S2__].*\[__\/S2__].*)/g, swap);
         }
 
+        if(code.search(/(\[__C[45]__])(.*)(\[__[A-BD-Z][0-9]+__])(.*)(\[__\/[A-BD-Z][0-9]+__])(.*)(\[__\/C[45]__])/g) !== -1) {
+            swap = code.match(/(\[__C[45]__])(.*)(\[__[A-BD-Z][0-9]+__])(.*)(\[__\/[A-BD-Z][0-9]+__])(.*)(\[__\/C[45]__])/g)[0];
+            swap = swap.replace(/(\[__[\/]?[A-BD-Z][0-9]+__])/g, '');
+            code = code.replace(/(\[__C[45]__])(.*)(\[__[A-BD-Z][0-9]+__])(.*)(\[__\/[A-BD-Z][0-9]+__])(.*)(\[__\/C[45]__])/g, swap);
+        }
+
+        return code + "\n"; //WORK HERE: FIX ERROR IN STRING CLEAR FOR P2 AND F5 LABELS IN CODE
+
+        /*String adjust and clear*/
         if(code.search(/(\[__S1__])"(.*)"(\[__\/S1__])/g) !== -1) {
             /*Clear string S1 removing S2*/
             swap = code.match(/(\[__S1__])"(.*)"(\[__\/S1__])/g)[0];
             swap = swap
+                .replace(/\[__[\/]?[A-RT-Z][0-9]+__]/g, '')
                 .replace(/\[__S1__]"/g, cl.S3.i)
                 .replace(/"\[__\/S1__]/g, cl.S3.f)
                 .replace(/\[__S2__]'/g, "'")
@@ -1034,6 +1058,7 @@
             /*Clear string S2 removing S1*/
             swap = code.match(/(\[__S2__])'(.*)'(\[__\/S2__])/g)[0];
             swap = swap
+                .replace(/\[__[\/]?[A-RT-Z][0-9]+__]/g, '')
                 .replace(/\[__S2__]'/g, cl.S4.i)
                 .replace(/'\[__\/S2__]/g, cl.S4.f)
                 .replace(/\[__S1__]/g, '"')
@@ -1070,10 +1095,10 @@
         }
 
         /*Number clear*/
-        if(code.search(/([a-zA-Z\\"')|!@#&_;}]+ ?)([+/*-])?(\[__N1__])([0-9]+)(\[__\/N1__])/g) !== -1) {
-            swap = code.match(/([a-zA-Z\\"')|!@#&_;}]+ ?)([+/!*-])?(\[__N1__])([0-9]+)(\[__\/N1__])/g)[0];
+        if(code.search(/([a-zA-Z\\"')|@#&_;}]+\[__N1__][0-9]+\[__\/N1__])|([\\"')|@#&_;}]+ ?)([+/*-><!=]? ?)(\[__N1__])([0-9]+)(\[__\/N1__])/g) !== -1) {
+            swap = code.match(/([a-zA-Z\\"')|@#&_;}]+\[__N1__][0-9]+\[__\/N1__])|([\\"')|@#&_;}]+ ?)([+/!*-><!=]? ?)(\[__N1__])([0-9]+)(\[__\/N1__])/g)[0];
             swap = swap.replace(/\[__([\/]?)N1__]/g, '');
-            code = code.replace(/([a-zA-Z\\"')|!@#&_;}]+ ?)([+/!*-])?(\[__N1__])([0-9]+)(\[__\/N1__])/g, swap);
+            code = code.replace(/([a-zA-Z\\"')|@#&_;}]+\[__N1__][0-9]+\[__\/N1__])|([\\"')|@#&_;}]+ ?)([+/!*-><!=]? ?)(\[__N1__])([0-9]+)(\[__\/N1__])/g, swap);
         }
 
         return code + "\n";
@@ -1151,7 +1176,9 @@
             .replace(/\[__F2__]([0-9a-zA-Z_]+)/g, cl.F2.t+'$1')
             .replace(/\[__\/F2__]/g, cl._X.t)
             .replace(/\[__F5__]\[\[\[([0-9a-zA-Z_]+)/g, cl.F5.t+'$1')
-            .replace(/]]]\[__\/F5__]/g, cl._X.t);
+            .replace(/]]]\[__\/F5__]/g, cl._X.t)
+            .replace(/\[\[\[([0-9a-zA-Z_]+)/g, cl.F5.t+'$1')
+            .replace(/]]]/g, cl._X.t);
 
         /*Variable declare*/
         code = (code)
@@ -1175,6 +1202,10 @@
         code = (code)
             .replace(/\[__P1__]([0-9a-zA-Z_$]+)/g, cl.P1.t+'$1')
             .replace(/\[__\/P1__]/g, cl._X.t);
+
+        /*Float Number*/
+        code = (code)
+            .replace(/\[__\[\.]__]([0-9]+|\[__N1__][0-9]+)/g, '.$1');
 
         /*Number*/
         code = (code)
