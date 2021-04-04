@@ -108,7 +108,7 @@
         L3: {i: '[__/./__]', f: '[__/./__]', t: '', d: 'point for url links'},
 
         /*methods of class*/
-        M1: {i:'[__M1__]', f: '[__/M1__]', t: '<span class="methods-of-class">', d: 'methods of class'},
+        M1: {i:'[__M1__]', f: '[__/M1__]', t: '<span class="set-get-methods">', d: 'methods of class'},
 
         /*number*/
         N1: {i:'[__N1__]', f: '[__/N1__]', t: '<span class="number">', d: 'number'},
@@ -138,13 +138,15 @@
         /* ['] */
         S4: {i:'[[[!]]]', f: '[[/[!]/]]', t: '', d: "the character [']"},
 
-        /*variables and this*/
-        V1: {i:'[__V1__]', f: '[__/V1__]', t: '<span class="variables">', d: 'variables and this'},
-
+        /*variables declare*/
+        V1: {i:'[__V1__]', f: '[__/V1__]', t: '<span class="variable-declare">', d: 'variables declare'},
+        /*variables name*/
+        V2: {i:'[__V2__]', f: '[__/V2__]', t: '<span class="variables">', d: 'variables and this'},
         /*value to properties of object*/
-        V2: {i:'[__V2__]', f: '[__/V2__]', t: '<span class="value">', d: 'value to properties of object'},
+        V3: {i:'[__V3__]', f: '[__/V3__]', t: '<span class="value">', d: 'value to properties of object'},
 
         /*Others*/
+        _E: {i:'[__{{ER}}__]', f: '[__{{/ER}}__]', t: '<span class="syntax-error">', d: 'syntax-error'},
         _T: {i:'', f: '', t: '<span class="test">', d: 'for test and development'},
         _X: {i:'', f: '', t: '</span>', d: 'close span'},
 
@@ -965,6 +967,9 @@
         /*Variable declare*/
         code = (code).replace(/(var |let |const |this\.?)/g, cl.V1.i+'$1'+cl.V1.f);
 
+        /*Variable name*/
+        code = (code).replace(/(\[__V1__])(var |let |const |this\.?)(\[__\/V1__])([a-zA-Z_0-9]+)( ?;| ?= ?)/g, '$1$2$3'+cl.V2.i+'$4'+cl.V2.f+'$5');
+
         /*Return*/
         code = (code).replace(/(return)(?=( ?;| .*;))/g, cl.R1.i+'$1'+cl.R1.f);
 
@@ -977,17 +982,13 @@
             .replace(/:\s?(true|false)\s?}/g, ': '+cl.B1.i+'$1'+cl.B1.f+'}')
             .replace(/(\[__R1__]return\[__\/R1__] )(true|false)\s?;/g, '$1'+cl.B1.i+'$2'+cl.B1.f+';');
 
-        /*Arguments and parameters*/
-        code = (code)
-            .replace(/(?!.*("|\[__[A-Z][0-9]+__]))(\(|\+ ?|, ?| )([0-9a-zA-Z_$]+)(\), )(?!.*("|\[__\/[A-Z][0-9]+__]))/gi, '$2'+cl.P1.i+'$3'+cl.P1.f+'$4');
-
         /*Float Number*/
-        if((code).search(/(.*)?([0-9]+\.[0-9]+)+(\.[0-9]{2})?(.*)?/g) !== -1) {console.log("SEARCH", code);
+        if((code).search(/(.*)?([0-9]+\.[0-9]+)+(\.[0-9]{2})?(.*)?/g) !== -1) {
             let _tmp = code;
-            swap = (code).match(/(.*)?([0-9]+\.[0-9]+)+(\.[0-9]{2})?(.*)?/g);console.log("MATCH", swap);
-            swap = swap.join('').replace(/([0-9]+)(\.)/g, '$1'+cl.N3.i);console.log("JOIN-REPLACE", swap);
-            _tmp = _tmp.split(/(.*)?([0-9]+\.[0-9]+)+(\.[0-9]{2})?(.*)?/g).join('');console.log("TMP", _tmp);
-            code = code.replace(_tmp, swap);console.log("REPLACE", code);
+            swap = (code).match(/(.*)?([0-9]+\.[0-9]+)+(\.[0-9]{2})?(.*)?/g);
+            swap = swap.join('').replace(/([0-9]+)(\.)/g, '$1'+cl.N3.i);
+            _tmp = _tmp.split(/(.*)?([0-9]+\.[0-9]+)+(\.[0-9]{2})?(.*)?/g).join('');
+            code = code.replace(_tmp, swap);
         }
 
         /*Number*/
@@ -997,10 +998,6 @@
             .replace(/([0-9]+)(\[__\[\.]__])(?=((\[__N1__])?[0-9]+))/g, cl.N1.i+'$1'+cl.N1.f+'$2');
         code = (code).replace(/\n/g, '');
 
-        /*Aliases*/
-        code = (code)
-            .replace(/(\${2}|\$|\$J|jX|jQuery)([.]|[(])/g, cl.A1.i+'$1'+cl.A1.f+'$2');
-
         /*Object Attributes*/
         code = (code)
             .replace(/\.([0-9a-zA-Z_]+)(?=([;]|[.]|\s?[=]\s?))/gi, '.'+cl.O1.i+'$1'+cl.O1.f);
@@ -1009,12 +1006,32 @@
         code = (code)
             .replace(/([0-9a-zA-Z_]+)(\s?:\s?)/g, cl.P2.i+'$1'+cl.P2.f+'$2');
 
+        /*Values (part1)*/
+        code = (code)
+            .replace(/(:\s?)([a-zA-Z_]+)(\s?,?)/g, '$1'+cl.V3.i+'$2'+cl.V3.f+'$3');
+
+        /*Arguments and parameters*/
+        code = (code)
+            .replace(/(?!.*("|\[__[A-Z][0-9]+__]))(\(|\+ ?|, ?| )([0-9a-zA-Z_$]+)(\)|,?| )(?!.*("|\[__\/[A-Z][0-9]+__]))/g, '$2'+cl.P1.i+'$3'+cl.P1.f+'$4');
+
+        /*Aliases*/
+        code = (code)
+            .replace(/(\${2}|\$|\$J|jX|jQuery)([.]|[(])/g, cl.A1.i+'$1'+cl.A1.f+'$2');
+
+        /*Object Attributes*/
+        code = (code)
+            .replace(/\.([0-9a-zA-Z_]+)(?=([;]|[.]|\s?[=]\s?))/g, '.'+cl.O1.i+'$1'+cl.O1.f);
+
+        /*Properties*/
+        code = (code)
+            .replace(/([0-9a-zA-Z_]+)(\s?:\s?)/g, cl.P2.i+'$1'+cl.P2.f+'$2');
+
         /*Values*/
         code = (code)
-            .replace(/:\s?([0-9]+),?/gi, ': '+cl.V2.i+'$1'+cl.V2.f+',')
-            .replace(/:\s?([0-9a-zA-Z_\-]+)(,)?/gi, ': '+cl.V2.i+'$1'+cl.V2.f+'$2')
-            .replace(/:\s?'([0-9a-zA-Z_\- .#%$]+)'/gi, ": "+cl.V2.i+"'$1'"+cl.V2.f)
-            .replace(/:\s?"([0-9a-zA-Z_\- .#%$]+)"/gi, ': '+cl.V2.i+'"$1"'+cl.V2.f);
+            .replace(/:\s?([0-9]+),?/g, ': '+cl.V3.i+'$1'+cl.V3.f+',')
+            .replace(/:\s?([0-9a-zA-Z_\-]+)(,)?/g, ': '+cl.V3.i+'$1'+cl.V3.f+'$2')
+            .replace(/:\s?'([0-9a-zA-Z_\- .#%$]+)'/g, ": "+cl.V3.i+"'$1'"+cl.V3.f)
+            .replace(/:\s?"([0-9a-zA-Z_\- .#%$]+)"/g, ': '+cl.V3.i+'"$1"'+cl.V3.f);
 
         /***
          * Final adjusts
@@ -1039,18 +1056,24 @@
             code = code.replace(/(\[__C[45]__])(.*)(\[__[A-BD-Z][0-9]+__])(.*)(\[__\/[A-BD-Z][0-9]+__])(.*)(\[__\/C[45]__])/g, swap);
         }
 
-        return code + "\n"; //WORK HERE: FIX ERROR IN STRING CLEAR FOR P2 AND F5 LABELS IN CODE
-
         /*String adjust and clear*/
         if(code.search(/(\[__S1__])"(.*)"(\[__\/S1__])/g) !== -1) {
             /*Clear string S1 removing S2*/
             swap = code.match(/(\[__S1__])"(.*)"(\[__\/S1__])/g)[0];
             swap = swap
+                /*Protect the function name before string clear*/
+                .replace(/(\[__)(\/?)(F5__])/g, '{{{$2F_5}}}')
+                /*Protect the object properties before string clear*/
+                .replace(/(\[__)(\/?)(P2__])/g, '{{{$2P_2}}}')
+                /*Clear string*/
                 .replace(/\[__[\/]?[A-RT-Z][0-9]+__]/g, '')
                 .replace(/\[__S1__]"/g, cl.S3.i)
                 .replace(/"\[__\/S1__]/g, cl.S3.f)
                 .replace(/\[__S2__]'/g, "'")
-                .replace(/'\[__\/S2__]/g, "'");
+                .replace(/'\[__\/S2__]/g, "'")
+                /*Reset clear*/
+                .replace(/([{]{3})(\/?)(F_5}}})/g, '[__$2F5__]')
+                .replace(/([{]{3})(\/?)(P_2}}})/g, '[__$2P2__]');
             code = code.replace(/(\[__S1__])"(.*)"(\[__\/S1__])/g, swap);
         }
 
@@ -1058,11 +1081,19 @@
             /*Clear string S2 removing S1*/
             swap = code.match(/(\[__S2__])'(.*)'(\[__\/S2__])/g)[0];
             swap = swap
+                /*Protect the function name before string clear*/
+                .replace(/(\[__)(\/?)(F5__])/g, '{{{$2F_5}}}')
+                /*Protect the object properties before string clear*/
+                .replace(/(\[__)(\/?)(P2__])/g, '{{{$2P_2}}}')
+                /*Clear string*/
                 .replace(/\[__[\/]?[A-RT-Z][0-9]+__]/g, '')
                 .replace(/\[__S2__]'/g, cl.S4.i)
                 .replace(/'\[__\/S2__]/g, cl.S4.f)
                 .replace(/\[__S1__]/g, '"')
-                .replace(/\[__\/S1__]/g, '"');
+                .replace(/\[__\/S1__]/g, '"')
+                /*Reset clear*/
+                .replace(/([{]{3})(\/?)(F_5}}})/g, '[__$2F5__]')
+                .replace(/([{]{3})(\/?)(P_2}}})/g, '[__$2P2__]');
             code = code.replace(/(\[__S2__])'(.*)'(\[__\/S2__])/g, swap);
         }
 
@@ -1096,9 +1127,22 @@
 
         /*Number clear*/
         if(code.search(/([a-zA-Z\\"')|@#&_;}]+\[__N1__][0-9]+\[__\/N1__])|([\\"')|@#&_;}]+ ?)([+/*-><!=]? ?)(\[__N1__])([0-9]+)(\[__\/N1__])/g) !== -1) {
-            swap = code.match(/([a-zA-Z\\"')|@#&_;}]+\[__N1__][0-9]+\[__\/N1__])|([\\"')|@#&_;}]+ ?)([+/!*-><!=]? ?)(\[__N1__])([0-9]+)(\[__\/N1__])/g)[0];
+            swap = code.match(/([a-zA-Z\\"')|@#&_;}]+\[__N1__][0-9]+\[__\/N1__])|([\\"')|@#&_;}]+ ?)([+/!*-><=]? ?)(\[__N1__])([0-9]+)(\[__\/N1__])/g)[0];
             swap = swap.replace(/\[__([\/]?)N1__]/g, '');
-            code = code.replace(/([a-zA-Z\\"')|@#&_;}]+\[__N1__][0-9]+\[__\/N1__])|([\\"')|@#&_;}]+ ?)([+/!*-><!=]? ?)(\[__N1__])([0-9]+)(\[__\/N1__])/g, swap);
+            code = code.replace(/([a-zA-Z\\"')|@#&_;}]+\[__N1__][0-9]+\[__\/N1__])|([\\"')|@#&_;}]+ ?)([+/!*-><=]? ?)(\[__N1__])([0-9]+)(\[__\/N1__])/g, swap);
+        }
+
+        /*Check Syntax Error*/
+        if(code.search(/(;)(\s?)(\[__[A-BD-Z][0-9]+__])([0-9a-zA-Z_+*>=<\-\/'" ]+)(\[__\/[A-BD-Z][0-9]__]+)$/g) !== -1) {
+            code = code.replace(/(;)(\s?)(\[__[A-BD-Z][0-9]+__])([0-9a-zA-Z_+*>=<\-\/'" ]+)(\[__\/[A-BD-Z][0-9]__]+)$/g, '$1$2'+cl._E.i+'$4 << Syntax Error'+cl._E.f);
+        }
+
+        /*if(code.search(/^([0-9a-zA-Z_+*>=<\-\/'"]+\s+?[0-9a-zA-Z_+*>=<\-\/'"]+)+$/g) !== -1) {
+            code = code.replace(/^([0-9a-zA-Z_+*>=<\-\/'"]+\s+?[0-9a-zA-Z_+*>=<\-\/'"]+)+$/g, cl._E.i+'$1 << Syntax Error'+cl._E.f);
+        }*/
+
+        if(code.search(/^(?!(\/\/|\/\*))(;? ?)([0-9a-zA-Z_+*>=<\-\/'"]+[\s]*)+(?!(;{\())$/g) !== -1) {
+            code = code.replace(/^(?!(\/\/|\/\*))(;? ?)([0-9a-zA-Z_+*>=<\-\/'"]+[\s]*)+(?!(;{\())$/g, cl._E.i+'$1$2$3$4 << Syntax Error'+cl._E.f);
         }
 
         return code + "\n";
@@ -1125,6 +1169,11 @@
         if(codeCtrlC === 1) {
             return cl.C4.t + code + cl._X.t + "\n";
         }
+
+        /*Syntax Error*/
+        code = (code)
+            .replace(/\[__\{\{ER}}__]([0-9a-zA-Z_:+*>=<\-\/'" ]+)/g, cl._E.t+'$1')
+            .replace(/\[__\{\{\/ER}}__]/g, cl._X.t);
 
         /*Strings*/
         code = (code)
@@ -1185,6 +1234,11 @@
             .replace(/\[__V1__](var |let |const |this\.?)/g, cl.V1.t+'$1')
             .replace(/\[__\/V1__]/g, cl._X.t);
 
+        /*Variable name*/
+        code = (code)
+            .replace(/\[__V2__]([a-zA-Z_0-9]+)/g, cl.V2.t+'$1')
+            .replace(/\[__\/V2__]/g, cl._X.t);
+
         /*Return*/
         code = (code).replace(/\[__R1__]return\[__\/R1__]/g, cl.R1.t+'return'+cl._X.t);
 
@@ -1229,8 +1283,8 @@
 
         /*Values*/
         code = (code)
-            .replace(/\[__V2__]([0-9a-zA-Z_]+)/g, cl.V2.t+'$1')
-            .replace(/\[__\/V2__]/g, cl._X.t);
+            .replace(/\[__V3__]([0-9a-zA-Z_]+)/g, cl.V3.t+'$1')
+            .replace(/\[__\/V3__]/g, cl._X.t);
 
         return (code) + "\n";
     }

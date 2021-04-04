@@ -463,17 +463,18 @@
 }
 /*Dark*/
 .back-dark-code {
-    background: #383a48 !important;
+    background: #2b2b2b !important;
     color: #B6DAEF /*#de96d0*/ !important;
 }
-.back-dark-code .test {
+.back-dark-code .test,
+.back-dark-code .syntax-error {
     color: #FF0000 !important;
     font-family: inherit !important;
     font-weight: bold !important;
 }
 .back-dark-code .line-number {
-    color: #b08816 !important;
-    border-right: solid #b08816 1px !important;
+    color: #d7a410 !important;
+    border-right: solid #d7a410 1px !important;
 }
 .back-dark-code .class {
     color: #e216e9 !important;
@@ -481,12 +482,12 @@
     font-weight: bold !important;
 }
 .back-dark-code .classname {
-    color: #2b94cd !important;
+    color: #7fc6ec !important;
     font-family: inherit !important;
     font-weight: bold !important;
 }
-.back-dark-code .methods-of-class {
-     color: #d27510 !important;
+.back-dark-code .set-get-methods {
+     color: #ca1a1a !important;
      font-family: inherit !important;
      font-weight: normal !important;
  }
@@ -495,27 +496,35 @@
     font-family: inherit !important;
     font-weight: bold !important;
 }
-.back-dark-code .function {
+.back-dark-code .function,
+.back-dark-code .loop-condition,
+.back-dark-code .return,
+.back-dark-code .variable-declare {
     color: #d27510 !important;
     font-family: inherit !important;
     font-weight: bold !important;
 }
-.back-dark-code .loop-condition {
-    color: #d27510 !important;
-    font-family: inherit !important;
-    font-weight: bold !important;
-}
+.back-dark-code .param,
+.back-dark-code .number,
 .back-dark-code .variables {
-    color: #d27510 !important;
+    color: #22a4fa !important;
     font-family: inherit !important;
-    font-weight: bold !important;
+    font-weight: normal !important;
 }
 .back-dark-code .return {
-    color: #9f0a97 !important;
-    font-family: inherit !important;
-    font-weight: bold !important;
+    font-weight: normal !important;
 }
-.back-dark-code .dom-elements {
+.back-dark-code .number {
+    color: #e340b5 !important;
+}
+.back-dark-code .function-name {
+    color: #ecf306 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+}
+.back-dark-code .dom-elements,
+.back-dark-code .object-attribute,
+.back-dark-code .property {
     color: #815eee !important;
     font-family: inherit !important;
     font-weight: normal !important;
@@ -525,42 +534,13 @@
     font-family: inherit !important;
     font-weight: bold !important;
 }
-.back-dark-code .function-name {
-    color: #ecf306 !important;
-    font-family: inherit !important;
-    font-weight: normal !important;
-}
-.back-dark-code .object-attribute {
-    color: #8865ef !important;
-    font-family: inherit !important;
-    font-weight: normal !important;
-}
-.back-dark-code .param {
-    color: #99f2fa !important;
-    font-family: inherit !important;
-    font-weight: normal !important;
-}
-.back-dark-code .number {
-    color: #36cbad !important;
-    font-family: inherit !important;
-    font-weight: normal !important;
-}
-.back-dark-code .property {
-    color: #8865ef !important;
-    font-family: inherit !important;
-    font-weight: normal !important;
-}
-.back-dark-code .object {
-    color: #5978ec !important;
-    font-family: inherit !important;
-    font-weight: normal !important;
-}
 .back-dark-code .value {
     color: #1bf526 !important;
     font-family: inherit !important;
     font-weight: normal !important;
 }
-.back-dark-code .string {
+.back-dark-code .string,
+.back-dark-code .comment-in-block {
     color: #61ae63 !important;
     font-family: inherit !important;
     font-weight: normal !important;
@@ -570,17 +550,12 @@
     font-family: inherit !important;
     font-weight: normal !important;
 }
-.back-dark-code .comment-in-block {
-    color: #1da8e9 !important;
-    font-family: inherit !important;
-    font-weight: normal !important;
-}
 .back-dark-code .boolean {
     color: #d27510 !important;
     font-family: inherit !important;
 }
 .back-dark-code .links {
-    color: #15bde5 !important;
+    color: #0fbfe9 !important;
     font-family: inherit !important;
     font-weight: normal !important;
     text-decoration: underline;
