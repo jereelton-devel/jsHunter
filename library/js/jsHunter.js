@@ -923,6 +923,137 @@
             return code + "\n";
         }
 
+        /*Check Syntax Error*/
+        if(code.search(/(;)(\s?)(\[__[A-BD-Z][0-9]+__])([0-9a-zA-Z_+*>=<\-\/'" ]+)(\[__\/[A-BD-Z][0-9]__]+)$/g) !== -1) {
+            code = code.replace(/(;)(\s?)(\[__[A-BD-Z][0-9]+__])([0-9a-zA-Z_+*>=<\-\/'" ]+)(\[__\/[A-BD-Z][0-9]__]+)$/g, '$1$2'+cl._E.i+'$4 << Syntax Error'+cl._E.f);
+        }
+
+        /*if(code.search(/^([0-9a-zA-Z_+*>=<\-\/'"]+\s+?[0-9a-zA-Z_+*>=<\-\/'"]+)+$/g) !== -1) {
+            code = code.replace(/^([0-9a-zA-Z_+*>=<\-\/'"]+\s+?[0-9a-zA-Z_+*>=<\-\/'"]+)+$/g, cl._E.i+'$1 << Syntax Error'+cl._E.f);
+        }*/
+
+        if(code.search(/^(?!(\/\/|\/\*))(;? ?)([0-9a-zA-Z_+*>=<\-\/'"]+[\s]*)+(?!(;{\())$/g) !== -1) {
+            code = code.replace(/^(?!(\/\/|\/\*))(;? ?)([0-9a-zA-Z_+*>=<\-\/'"]+[\s]*)+(?!(;{\())$/g, cl._E.i+'$1$2$3$4 << Syntax Error'+cl._E.f);
+        }
+        /*--------------------------------------------------
+
+        Syntax Error: 1
+
+        ^([; ]+)(.*[^;(){}])$
+
+        ===> $2
+
+        ;var
+        ; var
+        ; var
+        ;var
+        ;var;
+        ; var()
+        ; var
+        ;var
+
+        --------------------------------------------------
+
+        Syntax Error: 2
+
+        ^(['"].*)$
+
+        ===> $1
+
+        "a+1+2+b-a-b"
+        'a+1+2+b-a-b'
+
+        --------------------------------------------------
+
+            Syntax Error: 3
+
+        ^([a-z]+)?(\s?)([a-z]+)?(\s?)(=?)(\s?)(;?)$
+
+        ===> $1...$9
+
+        let test = ;
+        let test=;
+        let test= ;
+        let test =;
+        lettest= ;
+        lettest =;
+        lettest=;
+        lettest;
+
+        --------------------------------------------------
+
+        Syntax Error: 4
+
+        ^(?!(\/\/|\/\*))(;? ?)([0-9a-zA-Z_;]+|[0-9a-zA-Z_+*>=<\-\/'"(]+\s+?[0-9a-zA-Z_+*>=<\-\/'"]+)+(\s+)?$
+
+        //Comment inline "string inline" in test function
+
+        alert("test11233"); //that is only a test "test string" with string
+        let test = 10;
+        let test = 10;
+        FUNCTION test();
+        test; ---------------------------------------------------------------------------->> ERROR $3
+        test();
+        test {
+        }
+        //test
+        /!*test*!/
+        let test = 10;
+        test_1 ---------------------------------------------------------------------------->> ERROR $3
+        "a+1+2+b-a-b"
+        var f = function();
+        var f
+        var f
+        ; var f
+
+        function test
+        function() {
+        }
+        function test() {
+        }
+        function test
+        function function function
+        ; [__F1__]test[__/F1__]
+
+        function
+        function (
+        function(
+        function() { //test
+        function() { /!*test*!/
+            /!*test comment function()*!/ function() { function(
+        //Comment inline "string inline" in test function
+        //Comment inline "string inline" in test function(
+                /!*Samples Codes "string" in test function*!/
+                /!*Samples Codes "string" in test function(*!/
+                function(
+                "string function"
+                "string function("
+                function test(abc/!*test test*!/, function() {})
+                /!*test test*!/function test(function(){}, function() {})
+                /!*test "string" function alert("test")*!/
+        //test "string" function alert("test")
+                "test 'string' function alert('test')"
+                'test "string" function alert("test")'
+                function fn("parameter 1", args, "parameter 2", 'parameter 3');
+                alert('function fn("parameter 1", args, "parameter 2", "parameter 3")');
+
+                --------------------------------------------------
+
+                    Syntax Error: 5
+
+                (;)(\s?)(\[__[A-BD-Z][0-9]+__])([0-9a-zA-Z_+*>=<\-\/'" ]+)(\[__\/[A-BD-Z][0-9]__]+)$
+            (;\s?[0-9a-zA-Z_+*>=<\-\/'" ]+)$
+
+                ===> $1
+
+        //this a string that contain a number 10+10; ERRO
+                /!*this a string that contain a number 10*!/
+
+                let a10; let _10; ERRO
+                let a = test10; ERROR
+                let a = [test10, test10, "test10"]; ERROR
+                let a = [test10, test10, "test10"]; ERROR teste tetset*/
+
         /*Strings*/
         code = (code)
             .replace(/("[0-9a-zA-Z\[\]\\.,'()+\-=\/$?|!@#%&_*:;{}^ ]+")/gi, cl.S1.i+'$1'+cl.S1.f)
@@ -1130,19 +1261,6 @@
             swap = code.match(/([a-zA-Z\\"')|@#&_;}]+\[__N1__][0-9]+\[__\/N1__])|([\\"')|@#&_;}]+ ?)([+/!*-><=]? ?)(\[__N1__])([0-9]+)(\[__\/N1__])/g)[0];
             swap = swap.replace(/\[__([\/]?)N1__]/g, '');
             code = code.replace(/([a-zA-Z\\"')|@#&_;}]+\[__N1__][0-9]+\[__\/N1__])|([\\"')|@#&_;}]+ ?)([+/!*-><=]? ?)(\[__N1__])([0-9]+)(\[__\/N1__])/g, swap);
-        }
-
-        /*Check Syntax Error*/
-        if(code.search(/(;)(\s?)(\[__[A-BD-Z][0-9]+__])([0-9a-zA-Z_+*>=<\-\/'" ]+)(\[__\/[A-BD-Z][0-9]__]+)$/g) !== -1) {
-            code = code.replace(/(;)(\s?)(\[__[A-BD-Z][0-9]+__])([0-9a-zA-Z_+*>=<\-\/'" ]+)(\[__\/[A-BD-Z][0-9]__]+)$/g, '$1$2'+cl._E.i+'$4 << Syntax Error'+cl._E.f);
-        }
-
-        /*if(code.search(/^([0-9a-zA-Z_+*>=<\-\/'"]+\s+?[0-9a-zA-Z_+*>=<\-\/'"]+)+$/g) !== -1) {
-            code = code.replace(/^([0-9a-zA-Z_+*>=<\-\/'"]+\s+?[0-9a-zA-Z_+*>=<\-\/'"]+)+$/g, cl._E.i+'$1 << Syntax Error'+cl._E.f);
-        }*/
-
-        if(code.search(/^(?!(\/\/|\/\*))(;? ?)([0-9a-zA-Z_+*>=<\-\/'"]+[\s]*)+(?!(;{\())$/g) !== -1) {
-            code = code.replace(/^(?!(\/\/|\/\*))(;? ?)([0-9a-zA-Z_+*>=<\-\/'"]+[\s]*)+(?!(;{\())$/g, cl._E.i+'$1$2$3$4 << Syntax Error'+cl._E.f);
         }
 
         return code + "\n";
