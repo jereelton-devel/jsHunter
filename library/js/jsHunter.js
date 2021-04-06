@@ -880,7 +880,7 @@
             //Aliases
             .replace(/\$/gi, '<span class="alias">$</span>')
             .replace(/\$J/gi, '<span class="alias">$J</span>')
-            .replace(/jX/, '<span class="alias">jX</span>')
+            .replace(/jH/, '<span class="alias">jH</span>')
             .replace(/jQuery/gi, '<span class="alias">jQuery</span>')
             //Functions
             .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">$1</span>(')
@@ -923,137 +923,6 @@
             return code + "\n";
         }
 
-        /*Check Syntax Error*/
-        if(code.search(/(;)(\s?)(\[__[A-BD-Z][0-9]+__])([0-9a-zA-Z_+*>=<\-\/'" ]+)(\[__\/[A-BD-Z][0-9]__]+)$/g) !== -1) {
-            code = code.replace(/(;)(\s?)(\[__[A-BD-Z][0-9]+__])([0-9a-zA-Z_+*>=<\-\/'" ]+)(\[__\/[A-BD-Z][0-9]__]+)$/g, '$1$2'+cl._E.i+'$4 << Syntax Error'+cl._E.f);
-        }
-
-        /*if(code.search(/^([0-9a-zA-Z_+*>=<\-\/'"]+\s+?[0-9a-zA-Z_+*>=<\-\/'"]+)+$/g) !== -1) {
-            code = code.replace(/^([0-9a-zA-Z_+*>=<\-\/'"]+\s+?[0-9a-zA-Z_+*>=<\-\/'"]+)+$/g, cl._E.i+'$1 << Syntax Error'+cl._E.f);
-        }*/
-
-        if(code.search(/^(?!(\/\/|\/\*))(;? ?)([0-9a-zA-Z_+*>=<\-\/'"]+[\s]*)+(?!(;{\())$/g) !== -1) {
-            code = code.replace(/^(?!(\/\/|\/\*))(;? ?)([0-9a-zA-Z_+*>=<\-\/'"]+[\s]*)+(?!(;{\())$/g, cl._E.i+'$1$2$3$4 << Syntax Error'+cl._E.f);
-        }
-        /*--------------------------------------------------
-
-        Syntax Error: 1
-
-        ^([; ]+)(.*[^;(){}])$
-
-        ===> $2
-
-        ;var
-        ; var
-        ; var
-        ;var
-        ;var;
-        ; var()
-        ; var
-        ;var
-
-        --------------------------------------------------
-
-        Syntax Error: 2
-
-        ^(['"].*)$
-
-        ===> $1
-
-        "a+1+2+b-a-b"
-        'a+1+2+b-a-b'
-
-        --------------------------------------------------
-
-            Syntax Error: 3
-
-        ^([a-z]+)?(\s?)([a-z]+)?(\s?)(=?)(\s?)(;?)$
-
-        ===> $1...$9
-
-        let test = ;
-        let test=;
-        let test= ;
-        let test =;
-        lettest= ;
-        lettest =;
-        lettest=;
-        lettest;
-
-        --------------------------------------------------
-
-        Syntax Error: 4
-
-        ^(?!(\/\/|\/\*))(;? ?)([0-9a-zA-Z_;]+|[0-9a-zA-Z_+*>=<\-\/'"(]+\s+?[0-9a-zA-Z_+*>=<\-\/'"]+)+(\s+)?$
-
-        //Comment inline "string inline" in test function
-
-        alert("test11233"); //that is only a test "test string" with string
-        let test = 10;
-        let test = 10;
-        FUNCTION test();
-        test; ---------------------------------------------------------------------------->> ERROR $3
-        test();
-        test {
-        }
-        //test
-        /!*test*!/
-        let test = 10;
-        test_1 ---------------------------------------------------------------------------->> ERROR $3
-        "a+1+2+b-a-b"
-        var f = function();
-        var f
-        var f
-        ; var f
-
-        function test
-        function() {
-        }
-        function test() {
-        }
-        function test
-        function function function
-        ; [__F1__]test[__/F1__]
-
-        function
-        function (
-        function(
-        function() { //test
-        function() { /!*test*!/
-            /!*test comment function()*!/ function() { function(
-        //Comment inline "string inline" in test function
-        //Comment inline "string inline" in test function(
-                /!*Samples Codes "string" in test function*!/
-                /!*Samples Codes "string" in test function(*!/
-                function(
-                "string function"
-                "string function("
-                function test(abc/!*test test*!/, function() {})
-                /!*test test*!/function test(function(){}, function() {})
-                /!*test "string" function alert("test")*!/
-        //test "string" function alert("test")
-                "test 'string' function alert('test')"
-                'test "string" function alert("test")'
-                function fn("parameter 1", args, "parameter 2", 'parameter 3');
-                alert('function fn("parameter 1", args, "parameter 2", "parameter 3")');
-
-                --------------------------------------------------
-
-                    Syntax Error: 5
-
-                (;)(\s?)(\[__[A-BD-Z][0-9]+__])([0-9a-zA-Z_+*>=<\-\/'" ]+)(\[__\/[A-BD-Z][0-9]__]+)$
-            (;\s?[0-9a-zA-Z_+*>=<\-\/'" ]+)$
-
-                ===> $1
-
-        //this a string that contain a number 10+10; ERRO
-                /!*this a string that contain a number 10*!/
-
-                let a10; let _10; ERRO
-                let a = test10; ERROR
-                let a = [test10, test10, "test10"]; ERROR
-                let a = [test10, test10, "test10"]; ERROR teste tetset*/
-
         /*Strings*/
         code = (code)
             .replace(/("[0-9a-zA-Z\[\]\\.,'()+\-=\/$?|!@#%&_*:;{}^ ]+")/gi, cl.S1.i+'$1'+cl.S1.f)
@@ -1092,7 +961,7 @@
 
         /*Function Name*/
         code = (code)
-            .replace(/(\.)?([0-9a-zA-Z_]+)(\()/g, '$1'+cl.F2.i+'$2'+cl.F2.f+'$3')
+            .replace(/(\.|\s?\+\s?|\)\.)?([0-9a-zA-Z_]+)(\()/g, '$1{/::::/$2/::::/}$3')
             .replace(/(\[__\/[A-Z][0-9]+__]\))(\.)(\[__F2__])([0-9a-zA-Z_]+)(\[__\/F2__])(\(\[__[A-Z][0-9]+__])/g, '$1$2'+cl.F5.i+'$4'+cl.F5.f+'$6');
 
         /*Variable declare*/
@@ -1105,13 +974,19 @@
         code = (code).replace(/(return)(?=( ?;| .*;))/g, cl.R1.i+'$1'+cl.R1.f);
 
         /*DOM elements*/
-        code = (code).replace(/(console|document|window)\./g, cl.D1.i+'$1'+cl.D1.f+'.');
+        code = (code)
+            .replace(/(console|document|window)\./g, cl.D1.i+'$1'+cl.D1.f+'.')
+            .replace(/(\(\s?)(document|window)(\s?\))/g, '$1'+cl.D1.i+'$2'+cl.D1.f+'$3');
 
         /*Boolean*/
         code = (code)
             .replace(/,\s?(true|false)\s?\)/g, ', '+cl.B1.i+'$1'+cl.B1.f+')')
             .replace(/:\s?(true|false)\s?}/g, ': '+cl.B1.i+'$1'+cl.B1.f+'}')
             .replace(/(\[__R1__]return\[__\/R1__] )(true|false)\s?;/g, '$1'+cl.B1.i+'$2'+cl.B1.f+';');
+
+        /*Values (part1)*/
+        code = (code)
+            .replace(/(:\s?)([0-9a-zA-Z_]+)(\s?,?)/g, '$1'+cl.V3.i+'$2'+cl.V3.f+'$3');
 
         /*Float Number*/
         if((code).search(/(.*)?([0-9]+\.[0-9]+)+(\.[0-9]{2})?(.*)?/g) !== -1) {
@@ -1137,17 +1012,13 @@
         code = (code)
             .replace(/([0-9a-zA-Z_]+)(\s?:\s?)/g, cl.P2.i+'$1'+cl.P2.f+'$2');
 
-        /*Values (part1)*/
-        code = (code)
-            .replace(/(:\s?)([a-zA-Z_]+)(\s?,?)/g, '$1'+cl.V3.i+'$2'+cl.V3.f+'$3');
-
         /*Arguments and parameters*/
         code = (code)
             .replace(/(?!.*("|\[__[A-Z][0-9]+__]))(\(|\+ ?|, ?| )([0-9a-zA-Z_$]+)(\)|,?| )(?!.*("|\[__\/[A-Z][0-9]+__]))/g, '$2'+cl.P1.i+'$3'+cl.P1.f+'$4');
 
         /*Aliases*/
         code = (code)
-            .replace(/(\${2}|\$|\$J|jX|jQuery)([.]|[(])/g, cl.A1.i+'$1'+cl.A1.f+'$2');
+            .replace(/(\${2}|\$|\$J|jH|jQuery)([.]|[(])/g, cl.A1.i+'$1'+cl.A1.f+'$2');
 
         /*Object Attributes*/
         code = (code)
@@ -1208,6 +1079,19 @@
             code = code.replace(/(\[__S1__])"(.*)"(\[__\/S1__])/g, swap);
         }
 
+        //Clear trash
+        if(code.search(/(\[\[\[!!]]].*\[__[\/]?[A-Z][0-9]+__].*\[\[\/\[!!]\/]])(?=(["+ ]+))/g) !== -1) {
+            swap = code.match(/(\[\[\[!!]]].*\[__[\/]?[A-Z][0-9]+__].*\[\[\/\[!!]\/]])(?=(["+ ]+))/g)[0];
+            swap = swap.replace(/\[__[\/]?[A-Z][0-9]+__]/g, '');
+            code = code.replace(/(\[\[\[!!]]].*\[__[\/]?[A-Z][0-9]+__].*\[\[\/\[!!]\/]])(?=(["+ ]+))/g, swap);
+        }
+        if(code.search(/(\[\[\[!!]]].*{\/::::\/.*\/::::\/}.*\[\[\/\[!!]\/]])(?=(\)|;|\.|\,\s?\[\[\[!!]]]))/g) !== -1) {
+            swap = code.match(/(\[\[\[!!]]].*{\/::::\/.*\/::::\/}.*\[\[\/\[!!]\/]])(?=(\)|;|\.|\,\s?\[\[\[!!]]]))/g)[0];
+            swap = swap.replace(/{\/::::\//g, '');
+            swap = swap.replace(/\/::::\/}/g, '');
+            code = code.replace(/(\[\[\[!!]]].*{\/::::\/.*\/::::\/}.*\[\[\/\[!!]\/]])(?=(\)|;|\.|\,\s?\[\[\[!!]]]))/g, swap);
+        }
+
         if(code.search(/(\[__S2__])'(.*)'(\[__\/S2__])/g) !== -1) {
             /*Clear string S2 removing S1*/
             swap = code.match(/(\[__S2__])'(.*)'(\[__\/S2__])/g)[0];
@@ -1226,6 +1110,20 @@
                 .replace(/([{]{3})(\/?)(F_5}}})/g, '[__$2F5__]')
                 .replace(/([{]{3})(\/?)(P_2}}})/g, '[__$2P2__]');
             code = code.replace(/(\[__S2__])'(.*)'(\[__\/S2__])/g, swap);
+        }
+
+        //Clear trash
+        if(code.search(/(\[\[\[!]]].*\[__[\/]?[A-Z][0-9]+__].*\[\[\/\[!]\/]])(?=(["+ ]+))/g) !== -1) {
+            swap = code.match(/(\[\[\[!]]].*\[__[\/]?[A-Z][0-9]+__].*\[\[\/\[!]\/]])(?=(["+ ]+))/g)[0];
+            swap = swap.replace(/\[__[\/]?[A-Z][0-9]+__]/g, '');
+            code = code.replace(/(\[\[\[!]]].*\[__[\/]?[A-Z][0-9]+__].*\[\[\/\[!]\/]])(?=(["+ ]+))/g, swap);
+        }
+
+        if(code.search(/(\[\[\[!]]].*{\/::::\/.*\/::::\/}.*\[\[\/\[!]\/]])(?=(\)|;|\.|\,\s?\[\[\[!]]]))/g) !== -1) {
+            swap = code.match(/(\[\[\[!]]].*{\/::::\/.*\/::::\/}.*\[\[\/\[!]\/]])(?=(\)|;|\.|\,\s?\[\[\[!]]]))/g)[0];
+            swap = swap.replace(/{\/::::\//g, '');
+            swap = swap.replace(/\/::::\/}/g, '');
+            code = code.replace(/(\[\[\[!]]].*{\/::::\/.*\/::::\/}.*\[\[\/\[!]\/]])(?=(\)|;|\.|\,\s?\[\[\[!]]]))/g, swap);
         }
 
         /*Links adjusts*/
@@ -1263,6 +1161,15 @@
             code = code.replace(/([a-zA-Z\\"')|@#&_;}]+\[__N1__][0-9]+\[__\/N1__])|([\\"')|@#&_;}]+ ?)([+/!*-><=]? ?)(\[__N1__])([0-9]+)(\[__\/N1__])/g, swap);
         }
 
+        /*Check Syntax Error*/
+        if(code.search(/(;)(\s?)(\[__[A-BD-Z][0-9]+__])([0-9a-zA-Z_+*>=<\-\/'" ]+)(\[__\/[A-BD-Z][0-9]__]+)$/g) !== -1) {
+            code = code.replace(/(;)(\s?)(\[__[A-BD-Z][0-9]+__])([0-9a-zA-Z_+*>=<\-\/'" ]+)(\[__\/[A-BD-Z][0-9]__]+)$/g, '$1$2'+cl._E.i+'$4 << Syntax Error: 1'+cl._E.f);
+        }
+
+        if(code.search(/^(?!(\/\/|\/\*))(;? ?)([0-9a-zA-Z_+*>=<\-\/'"]+[\s]*)+(?!(;{\())$/g) !== -1) {
+            code = code.replace(/^(?!(\/\/|\/\*))(;? ?)([0-9a-zA-Z_+*>=<\-\/'"]+[\s]*)+(?!(;{\())$/g, cl._E.i+'$1$2$3$4 << Syntax Error: 2'+cl._E.f);
+        }
+
         return code + "\n";
     }
 
@@ -1290,14 +1197,14 @@
 
         /*Syntax Error*/
         code = (code)
-            .replace(/\[__\{\{ER}}__]([0-9a-zA-Z_:+*>=<\-\/'" ]+)/g, cl._E.t+'$1')
-            .replace(/\[__\{\{\/ER}}__]/g, cl._X.t);
+            .replace(/\[__{{ER}}__]([0-9a-zA-Z_:+*>=<\-\/'" ]+)/g, cl._E.t+'$1')
+            .replace(/\[__{{\/ER}}__]/g, cl._X.t);
 
         /*Strings*/
         code = (code)
             .replace(/\[\[\[!!]]]/g, cl.S1.t+'"')
             .replace(/\[\[\/\[!!]\/]]/g, '"'+cl._X.t)
-            .replace(/\[\[\[!]]]/g, cl.S1.t+"'")
+            .replace(/\[\[\[!]]]/g, cl.S2.t+"'")
             .replace(/\[\[\/\[!]\/]]/g, "'"+cl._X.t);
 
         /*Links*/
@@ -1340,6 +1247,8 @@
 
         /*Function Name*/
         code = (code)
+            .replace(/({\/::::\/)([0-9a-zA-Z_])/g, cl.F2.t+'$2')
+            .replace(/(\/::::\/})/g, cl._X.t)
             .replace(/\[__F2__]([0-9a-zA-Z_]+)/g, cl.F2.t+'$1')
             .replace(/\[__\/F2__]/g, cl._X.t)
             .replace(/\[__F5__]\[\[\[([0-9a-zA-Z_]+)/g, cl.F5.t+'$1')
@@ -1423,7 +1332,7 @@
             //Aliases
             /*.replace(/\$/gi, '<span class="alias">$</span>')
             .replace(/\$J/gi, '<span class="alias">$J</span>')
-            .replace(/jX/, '<span class="alias">jX</span>')
+            .replace(/jH/, '<span class="alias">jH</span>')
             .replace(/jQuery/gi, '<span class="alias">jQuery</span>')*/
             //Functions
             .replace(/\.([a-zA-Z]+)\(/gi, '.<span class="function-name">$1</span>(')
@@ -1628,8 +1537,8 @@
                     console.exception("Invalid value to parameter height in function screenSizer()");
                 }
 
-                jX(params.target).width(w);
-                jX(params.target).height(h);
+                jH(params.target).width(w);
+                jH(params.target).height(h);
 
                 console.log("screenSizer", w, h);
             }, 500);
@@ -1986,7 +1895,7 @@
             return this;
         }, //DONE & DOCUMENTATION
 
-        code: function(params) {
+        codify: function(params) {
             try {
                 let _sel = this.sel;
                 let _arr = [];
@@ -1996,12 +1905,12 @@
                 let _num = (params.hasOwnProperty('number')) ? params.number : true;
 
                 if(_mod !== 'mapper' && _mod !== 'styler' && _mod !== 'automatic') {
-                    console.error('[Error] Incorrect Mode for code() !');
+                    console.error('[Error] Incorrect Mode for codify() !');
                     return;
                 }
 
                 if(!_lan) {
-                    console.error('[Error] Missing Language for code() !');
+                    console.error('[Error] Missing Language for codify() !');
                     return;
                 }
 
@@ -2011,7 +1920,7 @@
                     _sel.forEach(function(a, index, el) {
 
                         //Theme apply
-                        jX("." + _sel[index].className).addClass(_thm);
+                        jH("." + _sel[index].className).addClass(_thm);
 
                         /**
                          * CODE MAPPER
@@ -2020,7 +1929,7 @@
                         if(_mod === 'mapper' || _mod === 'automatic') {
 
                             //Original lines from codes: Array
-                            _arr = (jX.fn.getData("text", _sel[index])).split("\n");
+                            _arr = (jH.fn.getData("text", _sel[index])).split("\n");
 
                             //Element reset
                             _sel[index].innerHTML = "";
@@ -2043,7 +1952,7 @@
                         if(_mod === 'styler' || _mod === 'automatic') {
 
                             //Mapped lines from codes: Array
-                            _arr = (jX.fn.getData("text", _sel[index])).split("\n");
+                            _arr = (jH.fn.getData("text", _sel[index])).split("\n");
 
                             //Element reset
                             _sel[index].innerHTML = "";
@@ -2062,8 +1971,8 @@
                     }) : (_sel) ?
 
                     (function(){
-                        console.log("Single: code()", _sel);
-                    })() : jsHunter.fn.exception("code() error " + _sel);
+                        console.log("Single: codify()", _sel);
+                    })() : jsHunter.fn.exception("codify() error " + _sel);
 
             } catch(err) {
                 console.error(err);
@@ -2781,17 +2690,17 @@
         }, //DONE
     };
 
-    window.jX = window.jsHunter = jsHunter;
+    window.jH = window.jsHunter = jsHunter;
     window.$$ = jsHunter();
 
 })();
 
 //No Conflict Resolved
-const _jsHunter = window.jsHunter, _jX = window.jX;
+const _jsHunter = window.jsHunter, _jH = window.jH;
 
 jsHunter.noConflict = function( digger ) {
-    if(window.jX === jsHunter) {
-        window.jX = _jX;
+    if(window.jH === jsHunter) {
+        window.jH = _jH;
     }
     if(digger && window.jsHunter === jsHunter) {
         window.jsHunter = _jsHunter;
@@ -2802,7 +2711,7 @@ jsHunter.noConflict = function( digger ) {
 jsHunter.noConflict();
 
 if ( typeof noGlobal === typeof undefined ) {
-    window.jsHunter = window.jX = jsHunter;
+    window.jsHunter = window.jH = jsHunter;
 }
 
 window.$J = jsHunter.fn;
