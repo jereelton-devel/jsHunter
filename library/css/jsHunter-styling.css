@@ -437,7 +437,7 @@
     width: 97%;
     height: auto;
     min-height: 100px;
-    max-height: 500px;
+    max-height: 1000px;
     margin: 20px auto;
     font-style: normal !important;
     overflow: auto;
@@ -458,7 +458,7 @@
     font-family: inherit !important;
     padding-top: -10px !important;
     display: block !important;
-    width: 91% !important;
+    width: 90% !important;
     float: left !important;
 }
 /*Dark*/
@@ -554,7 +554,7 @@
     color: #d27510 !important;
     font-family: inherit !important;
 }
-.back-blue-code .links {
+.back-dark-code .links {
     color: #0fbfe9 !important;
     font-family: inherit !important;
     font-weight: normal !important;
@@ -743,6 +743,9 @@
     font-family: inherit !important;
     font-weight: normal !important;
 }
+.back-light-code .string {
+    color: #d23737 !important;
+}
 .back-light-code .comments-inline {
     color: #acacac !important;
     font-family: inherit !important;
@@ -765,14 +768,13 @@
 }
 .back-modern-code .test,
 .back-modern-code .syntax-error {
-    color: #FF0000 !important;
+    color: #ef4848 !important;
     font-family: inherit !important;
     font-weight: bold !important;
 }
 .back-modern-code .line-number {
-    background: #465058;
-    color: #d9c7f1 !important;
-    border-right: solid #d9c7f1 1px !important;
+    color: #916ee7 !important;
+    border-right: solid #916ee7 1px !important;
 }
 .back-modern-code .class {
     color: #e216e9 !important;
@@ -785,12 +787,12 @@
     font-weight: bold !important;
 }
 .back-modern-code .set-get-methods {
-    color: #ca1a1a !important;
+    color: #7fc6ec !important;
     font-family: inherit !important;
     font-weight: normal !important;
 }
 .back-modern-code .constructor {
-    color: #9f0a97 !important;
+    color: #d74bd0 !important;
     font-family: inherit !important;
     font-weight: bold !important;
 }
@@ -798,26 +800,27 @@
 .back-modern-code .loop-condition,
 .back-modern-code .return,
 .back-modern-code .variable-declare {
-    color: #de0cc2 !important;
+    color: #718fea !important;
     font-family: inherit !important;
     font-weight: bold !important;
 }
 .back-modern-code .param,
 .back-modern-code .number,
 .back-modern-code .variables {
-    color: #a4cae3 !important;
+    color: #faa81b !important;
     font-family: inherit !important;
     font-weight: bold !important;
 }
 .back-modern-code .return {
+    color: #faa81b !important;
     font-weight: normal !important;
 }
 .back-modern-code .number {
-    color: #916ee7 !important;
+    color: #d477d2 !important;
     font-weight: normal !important;
 }
 .back-modern-code .function-name {
-    color: #e2a713 !important;
+    color: #dce30d !important;
     font-family: inherit !important;
     font-weight: normal !important;
 }
@@ -829,7 +832,7 @@
     font-weight: normal !important;
 }
 .back-modern-code .alias {
-    color: #d90b34 !important;
+    color: #ff8602 !important;
     font-family: inherit !important;
     font-weight: bold !important;
 }
@@ -840,9 +843,12 @@
 }
 .back-modern-code .string,
 .back-modern-code .comment-in-block {
-    color: #61ae63 !important;
+    color: #1eae23 !important;
     font-family: inherit !important;
     font-weight: normal !important;
+}
+.back-modern-code .string{
+    color: #ff4f4f !important;
 }
 .back-modern-code .comments-inline {
     color: #acacac !important;
@@ -850,7 +856,7 @@
     font-weight: normal !important;
 }
 .back-modern-code .boolean {
-    color: #d27510 !important;
+    color: #7dec71 !important;
     font-family: inherit !important;
 }
 .back-modern-code .links {
