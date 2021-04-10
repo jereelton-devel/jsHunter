@@ -26,7 +26,7 @@
             if(_selector) {
                 this.sel = jsHunter.sel = document.querySelectorAll(_selector);
                 if(!this.sel) {
-                    throw err = "Invalid selector ("+_selector+"), use id, class or label";
+                    throw "Invalid selector ("+_selector+"), use id, class or label";
                 }
             } else {
                 this.sel = this.selector = _selector = undefined;
@@ -34,15 +34,11 @@
         } catch(err) {
             console.error(err);
         } finally {
-            try {
-                if(_selector && !this.sel) {
-                    throw err = "jsHunter is not done, check your selector calling !";
-                } else {
-                    this.selector = jsHunter.selector = _selector;
-                    this.args     = jsHunter.args = _args;
-                }
-            } catch(e) {
-                console.error(e);
+            if(_selector && !this.sel) {
+                console.error("[Exception] jsHunter is not done, check your selector calling !");
+            } else {
+                this.selector = jsHunter.selector = _selector;
+                this.args     = jsHunter.args = _args;
             }
         }
     }
@@ -155,9 +151,9 @@
         element_id.style.top = margin_calc + "px";
     }
 
-    function _changeElementSize(element, orient, size, measure) {
+    function _changeElementSize(element, orientation, size, measure) {
 
-        switch (orient) {
+        switch (orientation) {
             case 'width':
                 element.style.width = size + measure;
                 break;
@@ -179,17 +175,17 @@
 
             switch (type) {
                 case "src":
-                    _sel.forEach(function (a, index, el) {
+                    _sel.forEach(function (a, index) {
                         _sel[index].attributes.src.value = value;
                     })
                     break;
                 case "disabled":
-                    _sel.forEach(function (a, index, el) {
+                    _sel.forEach(function (a, index) {
                         _sel[index].disabled = value;
                     })
                     break;
                 case "href":
-                    _sel.forEach(function (a, index, el) {
+                    _sel.forEach(function (a, index) {
                         _sel[index].href = value;
                     })
                     break;
@@ -245,8 +241,7 @@
          * */
 
         exception: function(msg){
-            throw err = msg;
-            return err;
+            return throw msg;
         }, //DONE INTERNAL
 
         /***
@@ -357,7 +352,7 @@
             let keys = Object.keys(_sel);
             (keys.length > 0) ?
                 keys.forEach(function(index) {
-                    _sel[index].removeEventListener("click", (function(){void(0);})());
+                    _sel[index].removeEventListener("click");
                     _sel[index].addEventListener("click", function(e){
                         e.preventDefault();
                         e.stopPropagation();
@@ -366,7 +361,7 @@
                         } console.log("click-1");
                     });
                 }) : (_sel) ? (function (){
-                    _sel.removeEventListener("click", (function(){void(0);})());
+                    _sel.removeEventListener("click");
                     _sel.addEventListener("click", function(e){
                         e.preventDefault();
                         e.stopPropagation();
@@ -410,7 +405,7 @@
             try {
                 (keys.length > 0) ?
                     keys.forEach(function(index) {
-                        _sel[index].removeEventListener(ev, (function(){void(0);})());
+                        _sel[index].removeEventListener(ev);
                         _sel[index].addEventListener(ev, function(e){
                             e.preventDefault();
                             e.stopPropagation();
@@ -418,7 +413,7 @@
                         });
                     }) : (_sel) ?
                     (function(){
-                        _sel.removeEventListener(ev, (function(){void(0);})());
+                        _sel.removeEventListener(ev);
                         _sel.addEventListener(ev, function(e){
                             e.preventDefault();
                             e.stopPropagation();
@@ -626,42 +621,40 @@
             switch(a) {
                 case "undefined":
                     return e;
-                    break;
                 case "text":
                     return e.text || e.textContent || e.innerText;
-                    break;
                 case "textContent":
                     return e.textContent || e.text || e.innerText;
-                    break;
                 case "value":
                     return e.value;
-                    break;
                 case "html":
                     return e.innerHTML;
-                    break;
                 case "outer":
                     return e.outerHTML;
-                    break;
                 case "src":
                     return e.src;
-                    break;
                 case "attr":
                     return e.attributes;
-                    break;
                 case "href":
                     return e.href;
-                    break;
                 case "eventTarget":
                     return e.target.id;
-                    break;
                 default:
-                    throw err = "Invalid argument [" + a + "] on getData !";
+                    throw "Invalid argument [" + a + "] on getData !";
             }
         }, //DONE & DOCUMENTATION
 
         screen: function() {
             return {width: window.innerWidth, height: window.innerHeight};
         }, //DONE & DOCUMENTATION
+
+        computedCss: function(element) {
+          try {
+            return _getStyles(element);
+          } catch (err) {
+              console.log("[Exception]: styles() => " + err);
+          }
+        }, //TODO
 
         /***
          * Visual Handlers
@@ -754,7 +747,7 @@
             let _opacity  = 100; //100....0
             let _element  = this.sel; //copy current target tag (noConflict)
             let _keys     = Object.keys(_element);
-            let _selector = this.selector;
+            /*let _selector = this.selector;*/
             let _timer_fade = (p.hasOwnProperty("timer_fade")) ? p.timer_fade : 1;
 
             fadeCtrl = setInterval(function(){
@@ -809,7 +802,7 @@
 
         }, //DONE
 
-        margin: function(orientation, value, measure) {
+        margin: function(orientation, value) {
             try {
                 let _sel = this.sel;
                 (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
@@ -865,6 +858,33 @@
             return this;
         }, //TODO PROGRAMAR FUNÇÃO PARA RETORNAR LARGURA DO ELEMENTO
 
+        sizer: function(element, orientation, value, type) {
+            try {
+                _changeElementSize(element, orientation, value, type);
+            } catch(err) {
+                console.error("[Exception] sizer() => " + err);
+            }
+            return this;
+        }, //TODO
+
+        opacity: function(element, opacity) {
+            try {
+                _opacityElement(element, opacity);
+            } catch(err) {
+                console.error("[Exception] opacity() => " + err);
+            }
+            return this;
+        }, //TODO
+
+        centralize: function(element_id, element_width, element_height) {
+            try {
+                _middlePositionConfigure(element_id, element_width, element_height);
+            } catch(err) {
+                console.error("[Exception] centralize() => " + err);
+            }
+            return this;
+        }, //TODO
+
         /***
          * Advanced Components
          * */
@@ -899,7 +919,7 @@
                             } else if(nodeType && nodeType === "children") {
                                 nodes.push(hunt[index]);
                             } else if(nodeType && nodeType === "self") {
-                                nodes.push(huntq[index]);
+                                nodes.push(hunt[index]);
                             }
                         })
                         jsHunter.fn.nodes = nodes;
@@ -949,7 +969,7 @@
                 element.id.search(id_value) >= 0 ||
                 element.id.search(" " + id_value) >= 0 ||
                 element.id.search(id_value + " ") >= 0
-            ) ? true : false;
+            );
         }, //DONE
 
         matchClass: function(element, classname) {
@@ -957,7 +977,7 @@
                 element.className.search(classname) >= 0 ||
                 element.className.search(" " + classname) >= 0 ||
                 element.className.search(classname + " ") >= 0
-            ) ? true : false;
+            );
         }, //DONE
 
         findId: function(element, id) {

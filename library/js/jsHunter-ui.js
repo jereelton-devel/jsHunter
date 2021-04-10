@@ -13,7 +13,7 @@
 
     try {
         if(!window.jH || !window.jsHunter || !jsHunter || !window.$$ || !window.$J) {
-            throw er = "[Exception]: Error on load jsHunter (Lib NOT FOUND) !";
+            throw "[Exception]: Error on load jsHunter (Lib NOT FOUND) !";
         }
     } catch (er) {
         console.exception( "Fatal Error: " + er);
@@ -141,15 +141,15 @@
 
                 params.opacity += _opacity_;
 
-                _changeElementSize(params.element,'width', params.more_width,'px');
+                jsHunter.fn.sizer(params.element,'width', params.more_width,'px');
 
                 if(jsHunter.fn.intNumber(params.element.style.height) <= params.styles.height) {
-                    _changeElementSize(params.element, 'height', params.more_width, 'px');
+                    jsHunter.fn.sizer(params.element, 'height', params.more_width, 'px');
                 }
 
-                _opacityElement(params.element, params.opacity)
+                jsHunter.fn.opacity(params.element, params.opacity)
 
-                _middlePositionConfigure(params.element, params.more_width, params.more_width);
+                jsHunter.fn.centralize(params.element, params.more_width, params.more_width);
             }
 
         }, 1);
@@ -159,22 +159,22 @@
 
         let _opacity_ = 0.1;
 
-        _changeElementSize(params.element, 'width', params.styles.width, 'px');
-        _changeElementSize(params.element, 'height', params.styles.height, 'px');
+        jsHunter.fn.sizer(params.element, 'width', params.styles.width, 'px');
+        jsHunter.fn.sizer(params.element, 'height', params.styles.height, 'px');
 
         if(params.wide === true) {
-            _changeElementSize(params.element, 'width', params.wide_width, 'px');
-            _changeElementSize(params.element, 'height', params.max_height, 'px');
+            jsHunter.fn.sizer(params.element, 'width', params.wide_width, 'px');
+            jsHunter.fn.sizer(params.element, 'height', params.max_height, 'px');
         }
 
-        _middlePositionConfigure(params.element, params.element.style.width, params.element.style.height);
+        jsHunter.fn.centralize(params.element, params.element.style.width, params.element.style.height);
 
         modalCtrl = setInterval(function() {
 
-            if(parseInt(params.opacity) >= 1) {
+            if(parseInt(params.opacity.toString()) >= 1) {
 
                 clearInterval(modalCtrl);
-                _opacityElement(params.element, '1');
+                jsHunter.fn.opacity(params.element, '1');
 
                 //Event target when lock screen is clicked
                 jsHunter(params.lock_screen, {rsp: "eventTarget"}).on('click', function(rsp){
@@ -196,7 +196,7 @@
             } else {
                 params.opacity += _opacity_;
 
-                _opacityElement(params.element, params.opacity);
+                jsHunter.fn.opacity(params.element, params.opacity);
             }
 
         }, 30);
@@ -217,21 +217,21 @@
             if(params.more_width >= _end_width_) {
 
                 clearInterval(modalCtrl);
-                //_changeElementSize(params.element, 'width', _end_width_, 'px');
+                //jsHunter.fn.sizer(params.element, 'width', _end_width_, 'px');
                 _modalDecrease(params);
 
             } else {
 
                 params.opacity += _opacity_;
 
-                _opacityElement(params.element, params.opacity);
-                _changeElementSize(params.element, 'width', params.more_width, 'px');
+                jsHunter.fn.opacity(params.element, params.opacity);
+                jsHunter.fn.sizer(params.element, 'width', params.more_width, 'px');
 
                 if(jsHunter.fn.intNumber(params.element.style.height) <= params.styles.height) {
-                    _changeElementSize(params.element, 'height', params.more_width, 'px');
+                    jsHunter.fn.sizer(params.element, 'height', params.more_width, 'px');
                 }
 
-                _middlePositionConfigure(params.element, params.more_width, params.styles.height);
+                jsHunter.fn.centralize(params.element, params.more_width, params.styles.height);
 
             }
 
@@ -247,20 +247,20 @@
             if(params.more_width <= _end_width_) {
 
                 clearInterval(modalCtrl);
-                //_changeElementSize(params.element, 'width', params.styles.width, 'px');
+                //jsHunter.fn.sizer(params.element, 'width', params.styles.width, 'px');
                 _modalIncrease(params);
 
             } else {
 
                 params.more_width -= 10;
 
-                _changeElementSize(params.element, 'width', params.more_width, 'px');
+                jsHunter.fn.sizer(params.element, 'width', params.more_width, 'px');
 
                 if(jsHunter.fn.intNumber(params.element.style.height) <= params.styles.height) {
-                    _changeElementSize(params.element, 'height', params.styles.height, 'px');
+                    jsHunter.fn.sizer(params.element, 'height', params.styles.height, 'px');
                 }
 
-                _middlePositionConfigure(params.element, params.more_width, params.styles.height);
+                jsHunter.fn.centralize(params.element, params.more_width, params.styles.height);
 
             }
 
@@ -277,19 +277,19 @@
             if(params.more_width >= _end_width_) {
 
                 clearInterval(modalCtrl);
-                _changeElementSize(params.element, 'width', _end_width_, 'px');
+                jsHunter.fn.sizer(params.element, 'width', _end_width_, 'px');
                 _modalFinish(params);
 
             } else {
 
                 params.more_width += 10;
-                _changeElementSize(params.element, 'width', params.more_width, 'px');
+                jsHunter.fn.sizer(params.element, 'width', params.more_width, 'px');
 
                 if(jsHunter.fn.intNumber(params.element.style.height) <= params.styles.height) {
-                    _changeElementSize(params.element, 'height', params.styles.height, 'px');
+                    jsHunter.fn.sizer(params.element, 'height', params.styles.height, 'px');
                 }
 
-                _middlePositionConfigure(params.element, params.more_width, params.styles.height);
+                jsHunter.fn.centralize(params.element, params.more_width, params.styles.height);
 
             }
 
@@ -357,8 +357,8 @@
                 } else {
                     params.more_width -= 5;
 
-                    _changeElementSize(params.element, 'width', params.more_width, 'px');
-                    _middlePositionConfigure(params.element, params.more_width, params.more_width);
+                    jsHunter.fn.sizer(params.element, 'width', params.more_width, 'px');
+                    jsHunter.fn.centralize(params.element, params.more_width, params.more_width);
                 }
 
             }, 1);
@@ -382,8 +382,8 @@
             } else {
                 _wf_ += 15;
 
-                _changeElementSize(params.element, 'width', _wf_, 'px');
-                _middlePositionConfigure(params.element, _wf_, params.more_width);
+                jsHunter.fn.sizer(params.element, 'width', _wf_, 'px');
+                jsHunter.fn.centralize(params.element, _wf_, params.more_width);
             }
 
         }, 1);
@@ -397,7 +397,7 @@
         let _opacity_ = 100;
         let _opacdiv_ = 15;
         let _element_ = params.element;
-        let _styles_ = _getStyles(_element_);
+        let _styles_ = jsHunter.fn.computedCss(_element_);
 
         params.width = _styles_.width;
         params.height = _styles_.height;
@@ -426,8 +426,8 @@
                 clearInterval(modalCtrl);
                 _modalCloseDefault(params);
             } else {
-                _changeElementSize(params.element, 'width', params.width, 'px');
-                _middlePositionConfigure(params.element, params.width, params.height);
+                jsHunter.fn.sizer(params.element, 'width', params.width, 'px');
+                jsHunter.fn.centralize(params.element, params.width, params.height);
             }
 
         }, 1);
@@ -443,18 +443,18 @@
 
                 clearInterval(modalCtrl);
                 // CSS Reset to Element Original Size
-                _changeElementSize(params.element, 'width', params.save_width, 'px');
-                _changeElementSize(params.element, 'height', params.save_width, 'px');
+                jsHunter.fn.sizer(params.element, 'width', params.save_width, 'px');
+                jsHunter.fn.sizer(params.element, 'height', params.save_width, 'px');
                 jsHunter(params.selector).display('none');
                 _modalUnLockScreen(params);
 
             } else {
 
                 params.opacity -= 2;
-                _changeElementSize(params.element, 'width', params.width, 'px');
-                _changeElementSize(params.element, 'height', params.width, 'px');
-                _opacityElement(params.element, (params.opacity / 100).toString());
-                _middlePositionConfigure(params.element, params.width, params.width);
+                jsHunter.fn.sizer(params.element, 'width', params.width, 'px');
+                jsHunter.fn.sizer(params.element, 'height', params.width, 'px');
+                jsHunter.fn.opacity(params.element, (params.opacity / 100).toString());
+                jsHunter.fn.centralize(params.element, params.width, params.width);
 
             }
 
@@ -474,7 +474,7 @@
 
             } else {
                 _opacity_ -= 0.1;
-                _opacityElement(params.element, _opacity_)
+                jsHunter.fn.opacity(params.element, _opacity_)
             }
 
         }, 30);
@@ -482,7 +482,6 @@
 
     function _modalLockScreen(_name_, _back_color_, _opacity_) {
 
-        //_createHtmlElement({
         $$.create({
             element: "div",
             attr_type: "id",
@@ -526,7 +525,7 @@
     jsHunter.prototype.modal = function(params) {
         try {
             if(typeof  params === "undefined") {
-                throw err = "Modal params missing !";
+                throw "Modal params missing !";
             } else {
                 let ef = params.effect;
                 let _selector = jsHunter.selector;//copy current target tag (noConflict)
@@ -540,7 +539,7 @@
                             jsHunter(_selector).display("block");
                             break;
                         default:
-                            throw err = "Modal effect params wrong !";
+                            throw "Modal effect params wrong !";
                     }
 
                     //Event Listener for close whe clicked in locks screen element
@@ -560,7 +559,7 @@
                             jsHunter(_selector).display("none");
                             break;
                         default:
-                            throw err = "Modal effect params wrong !";
+                            throw "Modal effect params wrong !";
                     }
                 }
             }
@@ -608,15 +607,14 @@
         let _max_height_ = 405;
 
         //Fix size for widget width/height
-        _e_width_ = (this.intNumber(_e_width_) > _max_width_) ? _max_width_+"px" : _e_width_ ;
-        _e_height_ = (this.intNumber(_e_height_) > _max_height_) ? _max_height_+"px" : _e_height_ ;
+        _e_width_ = (jsHunter.fn.intNumber(_e_width_) > _max_width_) ? _max_width_+"px" : _e_width_ ;
+        _e_height_ = (jsHunter.fn.intNumber(_e_height_) > _max_height_) ? _max_height_+"px" : _e_height_ ;
 
         if(_ls_state_ === true) {
             _modalLockScreen(_ls_name_, _ls_back_color_, _ls_opacity_);
         }
 
         //CREATE A HTML ELEMENT (ModalFX Box)
-        //_elementFX_ = _createHtmlElement({
         _elementFX_ = $$.create({
             element:  "div",
             attr_type: "id",
@@ -717,7 +715,7 @@
         }
 
         //CREATE A HTML ELEMENT (Modal Box)
-        _element_ = _createHtmlElement({
+        _element_ = $$.create({
             element:  "div",
             attr_type: "id",
             attr_name: _e_name_,
@@ -741,7 +739,7 @@
             _modalBody(_e_name_, _titleX_, _bodyX_);
         }
 
-        let _styles_ = _getStyles(_element_);
+        let _styles_ = jsHunter.fn.computedCss(_element_);
 
         //Fix size for widget width/height
         _styles_.width = (_styles_.width > _max_width_ || !_c_force_ && _c_wide_) ? _max_width_ : _styles_.width ;
@@ -752,7 +750,7 @@
         _element_.style.height = "0px";
         _element_.style.display = "block";
         _element_.style.color = _e_text_color_ || "#FEFEFE";
-        _element_.style.background = "rgba(" + this.hexToRgb(_e_back_color_).rgb + ", " + _e_opacity_ + ")";
+        _element_.style.background = "rgba(" + jsHunter.fn.hexToRgb(_e_back_color_).rgb + ", " + _e_opacity_ + ")";
         _element_.style.borderRadius = "2px";
         _element_.style.boxShadow = "3px 4px 10px #222222";
         _element_.style.opacity = "0";
@@ -810,35 +808,35 @@
 
         //CREATE STRUCTURE HTML OF ELEMENTS (modalTheme)
 
-        let _elementContainer_ = _createHtmlElement({
+        $$.create({
             element:  "div",
             attr_type: "id",
             attr_name: "#modal-container__styling",
             append: "body"
         });
 
-        let _elementModal_ = _createHtmlElement({
+        $$.create({
             element:  "div",
             attr_type: "id",
             attr_name: "#modal-box",
             append: "#modal-container__styling"
         });
 
-        let _elementClose_ = _createHtmlElement({
+        $$.create({
             element:  "div",
             attr_type: "id",
             attr_name: "#modal-close",
             append: "#modal-box"
         });
 
-        let _elementTitle_ = _createHtmlElement({
+        $$.create({
             element:  "div",
             attr_type: "id",
             attr_name: "#modal-title",
             append: "#modal-box"
         });
 
-        let _elementContent_ = _createHtmlElement({
+        $$.create({
             element:  "div",
             attr_type: "id",
             attr_name: "#modal-content",
@@ -846,7 +844,7 @@
         });
 
         if(_footer_ !== false) {
-            let _elementFooter_ = _createHtmlElement({
+            $$.create({
                 element: "div",
                 attr_type: "id",
                 attr_name: "#modal-footer",

@@ -174,8 +174,8 @@
             .replace(/([a-zA-Z0-9_]+)\(/gi, '<span class="function-name">$1</span>(')
             //Arguments and parameters
             .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\)/gi, '(<span class="params">$1</span>)')
-            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+")\,/gi, '(<span class="params">$1</span>,')
-            .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+')\,/gi, '(<span class="params">$1</span>,')
+            .replace(/\(("[0-9a-zA-Z ,-_.#\[\]%+:]+"),/gi, '(<span class="params">$1</span>,')
+            .replace(/\(('[0-9a-zA-Z ,-_.#\[\]%+:]+'),/gi, '(<span class="params">$1</span>,')
             .replace(/\(([0-9a-zA-Z ,-_.#\[\]%+:]+)\)/gi, '(<span class="params">$1</span>)')
             //Properties
             .replace(/([a-zA-Z_\-]+):/, '<span class="property">$1</span>:')
