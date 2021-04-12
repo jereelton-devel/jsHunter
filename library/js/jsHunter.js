@@ -241,8 +241,12 @@
          * */
 
         exception: function(msg){
-            return throw msg;
+            throw msg;
         }, //DONE INTERNAL
+
+        noth: function() {
+            (function(){void(0);})();
+        }, //TODO
 
         /***
          * Using
@@ -352,7 +356,7 @@
             let keys = Object.keys(_sel);
             (keys.length > 0) ?
                 keys.forEach(function(index) {
-                    _sel[index].removeEventListener("click");
+                    _sel[index].removeEventListener("click", jsHunter.fn.noth);
                     _sel[index].addEventListener("click", function(e){
                         e.preventDefault();
                         e.stopPropagation();
@@ -361,7 +365,7 @@
                         } console.log("click-1");
                     });
                 }) : (_sel) ? (function (){
-                    _sel.removeEventListener("click");
+                    _sel.removeEventListener("click", jsHunter.fn.noth);
                     _sel.addEventListener("click", function(e){
                         e.preventDefault();
                         e.stopPropagation();
@@ -405,7 +409,7 @@
             try {
                 (keys.length > 0) ?
                     keys.forEach(function(index) {
-                        _sel[index].removeEventListener(ev);
+                        _sel[index].removeEventListener(ev, jsHunter.fn.noth);
                         _sel[index].addEventListener(ev, function(e){
                             e.preventDefault();
                             e.stopPropagation();
@@ -413,7 +417,7 @@
                         });
                     }) : (_sel) ?
                     (function(){
-                        _sel.removeEventListener(ev);
+                        _sel.removeEventListener(ev, jsHunter.fn.noth);
                         _sel.addEventListener(ev, function(e){
                             e.preventDefault();
                             e.stopPropagation();
@@ -583,15 +587,15 @@
         }, //DONE & DOCUMENTATION
 
         create: function(params) {
-            _createHtmlElement(params);
+            let el = _createHtmlElement(params);
             (params.hasOwnProperty('timeout') && params.timeout > 0) ?
                 (function(){
                     setTimeout(function(){
                         jsHunter.fn.remove(params.append, params.attr_name);
                     }, params.timeout);
-                })() : (function(){void (0)})();
-            return this;
-        }, //DONE & DOCUMENTATION
+                })() : jsHunter.fn.noth();
+            return el;
+        }, //TODO: DONE & DOCUMENTATION
 
         remove: function(parent, children) {
 
@@ -652,7 +656,7 @@
           try {
             return _getStyles(element);
           } catch (err) {
-              console.log("[Exception]: styles() => " + err);
+              console.error("[Exception]: styles() => " + err);
           }
         }, //TODO
 
