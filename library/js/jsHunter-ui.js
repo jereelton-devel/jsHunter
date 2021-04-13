@@ -53,6 +53,10 @@
                 _modalElastic(params);
                 break;
 
+            case 'inside-out':
+                _modalInsideOut(params);
+                break;
+
             default:
                 console.log('Error on _modalInit(), invalid parameters !');
         }
@@ -209,6 +213,64 @@
         let _more_width_ = 50;
         let _end_width_ = params.styles.width + 100;
         let _opacity_ = (params.opacity + params.opacdiv) / 100;
+
+        modalCtrl = setInterval(function() {
+
+            params.more_width += _more_width_;
+
+            if(params.more_width >= _end_width_) {
+
+                clearInterval(modalCtrl);
+                //jsHunter.fn.sizer(params.element, 'width', _end_width_, 'px');
+                _modalDecrease(params);
+
+            } else {
+
+                params.opacity += _opacity_;
+
+                jsHunter.fn.opacity(params.element, params.opacity);
+                jsHunter.fn.sizer(params.element, 'width', params.more_width, 'px');
+
+                if(jsHunter.fn.intNumber(params.element.style.height) <= params.styles.height) {
+                    jsHunter.fn.sizer(params.element, 'height', params.more_width, 'px');
+                }
+
+                jsHunter.fn.centralize(params.element, params.more_width, params.styles.height);
+
+            }
+
+        }, params.speed);
+    }
+
+    function _modalInsideOut(params) {
+
+        clearInterval(modalCtrl);
+
+        let _s = jsHunter.fn.computedCss(jsHunter(params.modal).select());
+        let _p = jsHunter(params.modal).nodeParent(params.selector);
+        let _w = _s.all.width;
+        let _h = _s.all.height;
+        let _add_width = 0;
+        let _add_height = 0;
+        let _end_width = 0;
+        let _opacity = 0;
+
+        if(_w.search(/%/) !== -1) {
+            //Percentage
+            _add_width = _add_height = 5;
+        } else if(_w.search(/px/) !== -1) {
+            //Pixels
+            _add_width = _add_height = 50
+        }
+
+        console.log("PARENT", _p);
+
+        jsHunter.fn.sizer(jsHunter(params.modal).select(), 'width', 200, 'px');
+        jsHunter.fn.sizer(jsHunter(params.modal).select(), 'height', 200, 'px');
+        jsHunter.fn.centralize(jsHunter(params.modal).select(), 200, 200);
+
+        jsHunter(params.selector).fadeIn(params);
+        return;
 
         modalCtrl = setInterval(function() {
 
@@ -538,8 +600,12 @@
                         case "show":
                             jsHunter(_selector).display("block");
                             break;
+                        case "inside-out":
+                            params.selector = _selector;
+                            _modalInit(params);
+                            break;
                         default:
-                            throw "Modal effect params wrong !";
+                            throw "Wrong params to modal effect !";
                     }
 
                     //Event Listener for close whe clicked in locks screen element
@@ -559,7 +625,7 @@
                             jsHunter(_selector).display("none");
                             break;
                         default:
-                            throw "Modal effect params wrong !";
+                            throw "Wrong params to modal effect !";
                     }
                 }
             }

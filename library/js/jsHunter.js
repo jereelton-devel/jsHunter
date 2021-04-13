@@ -909,6 +909,23 @@
          * Utils And Others
          * */
 
+        select: function() {
+            try {
+                let _sel = this.sel;
+
+                if (_sel && _sel.length === 1 && (typeof _sel === "object" || Array.isArray(_sel))) {
+                    return this.sel[0];
+                } else if(_sel.length > 1) {
+                    return this.sel;
+                } else {
+                    console.error("[Exception] select() error, wrong or missing element [sel]");
+                }
+            } catch (err) {
+                console.error("[Exception] select() error, wrong or missing element [sel]");
+            }
+            return this;
+        }, //TODO
+
         hunter: function(wanted, nodeType) {
             try {
                 let hunt = document.querySelectorAll(wanted);
@@ -946,7 +963,7 @@
             return this;
         }, //DONE
 
-        nodeParent: function(parentItem) {
+        nodeParent: function(parentItem) { console.log("NODEPARENT", parentItem + " " + this.selector);
             try {
                 jsHunter.fn.hunter(parentItem + " " + this.selector, "parent");
                 (nodes.length <= 0) ? 
