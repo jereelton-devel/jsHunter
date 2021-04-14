@@ -653,37 +653,39 @@
         }, //DONE & DOCUMENTATION
 
         computedCss: function(element) {
-          try {
-            return _getStyles(element);
-          } catch (err) {
-              console.error("[Exception]: styles() => " + err);
-          }
+            try {
+                return _getStyles(element);
+            } catch (err) {
+                console.error("[Exception]: styles() => " + err);
+            }
         }, //TODO
 
         val: function(dt) {
-            try { //WORK HERE !!!
+
+            try {
 
                 let _sel = this.sel;
+                nodes = [];/*Reset nodes state*/
 
                 if(!_sel) {
                     jsHunter.fn.exception("Wrong or missing selector!");
-                } else if(!dt) {
+                } else if(!dt) {console.log("!dt", _sel);
                     //Get value
                     _sel.forEach(function(a, index, el) {
-                        _sel[index].style.width = value;
+                        nodes.push(_sel[index].value);
                     });
-                } else {
+                } else {console.log("else", _sel);
                     //Set Value
                     _sel.forEach(function(a, index, el) {
-                        _sel[index].style.width = value;
+                        _sel[index].value = dt;
                     })
                 }
 
             } catch (err) {
                 console.error("[Exception] val() => " + err);
             }
-            return this;
-        }, //TODO
+            return (nodes.length === 1) ? nodes[0] : (nodes.length > 1) ? nodes : null;
+        }, //DONE & DOCUMENTATION
 
         /***
          * Visual Handlers
