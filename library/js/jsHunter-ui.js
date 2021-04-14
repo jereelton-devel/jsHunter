@@ -246,58 +246,64 @@
 
         clearInterval(modalCtrl);
 
-        let _s = jsHunter.fn.computedCss(jsHunter(params.modal).select());
-        let _p = jsHunter(params.modal).nodeParent(params.selector);
-        let _w = _s.all.width;
-        let _h = _s.all.height;
-        let _add_width = 0;
-        let _add_height = 0;
-        let _end_width = 0;
-        let _opacity = 0;
+        let _element = jsHunter(params.modal).select();/*Get element target*/
+        let _styles = jsHunter.fn.computedCss(_element);/*Get css styles of element*/
+        let _width = _styles.all.width;/*Get initial width (px, %)*/
+        let _height = _styles.all.height;/*Get initial height (px, %)*/
+        let _end_width = parseInt(_width);/*Store origin width of element*/
+        let _end_height = parseInt(_height);/*Store origin height of element*/
+        let _measure = "px";/*Type of measure, can be pixels or percentange*/
+        let _add_width = 0;/*Initial value to increase width*/
+        let _add_height = 0;/*Initial value to increase height*/
 
-        if(_w.search(/%/) !== -1) {
-            //Percentage
-            _add_width = _add_height = 5;
-        } else if(_w.search(/px/) !== -1) {
-            //Pixels
-            _add_width = _add_height = 50
+        /*Check measure type used in element*/
+        if(_width.search(/%$/) !== -1) {//Percentage
+            _add_width = _add_height = 1;
+            _width = _end_width - 20;
+            _height = _end_height - 20;
+            _measure = "%";
+        } else if(_width.search(/px$/) !== -1) {//Pixels
+            _add_width = _add_height = 20;
+            _width = _end_width - 200;
+            _height = _end_height - 200;
         }
 
-        console.log("PARENT", _p);
+        /*Initial sizer at element*/
+        jsHunter.fn.sizer(_element, 'width', _width, _measure);
+        jsHunter.fn.sizer(_element, 'height', _height, _measure);
 
-        jsHunter.fn.sizer(jsHunter(params.modal).select(), 'width', 200, 'px');
-        jsHunter.fn.sizer(jsHunter(params.modal).select(), 'height', 200, 'px');
-        jsHunter.fn.centralize(jsHunter(params.modal).select(), 200, 200);
-
+        /*Check default timer to fade effect*/
+        if(params.timer_fade > 10) {params.timer_fade = 5;}
         jsHunter(params.selector).fadeIn(params);
-        return;
 
+        /*Update margin element*/
+        jsHunter(params.modal).margin('all', 0);
+
+        /*Loop to handler and view the element target - modal*/
         modalCtrl = setInterval(function() {
 
-            params.more_width += _more_width_;
+            _width += _add_width;/*Increase width*/
 
-            if(params.more_width >= _end_width_) {
-
+            if(_width >= _end_width) {/*Check if element reached the width limit*/
                 clearInterval(modalCtrl);
-                //jsHunter.fn.sizer(params.element, 'width', _end_width_, 'px');
-                _modalDecrease(params);
-
+                jsHunter.fn.sizer(_element, 'width', _end_width, _measure);
+                jsHunter.fn.sizer(_element, 'height', _end_height, _measure);
             } else {
 
-                params.opacity += _opacity_;
+                /*Apply the increase width*/
+                jsHunter.fn.sizer(_element, 'width', _width, _measure);
 
-                jsHunter.fn.opacity(params.element, params.opacity);
-                jsHunter.fn.sizer(params.element, 'width', params.more_width, 'px');
-
-                if(jsHunter.fn.intNumber(params.element.style.height) <= params.styles.height) {
-                    jsHunter.fn.sizer(params.element, 'height', params.more_width, 'px');
+                /*Apply the increase height (only element height)*/
+                if(jsHunter.fn.intNumber(_element.style.height) <= _end_height) {
+                    _height += _add_height;
+                    jsHunter.fn.sizer(_element, 'height', _height, _measure);
                 }
 
-                jsHunter.fn.centralize(params.element, params.more_width, params.styles.height);
+                /*Centralize element target on screen*/
+                jsHunter.fn.centralize(_element, _element.offsetWidth, _element.offsetHeight);
 
             }
-
-        }, params.speed);
+        }, 10);
     }
 
     function _modalDecrease(params) {
@@ -611,7 +617,11 @@
                     //Event Listener for close whe clicked in locks screen element
                     jsHunter(_selector, {rsp: "eventTarget"}).on('click', function(rsp) {
                         if(rsp === _selector.replace("#", '').replace(".", "")) {
-                            jsHunter(_selector).fadeOut(params);
+                            if(ef === "inside-out") {
+                                jsHunter(_selector).display("none");
+                            } else {
+                                jsHunter(_selector).fadeOut(params);
+                            }
                         }
                     });
                 }
@@ -730,7 +740,7 @@
 
         return this;
 
-    } //DONE & DOCUMENTATION (modal flyer without dependence)
+    } //TODO: (REVISION) DONE & DOCUMENTATION (modal flyer without dependence)
 
     jsHunter.prototype.modalX = function(params) {
 
@@ -854,7 +864,7 @@
 
         return this;
 
-    } //DONE & DOCUMENTATION (modal without dependence)
+    } //TODO: (REVISION) DONE & DOCUMENTATION (modal without dependence)
 
     jsHunter.prototype.modalTheme = function(params) {
 
@@ -977,6 +987,6 @@
 
         return this;
 
-    } //DONE E DOCUMENTATION
+    } //TODO: (REVISION) DONE E DOCUMENTATION
 
 })((typeof jsHunter !== "undefined" ? jsHunter: ''));

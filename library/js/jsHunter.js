@@ -47,7 +47,7 @@
         userAgent = navigator.userAgent.toLowerCase(),
         nodes     = [],
         node      = "",
-        fadeCtrl  = null, //FadeIn FadeOut Effects Controls
+        fadeCtrl  = null, /*FadeIn FadeOut Effects Controls*/
         sizeCtrl  = null;
 
     /***
@@ -56,9 +56,9 @@
 
     function _getStyles(_element) {
 
-        let s = window.getComputedStyle(_element); // Element Styles
-        let w = parseInt(s.width);  // Element Width Pixels
-        let h = parseInt(s.height); // Element Height Pixels
+        let s = window.getComputedStyle(_element); /*Element Styles*/
+        let w = parseInt(s.width);  /*Element Width Pixels*/
+        let h = parseInt(s.height); /*Element Height Pixels*/
 
         return {
             all: s,
@@ -95,10 +95,10 @@
         if(p.hasOwnProperty("border_radius"))  { s += "border-radius: "+p.border_radius+";"; }
         if(p.hasOwnProperty("box_shadow"))  { s += "box-shadow: "+p.box_shadow+";"; }
 
-        //RGBA
+        /*RGBA*/
         if(p.hasOwnProperty("back_color") && p.hasOwnProperty("opacity") && p.opacity !== "1") {
             s += "background: rgba("+jsHunter.fn.hexToRgb(p.back_color).rgb+","+p.opacity+");";
-            //HEXADECIMAL
+            /*HEXADECIMAL*/
         } else {
             s += "background-color: "+p.back_color+";";
         }
@@ -125,30 +125,30 @@
         return htmlElement;
     }
 
-    function _middlePositionConfigure(element_id, element_width, element_height) {
-        _MarginAutoConfigure(element_id, element_width);
-        _marginTopConfigure(element_id, element_height);
+    function _middlePositionConfigure(element, element_width, element_height) {
+        _MarginAutoConfigure(element, element_width);
+        _marginTopConfigure(element, element_height);
     }
 
-    function _MarginAutoConfigure(element_id, element_width) {
+    function _MarginAutoConfigure(element, element_width) {
         let screen_width = window.innerWidth;
         let initial_calc = screen_width - parseInt(element_width);
         let margin_calc = initial_calc / 2;
 
         margin_calc = (margin_calc < 0) ? 0: margin_calc;
 
-        element_id.style.left = (margin_calc - element_id.style.padding) + "px";
+        element.style.left = (margin_calc - element.style.padding) + "px";
 
     }
 
-    function _marginTopConfigure(element_id, element_height) {
+    function _marginTopConfigure(element, element_height) {
         let screen_height = window.innerHeight;
         let initial_calc = screen_height - parseInt(element_height);
         let margin_calc = ( initial_calc - 30 ) / 2;
 
         margin_calc = (margin_calc < 0) ? 0: margin_calc;
 
-        element_id.style.top = margin_calc + "px";
+        element.style.top = margin_calc + "px";
     }
 
     function _changeElementSize(element, orientation, size, measure) {
@@ -318,7 +318,7 @@
                 if(params.hasOwnProperty('height') && params.height.hasOwnProperty('calc')) {
                     h = Math.ceil(100 - (($$.intNumber(params.height.calc) / s.height) * 100)) + (params.height.adjust || 0);
                     h = h + "%";
-                } else if(params.hasAttribute('height') && params.height.hasOwnProperty('fixed')) {
+                } else if(params.hasOwnProperty('height') && params.height.hasOwnProperty('fixed')) {
                     h = params.height.fixed;
                 } else {
                     console.exception("Invalid value to parameter height in function screenSizer()");
@@ -660,6 +660,31 @@
           }
         }, //TODO
 
+        val: function(dt) {
+            try { //WORK HERE !!!
+
+                let _sel = this.sel;
+
+                if(!_sel) {
+                    jsHunter.fn.exception("Wrong or missing selector!");
+                } else if(!dt) {
+                    //Get value
+                    _sel.forEach(function(a, index, el) {
+                        _sel[index].style.width = value;
+                    });
+                } else {
+                    //Set Value
+                    _sel.forEach(function(a, index, el) {
+                        _sel[index].style.width = value;
+                    })
+                }
+
+            } catch (err) {
+                console.error("[Exception] val() => " + err);
+            }
+            return this;
+        }, //TODO
+
         /***
          * Visual Handlers
          * */
@@ -788,12 +813,26 @@
                     _sel.forEach(function(a, index, el) {
                         _sel[index].style.height = value;
                     }) : (_sel) ?
-                    _sel.style.height = value : jsHunter.fn.exception("height() error " + _sel);
+                    _sel.style.height = value : jsHunter.fn.exception("[Exception] height() error " + _sel);
             } catch(err) {
                 console.error(err);
             }
             return this;
         }, //TODO PROGRAMAR FUNÇÃO PARA RETORNAR ALTURA DO ELEMENTO
+
+        width: function(value) {
+            try {
+                let _sel = this.sel;
+                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+                    _sel.forEach(function(a, index, el) {
+                        _sel[index].style.width = value;
+                    }) : (_sel) ?
+                    _sel.style.width = value : jsHunter.fn.exception("[Exception] width() error " + _sel);
+            } catch(err) {
+                console.error(err);
+            }
+            return this;
+        }, //TODO PROGRAMAR FUNÇÃO PARA RETORNAR LARGURA DO ELEMENTO
 
         hidden: function(element) {
 
@@ -824,6 +863,12 @@
                             case 'bottom':
                                 _sel[index].style.marginBottom = value;
                                 break;
+                            case 'all':
+                                _sel[index].style.marginTop = value;
+                                _sel[index].style.marginRight = value;
+                                _sel[index].style.marginBottom = value;
+                                _sel[index].style.marginLeft = value;
+                                break;
                         }
                     }) : (_sel) ?
                     (function() {
@@ -840,6 +885,12 @@
                             case 'bottom':
                                 _sel.style.marginBottom = value;
                                 break;
+                            case 'all':
+                                _sel.style.marginTop = value;
+                                _sel.style.marginRight = value;
+                                _sel.style.marginBottom = value;
+                                _sel.style.marginLeft = value;
+                                break;
                         }
                     })() : jsHunter.fn.exception("margin() error " + _sel);
             } catch(err) {
@@ -847,20 +898,6 @@
             }
             return this;
         }, //TODO
-
-        width: function(value) {
-            try {
-                let _sel = this.sel;
-                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
-                    _sel.forEach(function(a, index, el) {
-                        _sel[index].style.width = value;
-                    }) : (_sel) ?
-                    _sel.style.width = value : jsHunter.fn.exception("width() error " + _sel);
-            } catch(err) {
-                console.error(err);
-            }
-            return this;
-        }, //TODO PROGRAMAR FUNÇÃO PARA RETORNAR LARGURA DO ELEMENTO
 
         sizer: function(element, orientation, value, type) {
             try {
@@ -880,14 +917,43 @@
             return this;
         }, //TODO
 
-        centralize: function(element_id, element_width, element_height) {
+        centralize: function(element, element_width, element_height) {
             try {
-                _middlePositionConfigure(element_id, element_width, element_height);
+                _middlePositionConfigure(element, element_width, element_height);
             } catch(err) {
                 console.error("[Exception] centralize() => " + err);
             }
             return this;
         }, //TODO
+
+        /***
+         * Css Handler
+         * */
+
+        /*css: function(jhuntercss, val) {
+            try {
+
+                let _sel = this.sel;
+
+                if(!prop || !val) {
+                    jsHunter.fn.exception("Wrong or missing css parameters");
+                } else if(_sel) {
+                    let keys = Object.keys(_sel);
+
+                    keys.forEach(function(index) {
+                        _sel[index].style.display = 'none';
+                        _setAttributesStyles(_sel[index], {prop: val});
+                    });
+
+                } else {
+                    jsHunter.fn.exception("Wrong or missing target selector");
+                }
+
+            } catch (err) {
+                console.error("[Exception] css() error " + err);
+            }
+            return this;
+        },*/
 
         /***
          * Advanced Components
