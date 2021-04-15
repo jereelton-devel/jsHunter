@@ -595,7 +595,7 @@
                     }, params.timeout);
                 })() : jsHunter.fn.noth();
             return el;
-        }, //TODO: DONE & DOCUMENTATION
+        }, //TODO: DONE & DOCUMENTATION ????
 
         remove: function(parent, children) {
 
@@ -610,7 +610,7 @@
 
         }, //DONE & DOCUMENTATION
 
-        objWriter: function(obj, params) { /*For developers*/
+        objWriter: function(obj, params) {/*For developers, use together with jsHunter.css*/
             try {
 
                 let _sel = this.sel;
@@ -625,15 +625,18 @@
 
                     if(!params || typeof params === "undefined") {params = {};}
 
+                    //Progress controls
                     if(params.hasOwnProperty("progress") && params.progress === false) {
                         _sel[0].innerHTML = "";
                     } else {
                         _sel[0].innerHTML = jsHunter.fn.progress();
                     }
 
+                    //Recursive controls
                     let _i_ = 1;
                     let _t_ = 0;
 
+                    //Tab controls
                     let tab = [
                         "<span class='span-tab1'> </span>",
                         "<span class='span-tab2'> </span>",
@@ -644,25 +647,46 @@
                         "<span class='span-tab7'> </span>"
                     ];
 
-                    let pre_ = "<pre>";
-                    let _pre = "</pre>";
-
                     if(params.hasOwnProperty("tab") && params.tab === false) {
                         tab[0] = tab[1] = tab[2] = tab[3] = tab[4] = tab[5] = tab[6] = "";
                     }
+
+                    //Content [pre formated] controls
+                    let pre_ = "<pre>";
+                    let _pre = "</pre>";
 
                     if(params.hasOwnProperty("pre") && params.pre === false) {
                         pre_ = _pre = "";
                     }
 
+                    //TODO: Style controls
+                    let styles = {
+                        obj_index: '<span class="obj-index">',
+                        obj_typeof: '<span class="obj-index-typeof">',
+                        obj_value: '<span class="obj-value">',
+                        end: '</span>'
+                    };
+
+                    if(params.hasOwnProperty("styles") && params.styles === false) {
+                        styles = {obj_index: '', obj_typeof: '', obj_value: '', end: ''};
+                    }
+
                     function objectWriter(x, obj) {
-                        _sel[0].innerHTML += tab[0] + x + ": <strong>[" + typeof obj + "]</strong>: " + obj + "<br />\n";
+                        let str = tab[0] + styles.obj_index + x + styles.end;
+                        str += ": " + styles.obj_value + obj + styles.end;
+                        str += " " + styles.obj_typeof + "(" + typeof obj + ")" + styles.end + "<br />\n";
+                        _sel[0].innerHTML += str;
                     }
 
                     function objectDigger(obj) {
                         for (let k in obj) {
-                            if(!obj.hasOwnProperty(k)) {continue;}
-                            _sel[0].innerHTML += tab[_i_] + k + ": <strong>[" + typeof obj[k] + "]</strong>: " + obj[k] + "<br />\n";
+                            //if(!obj.hasOwnProperty(k)) {continue;}
+
+                            let str = tab[_i_] + styles.obj_index + k + styles.end;
+                            str += ": " + styles.obj_value + obj[k] + styles.end;
+                            str += " " + styles.obj_typeof + "(" + typeof obj[k] + ")" + styles.end + "<br />\n";
+                            _sel[0].innerHTML += str;
+
                             if ((typeof obj[k]).search(/(object|function)/g) !== -1) {
                                 _i_+=1;
                                 _t_+=1;
@@ -678,11 +702,11 @@
 
                     setTimeout(function() {
 
-                        _sel[0].innerHTML = pre_ + "{\n";
+                        _sel[0].innerHTML = pre_ + "{<br />";
 
                         for (let x in obj) {
 
-                            if(!obj.hasOwnProperty(x)) {continue;}
+                            //if(!obj.hasOwnProperty(x)) {continue;}
 
                             objectWriter(x, obj[x]);
 
@@ -701,7 +725,7 @@
                 console.error("[Exception] objwriter() => " + err)
             }
             return this;
-        }, //TODO
+        }, //DONE & DOCUMENTATION
 
         /***
          * Information Data
@@ -751,7 +775,7 @@
             } catch (err) {
                 console.error("[Exception]: styles() => " + err);
             }
-        }, //TODO
+        }, //DONE & DOCUMENTATION
 
         val: function(dt) {
 
@@ -1183,7 +1207,9 @@
         }, //DONE
 
         trim: function(data) {
-            return data.replace(/^( +)([0-9a-zA-Z ,'"\\\/_\[\-\].!@#$%&*()]+)( +)$/gi, '$2').replace(/ +$/, '');
+            return data
+                .replace(/^( +)([0-9a-zA-Z ,'"\\\/_\[\-\].!@#$%&*()]+)( +)$/gi, '$2')
+                .replace(/ +$/, '');
         }, //TODO
 
         hexToRgb: function(color_hex) {

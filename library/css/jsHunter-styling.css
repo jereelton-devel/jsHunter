@@ -1,16 +1,17 @@
+/*
 
-/***
+!***
 *
 * Library jsHunter Styles
 *
-*/
+*!
 
-/*General*/
+!*General*!
 * {
     margin: 0px;
     padding: 0px;
 }
-/*Modal*/
+!*Modal*!
 #modal-container__styling {
     width: 100%;
     height: 100%;
@@ -88,9 +89,9 @@
     padding-bottom: 0px;
 }
 
-/*Themes*/
+!*Themes*!
 
-/*Green*/
+!*Green*!
 .theme-green__styling {
     background: rgba(0, 180, 0, 0.4) !important;
 }
@@ -115,7 +116,7 @@
     color: #1f581f !important;
 }
 
-/*Ice*/
+!*Ice*!
 .theme-ice__styling {
     background: rgba(215, 229, 227, 0.4) !important;
 }
@@ -140,7 +141,7 @@
     color: #444b4f !important;
 }
 
-/*Yellow*/
+!*Yellow*!
 .theme-yellow__styling {
     background: rgba(248, 219, 17, 0.3) !important;
 }
@@ -165,7 +166,7 @@
     color: #b08816 !important;
 }
 
-/*Black*/
+!*Black*!
 .theme-black__styling {
     background: rgba(10, 10, 10, 0.7) !important;
 }
@@ -190,7 +191,7 @@
     color: #c9d9d9 !important;
 }
 
-/*Blue*/
+!*Blue*!
 .theme-blue__styling {
     background: rgba(7, 35, 157, 0.9) !important;
 }
@@ -215,7 +216,7 @@
     color: #c9d9d9 !important;
 }
 
-/*Red*/
+!*Red*!
 .theme-red__styling {
     background: rgba(165, 27, 27, 0.8) !important;
 }
@@ -240,7 +241,7 @@
     color: #c9d9d9 !important;
 }
 
-/*Pink*/
+!*Pink*!
 .theme-pink__styling {
     background: rgba(192, 31, 238, 0.8) !important;
 }
@@ -265,7 +266,7 @@
     color: #9418a5 !important;
 }
 
-/*Black-White*/
+!*Black-White*!
 .theme-black-white__styling {
     background: rgba(0, 0, 0, 0.7) !important;
 }
@@ -290,7 +291,7 @@
     color: #ffffff !important;
 }
 
-/*Red-White*/
+!*Red-White*!
 .theme-red-white__styling {
     background: rgba(0, 0, 0, 0.7) !important;
 }
@@ -315,7 +316,7 @@
     color: #ffffff !important;
 }
 
-/*Blue-White*/
+!*Blue-White*!
 .theme-blue-white__styling {
     background: rgba(0, 0, 0, 0.7) !important;
 }
@@ -340,7 +341,7 @@
     color: #ffffff !important;
 }
 
-/*Green-White*/
+!*Green-White*!
 .theme-green-white__styling {
     background: rgba(0, 0, 0, 0.7) !important;
 }
@@ -365,7 +366,7 @@
     color: #ffffff !important;
 }
 
-/*Pink-White*/
+!*Pink-White*!
 .theme-pink-white__styling {
     background: rgba(0, 0, 0, 0.7) !important;
 }
@@ -390,7 +391,7 @@
     color: #ffffff !important;
 }
 
-/*Yellow-White*/
+!*Yellow-White*!
 .theme-yellow-white__styling {
     background: rgba(0, 0, 0, 0.7) !important;
 }
@@ -414,7 +415,7 @@
     background: #b08816 !important;
     color: #000000 !important;
 }
-/*Editor and Writer*/
+!*Editor and Writer*!
 .span-tab1 {
     display: inline-block;
     width: 40px;
@@ -450,7 +451,7 @@
     width: 280px;
     height: 20px;
 }
-/*Codify Styles*/
+!*Codify Styles*!
 .codes,
 .html,
 .css,
@@ -490,10 +491,10 @@
     width: 90% !important;
     float: left !important;
 }
-/*Dark*/
+!*Dark*!
 .back-dark-code {
     background: #2b2b2b !important;
-    color: #B6DAEF /*#de96d0*/ !important;
+    color: #B6DAEF !*#de96d0*! !important;
 }
 .back-dark-code .test,
 .back-dark-code .syntax-error {
@@ -589,10 +590,10 @@
     font-weight: normal !important;
     text-decoration: underline;
 }
-/*Blue*/
+!*Blue*!
 .back-blue-code {
     background: #102072 !important;
-    color: #d4c540 /*#de96d0*/ !important;
+    color: #d4c540 !*#de96d0*! !important;
 }
 .back-blue-code .test,
 .back-blue-code .syntax-error {
@@ -688,10 +689,10 @@
     font-weight: normal !important;
     text-decoration: underline;
 }
-/*Light*/
+!*Light*!
 .back-light-code {
     background: #fcfcfc !important;
-    color: #33393e /*#de96d0*/ !important;
+    color: #33393e !*#de96d0*! !important;
 }
 .back-light-code .test,
 .back-light-code .syntax-error {
@@ -790,10 +791,10 @@
     font-weight: normal !important;
     text-decoration: underline;
 }
-/*Modern*/
+!*Modern*!
 .back-modern-code {
     background: #3b4354 !important;
-    color: #ddebf6 /*#de96d0*/ !important;
+    color: #ddebf6 !*#de96d0*! !important;
 }
 .back-modern-code .test,
 .back-modern-code .syntax-error {
@@ -894,10 +895,10 @@
     font-weight: normal !important;
     text-decoration: underline;
 }
-/*Generic*/
+!*Generic*!
 .back-dark-alpha {
     background: rgba(1, 1, 1, 0.7) !important;
 }
 .back-white {
     background: #FFFFFF !important;
-}
+}*/
