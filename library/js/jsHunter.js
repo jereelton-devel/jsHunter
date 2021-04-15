@@ -610,6 +610,117 @@
 
         }, //DONE & DOCUMENTATION
 
+        objWriter: function(obj, params) { /*For developers*/
+            try {
+
+                let _sel = this.sel;
+
+                if(!obj || typeof obj !== "object") {
+                    jsHunter.fn.exception("Invalid data (object) for this function !");
+                } else if(!_sel) {
+                    jsHunter.fn.exception("Wrong or missing selector !");
+                } else if(_sel.length > 1) {
+                    jsHunter.fn.exception("Wrong type to selector, accepted #id !");
+                } else {
+
+                    if(!params || typeof params === "undefined") {params = {};}
+
+                    if(params.hasOwnProperty("progress") && params.progress === false) {
+                        _sel[0].innerHTML = "";
+                    } else {
+                        _sel[0].innerHTML = jsHunter.fn.progress();
+                    }
+
+                    let tab1 = "<span class='span-tab1'> </span>";
+                    let tab2 = "<span class='span-tab2'> </span>";
+                    let tab3 = "<span class='span-tab3'> </span>";
+                    let tab4 = "<span class='span-tab4'> </span>";
+                    let tab5 = "<span class='span-tab5'> </span>";
+                    let tab6 = "<span class='span-tab6'> </span>";
+                    let pre_ = "<pre>";
+                    let _pre = "</pre>";
+
+                    if(params.hasOwnProperty("tab") && params.tab === false) {
+                        tab1 = tab2 = tab3 = tab4 = tab5 = "";
+                    }
+
+                    if(params.hasOwnProperty("pre") && params.pre === false) {
+                        pre_ = _pre = "";
+                    }
+
+                    function objectWriter(sel, x, obj) {
+                        sel.innerHTML += tab1 + x + ": <strong>[" + typeof obj[x] + "]</strong>: " + obj[x] + "<br />\n";
+                    }
+
+                    function objectDigger(sel, x, obj) {
+                        let tmp = obj[x];
+                        for (let k in tmp) {console.log(k, tmp, tmp[k]);
+                            _sel.innerHTML += tab2 + k + ": <strong>[" + typeof tmp[k] + "]</strong>: " + tmp[k] + "<br />\n";
+                        }
+                    }
+
+                    setTimeout(async function() {
+
+                        _sel[0].innerHTML = pre_ + "{\n";
+
+                        for (let x in obj) {
+
+                            await objectWriter(_sel[0], x, obj);
+
+                            if ((typeof obj[x]).search(/(object|function)/g) !== -1) {
+                                /*Recursive function*/
+                                await objectDigger(_sel[0], x, obj);
+                            }
+
+                            /*_sel[0].innerHTML += tab1 + x + ": <strong>[" + typeof obj[x] + "]</strong>: " + obj[x] + "<br />\n";*/
+
+                            /*if ((typeof obj[x]).search(/(object|function)/g) !== -1) {
+                                let tmp1 = obj[x];
+                                for (let k in tmp1) {
+                                    _sel[0].innerHTML += tab2 + k + ": <strong>[" + typeof tmp1[k] + "]</strong>: " + tmp1[k] + "<br />\n";
+
+                                    if ((typeof tmp1[k]).search(/(object|function)/g) !== -1) {
+                                        let tmp2 = tmp1[k];
+                                        for (let y in tmp2) {
+                                            _sel[0].innerHTML += tab3 + y + ": <strong>[" + typeof tmp2[y] + "]</strong>: " + tmp2[y] + "<br />\n";
+
+                                            if ((typeof tmp2[y]).search(/(object|function)/g) !== -1) {
+                                                let tmp3 = tmp2[y];
+                                                for (let z in tmp3) {
+                                                    _sel[0].innerHTML += tab4 + z + ": <strong>[" + typeof tmp3[z] + "]</strong>: " + tmp3[z] + "<br />\n";
+
+                                                    if ((typeof tmp3[z]).search(/(object|function)/g) !== -1) {
+                                                        let tmp4 = tmp3[z];
+                                                        for (let w in tmp4) {
+                                                            _sel[0].innerHTML += tab5 + w + ": <strong>[" + typeof tmp4[w] + "]</strong>: " + tmp4[w] + "<br />\n";
+
+                                                            if ((typeof tmp4[w]).search(/(object|function)/g) !== -1) {
+                                                                let tmp5 = tmp4[w];
+                                                                for (let f in tmp5) {
+                                                                    _sel[0].innerHTML += tab6 + f + ": <strong>[" + typeof tmp5[f] + "]</strong>: " + tmp5[f] + "<br />\n";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }*/
+                        }
+
+                        _sel[0].innerHTML += "}<br />\n" + _pre;
+
+                    }, 1200);
+                }
+
+            } catch (err) {
+                console.error("[Exception] objwriter() => " + err)
+            }
+            return this;
+        }, //TODO
+
         /***
          * Information Data
          * */
@@ -965,6 +1076,10 @@
         }, //TODO
 
         progressBar: function() {
+        }, //TODO
+
+        progress: function() {
+            return "Please wait...";
         }, //TODO
 
         slider: function() {
