@@ -631,83 +631,65 @@
                         _sel[0].innerHTML = jsHunter.fn.progress();
                     }
 
-                    let tab1 = "<span class='span-tab1'> </span>";
-                    let tab2 = "<span class='span-tab2'> </span>";
-                    let tab3 = "<span class='span-tab3'> </span>";
-                    let tab4 = "<span class='span-tab4'> </span>";
-                    let tab5 = "<span class='span-tab5'> </span>";
-                    let tab6 = "<span class='span-tab6'> </span>";
+                    let _i_ = 1;
+                    let _t_ = 0;
+
+                    let tab = [
+                        "<span class='span-tab1'> </span>",
+                        "<span class='span-tab2'> </span>",
+                        "<span class='span-tab3'> </span>",
+                        "<span class='span-tab4'> </span>",
+                        "<span class='span-tab5'> </span>",
+                        "<span class='span-tab6'> </span>",
+                        "<span class='span-tab7'> </span>"
+                    ];
+
                     let pre_ = "<pre>";
                     let _pre = "</pre>";
 
                     if(params.hasOwnProperty("tab") && params.tab === false) {
-                        tab1 = tab2 = tab3 = tab4 = tab5 = "";
+                        tab[0] = tab[1] = tab[2] = tab[3] = tab[4] = tab[5] = tab[6] = "";
                     }
 
                     if(params.hasOwnProperty("pre") && params.pre === false) {
                         pre_ = _pre = "";
                     }
 
-                    function objectWriter(sel, x, obj) {
-                        sel.innerHTML += tab1 + x + ": <strong>[" + typeof obj[x] + "]</strong>: " + obj[x] + "<br />\n";
+                    function objectWriter(x, obj) {
+                        _sel[0].innerHTML += tab[0] + x + ": <strong>[" + typeof obj + "]</strong>: " + obj + "<br />\n";
                     }
 
-                    function objectDigger(sel, x, obj) {
-                        let tmp = obj[x];
-                        for (let k in tmp) {console.log(k, tmp, tmp[k]);
-                            _sel.innerHTML += tab2 + k + ": <strong>[" + typeof tmp[k] + "]</strong>: " + tmp[k] + "<br />\n";
+                    function objectDigger(obj) {
+                        for (let k in obj) {
+                            if(!obj.hasOwnProperty(k)) {continue;}
+                            _sel[0].innerHTML += tab[_i_] + k + ": <strong>[" + typeof obj[k] + "]</strong>: " + obj[k] + "<br />\n";
+                            if ((typeof obj[k]).search(/(object|function)/g) !== -1) {
+                                _i_+=1;
+                                _t_+=1;
+                                if(_i_ > 6) {
+                                    _i_ = 6;
+                                }
+                                objectDigger(obj[k]);
+                            }
                         }
+                        _i_ = (_t_ > 0) ? _i_ - _t_ : _i_;
+                        _i_ = (_i_ < 1) ? 1 : _i_;
                     }
 
-                    setTimeout(async function() {
+                    setTimeout(function() {
 
                         _sel[0].innerHTML = pre_ + "{\n";
 
                         for (let x in obj) {
 
-                            await objectWriter(_sel[0], x, obj);
+                            if(!obj.hasOwnProperty(x)) {continue;}
+
+                            objectWriter(x, obj[x]);
 
                             if ((typeof obj[x]).search(/(object|function)/g) !== -1) {
                                 /*Recursive function*/
-                                await objectDigger(_sel[0], x, obj);
+                                objectDigger(obj[x]);
                             }
-
-                            /*_sel[0].innerHTML += tab1 + x + ": <strong>[" + typeof obj[x] + "]</strong>: " + obj[x] + "<br />\n";*/
-
-                            /*if ((typeof obj[x]).search(/(object|function)/g) !== -1) {
-                                let tmp1 = obj[x];
-                                for (let k in tmp1) {
-                                    _sel[0].innerHTML += tab2 + k + ": <strong>[" + typeof tmp1[k] + "]</strong>: " + tmp1[k] + "<br />\n";
-
-                                    if ((typeof tmp1[k]).search(/(object|function)/g) !== -1) {
-                                        let tmp2 = tmp1[k];
-                                        for (let y in tmp2) {
-                                            _sel[0].innerHTML += tab3 + y + ": <strong>[" + typeof tmp2[y] + "]</strong>: " + tmp2[y] + "<br />\n";
-
-                                            if ((typeof tmp2[y]).search(/(object|function)/g) !== -1) {
-                                                let tmp3 = tmp2[y];
-                                                for (let z in tmp3) {
-                                                    _sel[0].innerHTML += tab4 + z + ": <strong>[" + typeof tmp3[z] + "]</strong>: " + tmp3[z] + "<br />\n";
-
-                                                    if ((typeof tmp3[z]).search(/(object|function)/g) !== -1) {
-                                                        let tmp4 = tmp3[z];
-                                                        for (let w in tmp4) {
-                                                            _sel[0].innerHTML += tab5 + w + ": <strong>[" + typeof tmp4[w] + "]</strong>: " + tmp4[w] + "<br />\n";
-
-                                                            if ((typeof tmp4[w]).search(/(object|function)/g) !== -1) {
-                                                                let tmp5 = tmp4[w];
-                                                                for (let f in tmp5) {
-                                                                    _sel[0].innerHTML += tab6 + f + ": <strong>[" + typeof tmp5[f] + "]</strong>: " + tmp5[f] + "<br />\n";
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }*/
                         }
 
                         _sel[0].innerHTML += "}<br />\n" + _pre;
