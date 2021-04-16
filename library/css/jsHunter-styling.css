@@ -12,7 +12,7 @@
     padding: 0px;
 }
 !*Modal*!
-#modal-container__styling {
+#modal-container__thematic {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -23,7 +23,7 @@
     font-family: arial !important;
     overflow: hidden !important;
 }
-#modal-container__styling #modal-box {
+#modal-container__thematic #modal-box {
     width: 70%;
     height: 80%;
     position: absolute;
@@ -33,7 +33,7 @@
     box-shadow: 4px 5px 15px #454545;
     overflow: hidden !important;
 }
-#modal-container__styling #modal-close {
+#modal-container__thematic #modal-close {
     width: auto;
     height: auto;
     position: absolute;
@@ -45,7 +45,7 @@
     padding: 1%;
     cursor: pointer;
 }
-#modal-container__styling #modal-title {
+#modal-container__thematic #modal-title {
     width: 96%;
     height: 7%;
     background: #BFBFBF;
@@ -60,7 +60,7 @@
     left: 0px;
     padding-bottom: 0px;
 }
-#modal-container__styling #modal-content {
+#modal-container__thematic #modal-content {
     width: 96%;
     height: 73%;
     background: #FFFFFF;
@@ -74,7 +74,7 @@
     top: 10%;
     left: 0px;
 }
-#modal-container__styling #modal-footer {
+#modal-container__thematic #modal-footer {
     width: 96%;
     height: 7%;
     background: #BFBFBF;
@@ -92,326 +92,326 @@
 !*Themes*!
 
 !*Green*!
-.theme-green__styling {
+.theme-green__thematic {
     background: rgba(0, 180, 0, 0.4) !important;
 }
-.theme-green__styling #modal-box {
+.theme-green__thematic #modal-box {
     background: #bdf3bd !important;
     box-shadow: 4px 5px 15px #2d6615 !important;
 }
-.theme-green__styling #modal-box #modal-close {
+.theme-green__thematic #modal-box #modal-close {
     background: #457a45 !important;
     color: #0b470b !important;
 }
-.theme-green__styling #modal-box #modal-title {
+.theme-green__thematic #modal-box #modal-title {
     background: #205f20 !important;
     color: #acc1ac !important;
 }
-.theme-green__styling #modal-box #modal-content {
+.theme-green__thematic #modal-box #modal-content {
     background: #95f392;
     color: #008B00;
 }
-.theme-green__styling #modal-box #modal-footer {
+.theme-green__thematic #modal-box #modal-footer {
     background: #64ac54 !important;
     color: #1f581f !important;
 }
 
 !*Ice*!
-.theme-ice__styling {
+.theme-ice__thematic {
     background: rgba(215, 229, 227, 0.4) !important;
 }
-.theme-ice__styling #modal-box {
+.theme-ice__thematic #modal-box {
     background: #e8f1f1 !important;
     box-shadow: 4px 5px 15px #DEDEDE;
 }
-.theme-ice__styling #modal-box #modal-close {
+.theme-ice__thematic #modal-box #modal-close {
     background: #b8bebe !important;
     color: #4e5655 !important;
 }
-.theme-ice__styling #modal-box #modal-title {
+.theme-ice__thematic #modal-box #modal-title {
     background: #dae5e5 !important;
     color: #505151 !important;
 }
-.theme-ice__styling #modal-box #modal-content {
+.theme-ice__thematic #modal-box #modal-content {
     background: #e8f1f1;
     color: #303b30;
 }
-.theme-ice__styling #modal-box #modal-footer {
+.theme-ice__thematic #modal-box #modal-footer {
     background: #e6eaea !important;
     color: #444b4f !important;
 }
 
 !*Yellow*!
-.theme-yellow__styling {
+.theme-yellow__thematic {
     background: rgba(248, 219, 17, 0.3) !important;
 }
-.theme-yellow__styling #modal-box {
+.theme-yellow__thematic #modal-box {
     background: #FFF8DC !important;
     box-shadow: 4px 5px 15px #7d811f;
 }
-.theme-yellow__styling #modal-box #modal-close {
+.theme-yellow__thematic #modal-box #modal-close {
     background: #ba8c21 !important;
     color: #FFD700 !important;
 }
-.theme-yellow__styling #modal-box #modal-title {
+.theme-yellow__thematic #modal-box #modal-title {
     background: #DAA520 !important;
     color: #FFD700 !important;
 }
-.theme-yellow__styling #modal-box #modal-content {
+.theme-yellow__thematic #modal-box #modal-content {
     background: #f1d668;
     color: #887a35;
 }
-.theme-yellow__styling #modal-box #modal-footer {
+.theme-yellow__thematic #modal-box #modal-footer {
     background: #e9c366 !important;
     color: #b08816 !important;
 }
 
 !*Black*!
-.theme-black__styling {
+.theme-black__thematic {
     background: rgba(10, 10, 10, 0.7) !important;
 }
-.theme-black__styling #modal-box {
+.theme-black__thematic #modal-box {
     background: #fff8dc !important;
     box-shadow: 4px 5px 15px #3b3b36 !important;
 }
-.theme-black__styling #modal-box #modal-close {
+.theme-black__thematic #modal-box #modal-close {
     background: #3c3b39 !important;
     color: #e9e7df !important;
 }
-.theme-black__styling #modal-box #modal-title {
+.theme-black__thematic #modal-box #modal-title {
     background: #2b2a28 !important;
     color: #e2e2d6 !important;
 }
-.theme-black__styling #modal-box #modal-content {
+.theme-black__thematic #modal-box #modal-content {
     background: #323232;
     color: #d7dcdd;
 }
-.theme-black__styling #modal-box #modal-footer {
+.theme-black__thematic #modal-box #modal-footer {
     background: #000000 !important;
     color: #c9d9d9 !important;
 }
 
 !*Blue*!
-.theme-blue__styling {
+.theme-blue__thematic {
     background: rgba(7, 35, 157, 0.9) !important;
 }
-.theme-blue__styling #modal-box {
+.theme-blue__thematic #modal-box {
     background: #6da8f1 !important;
     box-shadow: 4px 5px 15px #182c79 !important;
 }
-.theme-blue__styling #modal-box #modal-close {
+.theme-blue__thematic #modal-box #modal-close {
     background: #1645a4 !important;
     color: #e9e7df !important;
 }
-.theme-blue__styling #modal-box #modal-title {
+.theme-blue__thematic #modal-box #modal-title {
     background: #0b2762 !important;
     color: #e2e2d6 !important;
 }
-.theme-blue__styling #modal-box #modal-content {
+.theme-blue__thematic #modal-box #modal-content {
     background: #274ab5;
     color: #598bd6;
 }
-.theme-blue__styling #modal-box #modal-footer {
+.theme-blue__thematic #modal-box #modal-footer {
     background: #162c7a !important;
     color: #c9d9d9 !important;
 }
 
 !*Red*!
-.theme-red__styling {
+.theme-red__thematic {
     background: rgba(165, 27, 27, 0.8) !important;
 }
-.theme-red__styling #modal-box {
+.theme-red__thematic #modal-box {
     background: #e34747 !important;
     box-shadow: 4px 5px 15px #3e1c1c !important;
 }
-.theme-red__styling #modal-box #modal-close {
+.theme-red__thematic #modal-box #modal-close {
     background: #6b1111 !important;
     color: #ec2323 !important;
 }
-.theme-red__styling #modal-box #modal-title {
+.theme-red__thematic #modal-box #modal-title {
     background: #960505 !important;
     color: #e2e2d6 !important;
 }
-.theme-red__styling #modal-box #modal-content {
+.theme-red__thematic #modal-box #modal-content {
     background: #5b0707;
     color: #e33232;
 }
-.theme-red__styling #modal-box #modal-footer {
+.theme-red__thematic #modal-box #modal-footer {
     background: #b01212 !important;
     color: #c9d9d9 !important;
 }
 
 !*Pink*!
-.theme-pink__styling {
+.theme-pink__thematic {
     background: rgba(192, 31, 238, 0.8) !important;
 }
-.theme-pink__styling #modal-box {
+.theme-pink__thematic #modal-box {
     background: #870499 !important;
     box-shadow: 4px 5px 15px #581858 !important;
 }
-.theme-pink__styling #modal-box #modal-close {
+.theme-pink__thematic #modal-box #modal-close {
     background: #6a2773 !important;
     color: #e14cf6 !important;
 }
-.theme-pink__styling #modal-box #modal-title {
+.theme-pink__thematic #modal-box #modal-title {
     background: #870499 !important;
     color: #e14cf6 !important;
 }
-.theme-pink__styling #modal-box #modal-content {
+.theme-pink__thematic #modal-box #modal-content {
     background: #5b0267;
     color: #d080db;
 }
-.theme-pink__styling #modal-box #modal-footer {
+.theme-pink__thematic #modal-box #modal-footer {
     background: #cd5fd7 !important;
     color: #9418a5 !important;
 }
 
 !*Black-White*!
-.theme-black-white__styling {
+.theme-black-white__thematic {
     background: rgba(0, 0, 0, 0.7) !important;
 }
-.theme-black-white__styling #modal-box {
+.theme-black-white__thematic #modal-box {
     background: #ffffff !important;
     box-shadow: 4px 5px 15px #454545 !important;
 }
-.theme-black-white__styling #modal-box #modal-close {
+.theme-black-white__thematic #modal-box #modal-close {
     background: #000000 !important;
     color: #ffffff !important;
 }
-.theme-black-white__styling #modal-box #modal-title {
+.theme-black-white__thematic #modal-box #modal-title {
     background: #242824 !important;
     color: #ffffff !important;
 }
-.theme-black-white__styling #modal-box #modal-content {
+.theme-black-white__thematic #modal-box #modal-content {
     background: #ffffff;
     color: #000000;
 }
-.theme-black-white__styling #modal-box #modal-footer {
+.theme-black-white__thematic #modal-box #modal-footer {
     background: #1f1e1e !important;
     color: #ffffff !important;
 }
 
 !*Red-White*!
-.theme-red-white__styling {
+.theme-red-white__thematic {
     background: rgba(0, 0, 0, 0.7) !important;
 }
-.theme-red-white__styling #modal-box {
+.theme-red-white__thematic #modal-box {
     background: #ffffff !important;
     box-shadow: 4px 5px 15px #121212 !important;
 }
-.theme-red-white__styling #modal-box #modal-close {
+.theme-red-white__thematic #modal-box #modal-close {
     background: #8F0000 !important;
     color: #ffffff !important;
 }
-.theme-red-white__styling #modal-box #modal-title {
+.theme-red-white__thematic #modal-box #modal-title {
     background: #B80000 !important;
     color: #ffffff !important;
 }
-.theme-red-white__styling #modal-box #modal-content {
+.theme-red-white__thematic #modal-box #modal-content {
     background: #ffffff;
     color: #000000;
 }
-.theme-red-white__styling #modal-box #modal-footer {
+.theme-red-white__thematic #modal-box #modal-footer {
     background: #B80000 !important;
     color: #ffffff !important;
 }
 
 !*Blue-White*!
-.theme-blue-white__styling {
+.theme-blue-white__thematic {
     background: rgba(0, 0, 0, 0.7) !important;
 }
-.theme-blue-white__styling #modal-box {
+.theme-blue-white__thematic #modal-box {
     background: #ffffff !important;
     box-shadow: 4px 5px 15px #121212 !important;
 }
-.theme-blue-white__styling #modal-box #modal-close {
+.theme-blue-white__thematic #modal-box #modal-close {
     background: #00008F !important;
     color: #ffffff !important;
 }
-.theme-blue-white__styling #modal-box #modal-title {
+.theme-blue-white__thematic #modal-box #modal-title {
     background: #0000B8 !important;
     color: #ffffff !important;
 }
-.theme-blue-white__styling #modal-box #modal-content {
+.theme-blue-white__thematic #modal-box #modal-content {
     background: #ffffff;
     color: #000000;
 }
-.theme-blue-white__styling #modal-box #modal-footer {
+.theme-blue-white__thematic #modal-box #modal-footer {
     background: #0000B8 !important;
     color: #ffffff !important;
 }
 
 !*Green-White*!
-.theme-green-white__styling {
+.theme-green-white__thematic {
     background: rgba(0, 0, 0, 0.7) !important;
 }
-.theme-green-white__styling #modal-box {
+.theme-green-white__thematic #modal-box {
     background: #ffffff !important;
     box-shadow: 4px 5px 15px #121212 !important;
 }
-.theme-green-white__styling #modal-box #modal-close {
+.theme-green-white__thematic #modal-box #modal-close {
     background: #008F00 !important;
     color: #ffffff !important;
 }
-.theme-green-white__styling #modal-box #modal-title {
+.theme-green-white__thematic #modal-box #modal-title {
     background: #00B800 !important;
     color: #ffffff !important;
 }
-.theme-green-white__styling #modal-box #modal-content {
+.theme-green-white__thematic #modal-box #modal-content {
     background: #ffffff;
     color: #000000;
 }
-.theme-green-white__styling #modal-box #modal-footer {
+.theme-green-white__thematic #modal-box #modal-footer {
     background: #00B800 !important;
     color: #ffffff !important;
 }
 
 !*Pink-White*!
-.theme-pink-white__styling {
+.theme-pink-white__thematic {
     background: rgba(0, 0, 0, 0.7) !important;
 }
-.theme-pink-white__styling #modal-box {
+.theme-pink-white__thematic #modal-box {
     background: #ffffff !important;
     box-shadow: 4px 5px 15px #121212 !important;
 }
-.theme-pink-white__styling #modal-box #modal-close {
+.theme-pink-white__thematic #modal-box #modal-close {
     background: #8F008F !important;
     color: #ffffff !important;
 }
-.theme-pink-white__styling #modal-box #modal-title {
+.theme-pink-white__thematic #modal-box #modal-title {
     background: #B800B8 !important;
     color: #ffffff !important;
 }
-.theme-pink-white__styling #modal-box #modal-content {
+.theme-pink-white__thematic #modal-box #modal-content {
     background: #ffffff;
     color: #000000;
 }
-.theme-pink-white__styling #modal-box #modal-footer {
+.theme-pink-white__thematic #modal-box #modal-footer {
     background: #B800B8 !important;
     color: #ffffff !important;
 }
 
 !*Yellow-White*!
-.theme-yellow-white__styling {
+.theme-yellow-white__thematic {
     background: rgba(0, 0, 0, 0.7) !important;
 }
-.theme-yellow-white__styling #modal-box {
+.theme-yellow-white__thematic #modal-box {
     background: #ffffff !important;
     box-shadow: 4px 5px 15px #121212 !important;
 }
-.theme-yellow-white__styling #modal-box #modal-close {
+.theme-yellow-white__thematic #modal-box #modal-close {
     background: #7a621c !important;
     color: #000000 !important;
 }
-.theme-yellow-white__styling #modal-box #modal-title {
+.theme-yellow-white__thematic #modal-box #modal-title {
     background: #b08816 !important;
     color: #ffffff !important;
 }
-.theme-yellow-white__styling #modal-box #modal-content {
+.theme-yellow-white__thematic #modal-box #modal-content {
     background: #ffffff;
     color: #000000;
 }
-.theme-yellow-white__styling #modal-box #modal-footer {
+.theme-yellow-white__thematic #modal-box #modal-footer {
     background: #b08816 !important;
     color: #000000 !important;
 }

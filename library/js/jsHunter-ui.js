@@ -5,7 +5,7 @@
 * Release: 1.0.0
 * Date: 2019-11-01
 *
-* This library should be used together with jsHunter and jsHunter-styling.css !
+* This library should be used together with jsHunter and jsHunter-ui.css !
 *
 */
 
@@ -25,7 +25,7 @@
      * */
 
     let
-        //Modal controls
+        /*Modal controls*/
         modalCtrl = null,
         loopCtrl  = 0;
 
@@ -596,7 +596,7 @@
                 throw "Modal params missing !";
             } else {
                 let ef = params.effect;
-                let _selector = jsHunter.selector;//copy current target tag (noConflict)
+                let _selector = jsHunter.selector;/*copy current target tag (noConflict)*/
 
                 if(params.action === "open") {
                     switch (ef) {
@@ -614,7 +614,7 @@
                             throw "Wrong params to modal effect !";
                     }
 
-                    //Event Listener for close whe clicked in locks screen element
+                    /*Event Listener for close whe clicked in locks screen element*/
                     jsHunter(_selector, {rsp: "eventTarget"}).on('click', function(rsp) {
                         if(rsp === _selector.replace("#", '').replace(".", "")) {
                             if(ef === "inside-out") {
@@ -678,11 +678,11 @@
         let _titleFX_ = (_contentFX_.hasOwnProperty("title")) ? _contentFX_.title : '';
         let _bodyFX_ = (_contentFX_.hasOwnProperty("body")) ? _contentFX_.body : '';
 
-        //Max Size for this element
+        /*Max Size for this element*/
         let _max_width_ = 900;
         let _max_height_ = 405;
 
-        //Fix size for widget width/height
+        /*Fix size for widget width/height*/
         _e_width_ = (jsHunter.fn.intNumber(_e_width_) > _max_width_) ? _max_width_+"px" : _e_width_ ;
         _e_height_ = (jsHunter.fn.intNumber(_e_height_) > _max_height_) ? _max_height_+"px" : _e_height_ ;
 
@@ -690,7 +690,7 @@
             _modalLockScreen(_ls_name_, _ls_back_color_, _ls_opacity_);
         }
 
-        //CREATE A HTML ELEMENT (ModalFX Box)
+        /*CREATE A HTML ELEMENT (ModalFX Box)*/
         _elementFX_ = $$.create({
             element:  "div",
             attr_type: "id",
@@ -714,24 +714,24 @@
             }
         });
 
-        //Init body modal with a html data fake
+        /*Init body modal with a html data fake*/
         if(_stateFX_ === false) {
             _modalBody(_e_name_, '', '');
         } else {
             _modalBody(_e_name_, _titleFX_, _bodyFX_);
         }
 
-        //Init Modal Presentation and controls
+        /*Init Modal Presentation and controls*/
         _modalInit({
             action: _c_action_,
-            element: _elementFX_, //id.selector
-            timeout: _c_timeout_, //time
-            speed: _c_speed_, //40
-            effect: _c_effect_, //accordion
-            selector: _e_name_, //ref
+            element: _elementFX_, /*id.selector*/
+            timeout: _c_timeout_, /*time*/
+            speed: _c_speed_, /*40*/
+            effect: _c_effect_, /*accordion*/
+            selector: _e_name_, /*ref*/
             lock_screen: _ls_name_,
-            wide_width: _max_width_, //max-wide-width
-            max_height: _max_height_, //max height for modal,
+            wide_width: _max_width_, /*max-wide-width*/
+            max_height: _max_height_, /*max height for modal*/
             margin_left: _e_ini_margin_left_,
             css_margin_left: _e_css_margin_left_,
             css_height: _e_css_height_,
@@ -871,23 +871,24 @@
         let _timeout_ = (params.hasOwnProperty('timeout')) ? params.timeout : 0;
         let _theme_ = (params.hasOwnProperty('theme')) ? params.theme : '';
         let _lock_back_color_ = (params.hasOwnProperty('lock_back_color')) ? params.lock_back_color : 'none';
+        let _effect_ = (params.hasOwnProperty('effect') && params.effect === "inside-out") ? params.effect : 'none';
         let _content_ = (params.hasOwnProperty('content')) ? params.content : '';
         let _back_color_ = (_content_.hasOwnProperty('back_color')) ? _content_.back_color : 'none';
         let _title_ = (_content_.hasOwnProperty('title')) ? _content_.title : 'Sample Title';
         let _body_ = (_content_.hasOwnProperty('body')) ? _content_.body : 'Sample Body';
         let _footer_ = (_content_.hasOwnProperty('footer')) ? (_content_.footer === false) ? false : _content_.footer : false;
 
-        //Check if element already exists in DOM
-        if(document.querySelector("#modal-container__styling")) {
+        /*Check if element already exists in DOM*/
+        if(document.querySelector("#modal-container__thematic")) {
             return;
         }
 
-        //CREATE STRUCTURE HTML OF ELEMENTS (modalTheme)
+        /*CREATE STRUCTURE HTML OF ELEMENTS (modalTheme)*/
 
         $$.create({
             element:  "div",
             attr_type: "id",
-            attr_name: "#modal-container__styling",
+            attr_name: "#modal-container__thematic",
             append: "body"
         });
 
@@ -895,7 +896,7 @@
             element:  "div",
             attr_type: "id",
             attr_name: "#modal-box",
-            append: "#modal-container__styling"
+            append: "#modal-container__thematic"
         });
 
         $$.create({
@@ -931,56 +932,66 @@
             jsHunter('#modal-content').height('83%');
         }
 
-        //Writer in box
+        /*Writer in box*/
         jsHunter('#modal-close').html('X');
         jsHunter('#modal-title').html(_title_);
         jsHunter('#modal-content').html(_body_);
-        jsHunter('#modal-container__styling').resetStyle().addClass(_theme_);
+        jsHunter('#modal-container__thematic').resetStyle().addClass(_theme_);
 
         if(_lock_back_color_ !== 'none') {
-            jsHunter('#modal-container__styling').addClass(_lock_back_color_);
+            jsHunter('#modal-container__thematic').addClass(_lock_back_color_);
         }
 
         if(_back_color_ !== 'none') {
             jsHunter('#modal-content').addClass(_back_color_);
         }
 
-        //Show box
-        jsHunter('#modal-box').fadeIn({timer_fade: 10});
+        /*Show box*/
+        if(_effect_ === 'none') {
+            jsHunter('#modal-box').fadeIn({timer_fade: 10});
+        } else {
+            params.selector = "#modalcontainer__thematic";
+            params.modal = "#modal-box";
+            _modalInsideOut(params);
+        }
 
-        //Event Listener for close by button X modal-close
+        /*
+        * Close Modal
+        * */
+
+        /*Event Listener for close by button X modal-close*/
         jsHunter('#modal-close').on('click', function(){
-            jsHunter('#modal-container__styling')
+            jsHunter('#modal-container__thematic')
                 .fadeOut({
                     timer_fade: 10,
                     remove: true,
                     parent: 'body',
-                    children: '#modal-container__styling'
+                    children: '#modal-container__thematic'
                 });
         });
 
-        //Event Listener for close whe clicked in locks screen element
-        jsHunter('#modal-container__styling', {rsp: "eventTarget"}).on('click', function(rsp) {
-            if(rsp === 'modal-container__styling') {
-                jsHunter('#modal-container__styling')
+        /*Event Listener for close whe clicked in locks screen element*/
+        jsHunter('#modal-container__thematic', {rsp: "eventTarget"}).on('click', function(rsp) {
+            if(rsp === 'modal-container__thematic') {
+                jsHunter('#modal-container__thematic')
                     .fadeOut({
                         timer_fade: 10,
                         remove: true,
                         parent: 'body',
-                        children: '#modal-container__styling'
+                        children: '#modal-container__thematic'
                     });
             }
         });
 
-        //Automatic Modal Close
+        /*Automatic Modal Close*/
         if(parseInt(_timeout_) > 0) {
             setTimeout(function(){
-                jsHunter('#modal-container__styling')
+                jsHunter('#modal-container__thematic')
                     .fadeOut({
                         timer_fade: 10,
                         remove: true,
                         parent: 'body',
-                        children: '#modal-container__styling'
+                        children: '#modal-container__thematic'
                     });
             }, parseInt(_timeout_));
         }

@@ -2466,7 +2466,7 @@
             let _footer_ = (_content_.hasOwnProperty('footer')) ? (_content_.footer === false) ? false : _content_.footer : false;
 
             //Check if element already exists in DOM
-            if(document.querySelector("#modal-container__styling")) {
+            if(document.querySelector("#modal-container__thematic")) {
                 return;
             }
 
@@ -2475,7 +2475,7 @@
             let _elementContainer_ = _createHtmlElement({
                 element:  "div",
                 attr_type: "id",
-                attr_name: "#modal-container__styling",
+                attr_name: "#modal-container__thematic",
                 append: "body"
             });
 
@@ -2483,7 +2483,7 @@
                 element:  "div",
                 attr_type: "id",
                 attr_name: "#modal-box",
-                append: "#modal-container__styling"
+                append: "#modal-container__thematic"
             });
 
             let _elementClose_ = _createHtmlElement({
@@ -2523,10 +2523,10 @@
             jsHunter('#modal-close').html('X');
             jsHunter('#modal-title').html(_title_);
             jsHunter('#modal-content').html(_body_);
-            jsHunter('#modal-container__styling').resetStyle().addClass(_theme_);
+            jsHunter('#modal-container__thematic').resetStyle().addClass(_theme_);
 
             if(_lock_back_color_ !== 'none') {
-                jsHunter('#modal-container__styling').addClass(_lock_back_color_);
+                jsHunter('#modal-container__thematic').addClass(_lock_back_color_);
             }
 
             if(_back_color_ !== 'none') {
@@ -2538,24 +2538,24 @@
 
             //Event Listener for close by button X modal-close
             jsHunter('#modal-close').on('click', function(){
-                jsHunter('#modal-container__styling')
+                jsHunter('#modal-container__thematic')
                     .fadeOut({
                         timer_fade: 10,
                         remove: true,
                         parent: 'body',
-                        children: '#modal-container__styling'
+                        children: '#modal-container__thematic'
                     });
             });
 
             //Event Listener for close whe clicked in locks screen element
-            jsHunter('#modal-container__styling', {rsp: "eventTarget"}).on('click', function(rsp) {
-                if(rsp === 'modal-container__styling') {
-                    jsHunter('#modal-container__styling')
+            jsHunter('#modal-container__thematic', {rsp: "eventTarget"}).on('click', function(rsp) {
+                if(rsp === 'modal-container__thematic') {
+                    jsHunter('#modal-container__thematic')
                         .fadeOut({
                             timer_fade: 10,
                             remove: true,
                             parent: 'body',
-                            children: '#modal-container__styling'
+                            children: '#modal-container__thematic'
                         });
                 }
             });
@@ -2563,12 +2563,12 @@
             //Automatic Modal Close
             if(parseInt(_timeout_) > 0) {
                 setTimeout(function(){
-                    jsHunter('#modal-container__styling')
+                    jsHunter('#modal-container__thematic')
                         .fadeOut({
                             timer_fade: 10,
                             remove: true,
                             parent: 'body',
-                            children: '#modal-container__styling'
+                            children: '#modal-container__thematic'
                         });
                 }, parseInt(_timeout_));
             }

@@ -5,7 +5,7 @@
 * Release: 1.0.0
 * Date: 2019-11-01
 *
-* This library should be used together with jsHunter and jsHunter-styling.css !
+* This library should be used together with jsHunter and jsHunter-codify.css !
 *
 */
 
