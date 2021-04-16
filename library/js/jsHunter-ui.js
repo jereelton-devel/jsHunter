@@ -208,7 +208,7 @@
 
     function _modalElastic(params) {
 
-        loopCtrl = 0; //Reset control
+        loopCtrl = 0; /*Reset control*/
 
         let _more_width_ = 50;
         let _end_width_ = params.styles.width + 100;
@@ -221,7 +221,6 @@
             if(params.more_width >= _end_width_) {
 
                 clearInterval(modalCtrl);
-                //jsHunter.fn.sizer(params.element, 'width', _end_width_, 'px');
                 _modalDecrease(params);
 
             } else {
@@ -315,7 +314,6 @@
             if(params.more_width <= _end_width_) {
 
                 clearInterval(modalCtrl);
-                //jsHunter.fn.sizer(params.element, 'width', params.styles.width, 'px');
                 _modalIncrease(params);
 
             } else {
@@ -374,19 +372,19 @@
                 _modalDecrease(params);
             } else {
 
-                //Event target when lock screen is clicked
+                /*Event target when lock screen is clicked*/
                 jsHunter(params.lock_screen, {rsp: "eventTarget"}).on('click', function(rsp){
                     if(rsp === params.lock_screen.replace("#", '').replace(".", "")) {
                         _modalClose(params);
                     }
                 });
 
-                //Button Event for modal close
+                /*Button Event for modal close*/
                 jsHunter("[data-close-modalX]").on('click', function(){
                     _modalClose(params);
                 });
 
-                //Automatic Modal Close
+                /*Automatic Modal Close*/
                 if(params.timeout > 0) {
                     _modalAutoClose(params);
                 }
@@ -400,24 +398,24 @@
 
                     clearInterval(modalCtrl);
 
-                    //When wide is configured
+                    /*When wide is configured*/
                     if(params.wide && params.styles.width) {
                         _modalDoWide(params);
                     }
 
-                    //Button Event for modal close
+                    /*Button Event for modal close*/
                     jsHunter("[data-close-modalX]").on('click', function(){
                         _modalClose(params);
                     });
 
-                    //Event target when lock screen is clicked
+                    /*Event target when lock screen is clicked*/
                     jsHunter(params.lock_screen, {rsp: "eventTarget"}).on('click', function(rsp){
                         if(rsp === params.lock_screen.replace("#", '').replace(".", "")) {
                             _modalClose(params);
                         }
                     });
 
-                    //Automatic Modal Close
+                    /*Automatic Modal Close*/
                     if(parseInt(params.timeout) > 0) {
                         _modalAutoClose(params);
                     }
@@ -479,6 +477,9 @@
             _modalCloseFade(params);
         } else if(params.effect === 'normal') {
             _modalCloseWide(params);
+        } else if(params.effect === 'elastic') {
+            jsHunter("#"+_element_.id || "."+_element_.className).hide();
+            _modalUnLockScreen(params);
         } else {
             _modalCloseDefault(params);
         }
@@ -510,7 +511,7 @@
             if(params.width <= params.width_down) {
 
                 clearInterval(modalCtrl);
-                // CSS Reset to Element Original Size
+                /*CSS Reset to Element Original Size*/
                 jsHunter.fn.sizer(params.element, 'width', params.save_width, 'px');
                 jsHunter.fn.sizer(params.element, 'height', params.save_width, 'px');
                 jsHunter(params.selector).display('none');
@@ -740,7 +741,7 @@
 
         return this;
 
-    } //TODO: (REVISION) DONE & DOCUMENTATION (modal flyer without dependence)
+    } //DONE & DOCUMENTATION (modal flyer without dependence)
 
     jsHunter.prototype.modalX = function(params) {
 
@@ -782,7 +783,7 @@
         let _titleX_ = (_contentX_.hasOwnProperty("title")) ? _contentX_.title : '';
         let _bodyX_ = (_contentX_.hasOwnProperty("body")) ? _contentX_.body : '';
 
-        //Max Height for html element according window size
+        /*Max Height for html element according window size*/
         let _max_width_ = window.innerWidth - 200;
         let _max_height_ = window.innerHeight - 200;
 
@@ -790,7 +791,7 @@
             _modalLockScreen(_ls_name_, _ls_back_color_, _ls_opacity_);
         }
 
-        //CREATE A HTML ELEMENT (Modal Box)
+        /*CREATE A HTML ELEMENT (Modal Box)*/
         _element_ = $$.create({
             element:  "div",
             attr_type: "id",
@@ -808,7 +809,7 @@
             }
         });
 
-        //Init body modal with a html data fake
+        /*Init body modal with a html data fake*/
         if(_stateX_ === false) {
             _modalBody(_e_name_, '', '');
         } else {
@@ -817,11 +818,11 @@
 
         let _styles_ = jsHunter.fn.computedCss(_element_);
 
-        //Fix size for widget width/height
+        /*Fix size for widget width/height*/
         _styles_.width = (_styles_.width > _max_width_ || !_c_force_ && _c_wide_) ? _max_width_ : _styles_.width ;
         _styles_.height = (_styles_.height > _max_height_ || !_c_force_ && _c_wide_) ? _max_height_ : _styles_.height ;
 
-        //CSS Reset Element
+        /*CSS Reset Element*/
         _element_.style.width = "0px";
         _element_.style.height = "0px";
         _element_.style.display = "block";
@@ -833,7 +834,7 @@
         _element_.style.border = "solid " + _e_border_color_ + " 1px";
         _element_.style.transition = "all 1ms ease-out";
 
-        //Without Lock Screen
+        /*Without Lock Screen*/
         if (!_ls_state_) {
             _element_.style.position = "fixed";
             _element_.style.zIndex = "5000";
@@ -844,27 +845,27 @@
             _styles_.height = _max_height_ = window.innerHeight;
         }
 
-        //Init Modal Presentation and controls
+        /*Init Modal Presentation and controls*/
         _modalInit({
-            more_width: _more_width_, //0
-            opacity: _opacity_, //0
-            opacdiv: _opacdiv_, //15
-            element: _element_, //id.selector
-            styles: _styles_, //all, width, height, width_save
-            timeout: _c_timeout_, //time
-            speed: _c_speed_, //40
-            wide: _c_wide_, //true|false
-            effect: _c_effect_, //type and number of exec
+            more_width: _more_width_, /*0*/
+            opacity: _opacity_, /*0*/
+            opacdiv: _opacdiv_, /*15*/
+            element: _element_, /*id.selector*/
+            styles: _styles_, /*all, width, height, width_save*/
+            timeout: _c_timeout_, /*time*/
+            speed: _c_speed_, /*40*/
+            wide: _c_wide_, /*true|false*/
+            effect: _c_effect_, /*type and number of exec*/
             loop: _c_loop_,
-            selector: _e_name_, //ref
+            selector: _e_name_, /*ref*/
             lock_screen: _ls_name_,
-            wide_width: _max_width_, //max-wide-width
-            max_height: _max_height_ //max height for modal
+            wide_width: _max_width_, /*max-wide-width*/
+            max_height: _max_height_ /*max height for modal*/
         });
 
         return this;
 
-    } //TODO: (REVISION) DONE & DOCUMENTATION (modal without dependence)
+    } //DONE & DOCUMENTATION (modal without dependence)
 
     jsHunter.prototype.modalTheme = function(params) {
 
@@ -998,6 +999,6 @@
 
         return this;
 
-    } //TODO: (REVISION) DONE E DOCUMENTATION
+    } //DONE E DOCUMENTATION
 
 })((typeof jsHunter !== "undefined" ? jsHunter: ''));

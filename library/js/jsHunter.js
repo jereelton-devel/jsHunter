@@ -287,7 +287,7 @@
         attr: function(type, value) {
             try {
                 let _sel = this.sel;
-                (_sel && typeof  _sel === "object" || Array.isArray(_sel)) ?
+                (_sel && (typeof  _sel === "object" || Array.isArray(_sel))) ?
                     (function() {
                         _doAttr(_sel, type, value, "nodeList");
                     })() : (_sel) ?
@@ -438,7 +438,7 @@
         html: function(text) {
             try {
                 let _sel = this.sel;
-                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+                (_sel && (typeof _sel === "object" || Array.isArray(_sel))) ?
                     _sel.forEach(function(a, index, el) {
                         _sel[index].innerHTML = text;
                     }) : (_sel) ?
@@ -452,7 +452,7 @@
         append: function(text) {
             try {
                 let _sel = this.sel;
-                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+                (_sel && (typeof _sel === "object" || Array.isArray(_sel))) ?
                     _sel.forEach(function(a, index, el) {
                         _sel[index].innerHTML += text;
                     }) : (_sel) ?
@@ -811,7 +811,7 @@
         anime: function(transition) {
             try {
                 let _sel = this.sel;
-                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+                (_sel && (typeof _sel === "object" || Array.isArray(_sel))) ?
                     _sel.forEach(function(a, index, el) {
                         _sel[index].style.transition = transition;
                     }) : (_sel) ?
@@ -827,32 +827,50 @@
         display: function(value) {
             try {
                 let _sel = this.sel;
-                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+                (_sel && (typeof _sel === "object" || Array.isArray(_sel))) ?
                     _sel.forEach(function(a, index, el) {
                         _sel[index].style.display = value;
                     }) : (_sel) ?
-                    _sel.style.display = value : jsHunter.fn.exception("display() error " + _sel);
+                    _sel.style.display = value : jsHunter.fn.exception("[Exception] display() error " + _sel);
             } catch(err) {
                 console.error(err);
             }
             return this;
         }, //DONE
 
+        show: function() {
+
+        }, //TODO
+
+        hide: function() {
+            try {
+                let _sel = this.sel;
+                (_sel && (typeof _sel === "object" || Array.isArray(_sel))) ?
+                    _sel.forEach(function(a, index, el) {
+                        _sel[index].style.display = 'none';
+                    }) : (_sel) ?
+                    _sel.style.display = 'none' : jsHunter.fn.exception("[Exception] hide() error " + _sel);
+            } catch(err) {
+                console.error(err);
+            }
+            return this;
+        }, //TODO
+
         fadeIn: function(p) {
-            clearInterval(fadeCtrl); //Bug Fix
-            let _opacity  = 0; //0....100
-            let _element  = this.sel; //Copy current target tag (Conflict Fix)
+            clearInterval(fadeCtrl); /*Bug Fix*/
+            let _opacity  = 0; /*0....100*/
+            let _element  = this.sel; /*Copy current target tag (Conflict Fix)*/
             let _keys     = Object.keys(_element);
-            let _selector = this.selector; //Save current selector (fadeOut())
+            let _selector = this.selector; /*Save current selector (fadeOut())*/
             let _timer_fade = (p.hasOwnProperty("timer_fade")) ? p.timer_fade : 1;
             let _timeout = (p.hasOwnProperty("timeout")) ? p.timeout : 0;
 
             _keys.forEach(function(index){
 
-                //CSS Reset Element
+                /*CSS Reset Element*/
                 _element[index].style.display = "block";
 
-                //Cross Browser CSS > IE
+                /*Cross Browser CSS > IE*/
                 if( userAgent.indexOf( 'msie' ) !== -1 ) {
                     _element[index].style.filter  = "alpha(opacity=0)";
                 } else { _element[index].style.opacity = "0"; }
@@ -866,7 +884,7 @@
                     if((_opacity >= 100)) {
                         clearInterval(fadeCtrl);
 
-                        // Automatic Close
+                        /*Automatic Close*/
                         if(parseInt(_timeout) > 0) {
 
                             setTimeout(function(){
@@ -878,7 +896,7 @@
                     } else {
                         _opacity += 2;
 
-                        //Cross Browser CSS > IE
+                        /*Cross Browser CSS > IE*/
                         if( userAgent.indexOf( 'msie' ) !== -1 ) {
                             _element[index].style.filter  = "alpha(opacity=" + _opacity + ")";
                         } else { _element[index].style.opacity = (_opacity / 100).toString(); }
@@ -928,7 +946,7 @@
         height: function(value) {
             try {
                 let _sel = this.sel;
-                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+                (_sel && (typeof _sel === "object" || Array.isArray(_sel))) ?
                     _sel.forEach(function(a, index, el) {
                         _sel[index].style.height = value;
                     }) : (_sel) ?
@@ -942,7 +960,7 @@
         width: function(value) {
             try {
                 let _sel = this.sel;
-                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+                (_sel && (typeof _sel === "object" || Array.isArray(_sel))) ?
                     _sel.forEach(function(a, index, el) {
                         _sel[index].style.width = value;
                     }) : (_sel) ?
@@ -967,7 +985,7 @@
         margin: function(orientation, value) {
             try {
                 let _sel = this.sel;
-                (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+                (_sel && (typeof _sel === "object" || Array.isArray(_sel))) ?
                     _sel.forEach(function(a, index, el) {
                         switch (orientation){
                             case 'left':
