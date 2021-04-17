@@ -56,6 +56,63 @@
     color: #919393;
     font-style: italic;
 }
+/*Buttons*/
+
+.simulate-button-green,
+.simulate-button-blue,
+.simulate-button-orange,
+.simulate-button-purple,
+.simulate-button-black,
+.simulate-button-cyan,
+.simulate-button-red,
+.simulate-button-yellow,
+.simulate-button-pink {
+    display: inline-block;
+    min-width: 150px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    color: #FAFAFA !important;
+    font-style: normal;
+    cursor: pointer;
+    background-color: #008B00;
+    box-shadow: 1px 2px 5px #454545;
+    margin: 3px 0px 3px 3px;
+    text-decoration: none !important;
+}
+.simulate-button-blue {
+    background-color: #2344e7;
+}
+.simulate-button-orange {
+    background-color: #e77e23;
+}
+.simulate-button-purple {
+    background-color: #7e23e7;
+}
+.simulate-button-red {
+    background-color: #f5103e;
+}
+.simulate-button-black {
+    background-color: #000000;
+}
+.simulate-button-cyan {
+    background-color: #3199f5;
+}
+.simulate-button-yellow {
+    color: #333333;
+    background-color: #e0c012;
+}
+.simulate-button-pink {
+    background-color: #d80ae0;
+}
+.simulate-button-disabled {
+    color: #BBBBBB !important;
+    cursor: wait !important;
+    box-shadow: none !important;
+    background-color: #dedee0 !important;
+}
 /*Generic*/
 .back-dark-alpha {
     background: rgba(1, 1, 1, 0.7) !important;
