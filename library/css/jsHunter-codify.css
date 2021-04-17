@@ -449,3 +449,24 @@
     font-weight: normal !important;
     text-decoration: underline;
 }
+/*Remove codify styles: codifyless*/
+.codifyless {
+    padding: 1%;
+    border: dashed #DEDEDE 1px;
+    font-family: "Courier New", "courier", sans-serif;
+    text-align: left !important;
+    width: 97%;
+    height: auto;
+    min-height: 100px;
+    max-height: 500px;
+    margin: 20px auto;
+    font-style: normal !important;
+    overflow: auto;
+    background: #303442;
+    color: #99CEF5;
+}
+
+.codifyless .comments-inline {
+    color: #FFD700 !important;
+    font-family: inherit !important;
+}
