@@ -8,6 +8,9 @@
 /*modalX() Styles*/
 
 /*Default*/
+#div_modal {
+    overflow: hidden !important;
+}
 .modalX_default {
     background: #FFFFFF !important;
 }
@@ -97,13 +100,15 @@
 }
 /*Silver*/
 .modalX_silver {
-    background: #cccccc !important;
+    background: #b6b5b6 !important;
 }
 .modalX_silver #h1_modalX {
     border-bottom: solid #888888 1px !important;
     padding: 10px !important;
-    color: #494949 !important;
-    background: #8a8a8a !important;
+    color: #565656 !important;
+    background: #99959c !important;
+    font-weight: normal;
+    letter-spacing: 2px;
 }
 .modalX_silver #modalX_title {
 
@@ -132,11 +137,11 @@
     height: auto  !important;
     margin: 1%  !important;
     position: relative  !important;
-    border: dashed #BDBDBD 1px  !important;
-    background: #E8E6E6  !important;
+    border: dashed #7F7E8F 1px  !important;
+    background: #A3A3AD  !important;
 }
 .modalX_silver #modalX_content #p_modalX {
-    color: #aea6a6 !important;
+    color: #636368 !important;
     padding: 10px !important;
 }
 /*Black*/
