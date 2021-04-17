@@ -94,6 +94,7 @@
         if(p.hasOwnProperty("overflow"))  { s += "overflow: "+p.overflow+";"; }
         if(p.hasOwnProperty("border_radius"))  { s += "border-radius: "+p.border_radius+";"; }
         if(p.hasOwnProperty("box_shadow"))  { s += "box-shadow: "+p.box_shadow+";"; }
+        if(p.hasOwnProperty("box_sizing"))  { s += "box-sizing: "+p.box_sizing+";"; }
 
         /*RGBA*/
         if(p.hasOwnProperty("back_color") && p.hasOwnProperty("opacity") && p.opacity !== "1") {
@@ -161,7 +162,7 @@
                 element.style.height = size + measure;
                 break;
             default:
-                console.error("[Error]: Increase Element Function: element is invalid !");
+                console.error("[Error]: Increase Element Function: orientation is invalid !");
         }
     }
 
@@ -217,8 +218,8 @@
          * Testing Installation
          * */
 
-        // for test your application, see:
-        // http://joticode.com/works/jshunter/#_test_-installation
+        /*for test your application, see:
+        http://joticode.com/works/jshunter/#_test_-installation*/
         _test_: function(param) {
             console.log("Test is running...", param);
             let _sel = this.sel || nodes;
@@ -254,7 +255,6 @@
 
         loaded: function(callback) {
             window.onload = function() {
-
                 if (typeof callback === "function") {
                     callback();
                 } else {
@@ -270,10 +270,10 @@
         ajax: function(){
         }, //TODO
 
-        response: function(){
+        requester: function(){
         }, //TODO
 
-        requester: function(){
+        receiver: function(){
         }, //TODO
 
         /***
@@ -463,7 +463,7 @@
             return this;
         }, //DONE & DOCUMENTATION
 
-        addClass: function(classname, index) {console.log("CLASSNAME::: ",classname);
+        addClass: function(classname, index) {console.log("addClass=>", classname);
             let _sel    = this.sel;
             let keys    = (_sel) ? Object.keys(_sel) : "";
             let element = (keys.length > 0) ?
@@ -472,26 +472,31 @@
                 if((index || index >=0) && nodes.length > 0) { console.log("IF1");
                     if(!jsHunter.fn.matchClass(nodes[index], classname)) {
                         nodes[index].className += " " + classname;
+                        nodes[index].className = jsHunter.fn.trim(nodes[index]);
                     }
                 } else if(nodes.length > 0 && !index) { console.log("IF2");
                     nodes.forEach(function(inode) {
                         if(!jsHunter.fn.matchClass(inode, classname)) {
                             inode.className += " " + classname;
+                            inode.className = jsHunter.fn.trim(inode.className);
                         }
                     });
                 } else if(node) { console.log("IF3");
                     if(!jsHunter.fn.matchClass(node, classname)) {
                         node.className += " " + classname;
+                        node.className = jsHunter.fn.trim(node.className);
                     }
                 } else if(element.length > 0) { console.log("IF4");
                     keys.forEach(function(inode) {
                         if(!jsHunter.fn.matchClass(element[inode], classname)) {
                             element[inode].className += " " + classname;
+                            element[inode].className = jsHunter.fn.trim(element[inode].className);
                         }
                     });
                 } else if(element && element.length > 0) { console.log("IF5");
                     if(!jsHunter.fn.matchClass(element, classname)) {
                         element.className += " " + classname;
+                        element.className = jsHunter.fn.trim(element.className);
                     }
                 } else { console.log("ELSE");
                     jsHunter.fn.exception("addClass() error, nodes and selector is undefined !");
@@ -598,7 +603,6 @@
         }, //TODO: DONE & DOCUMENTATION ????
 
         remove: function(parent, children) {
-
             let _el_ = document.querySelectorAll(parent);
             let keys = Object.keys(_el_);
 
@@ -607,7 +611,6 @@
             });
 
             return this;
-
         }, //DONE & DOCUMENTATION
 
         objWriter: function(obj, params) {/*For developers, use together with jsHunter.css*/
@@ -625,18 +628,18 @@
 
                     if(!params || typeof params === "undefined") {params = {};}
 
-                    //Progress controls
+                    /*Progress controls*/
                     if(params.hasOwnProperty("progress") && params.progress === false) {
                         _sel[0].innerHTML = "";
                     } else {
                         _sel[0].innerHTML = jsHunter.fn.progress();
                     }
 
-                    //Recursive controls
+                    /*Recursive controls*/
                     let _i_ = 1;
                     let _t_ = 0;
 
-                    //Tab controls
+                    /*Tab controls*/
                     let tab = [
                         "<span class='span-tab1'> </span>",
                         "<span class='span-tab2'> </span>",
@@ -651,7 +654,7 @@
                         tab[0] = tab[1] = tab[2] = tab[3] = tab[4] = tab[5] = tab[6] = "";
                     }
 
-                    //Content [pre formated] controls
+                    /*Content [pre formated] controls*/
                     let pre_ = "<pre>";
                     let _pre = "</pre>";
 
@@ -659,7 +662,7 @@
                         pre_ = _pre = "";
                     }
 
-                    //TODO: Style controls
+                    /*Style controls*/
                     let styles = {
                         obj_index: '<span class="obj-index">',
                         obj_typeof: '<span class="obj-index-typeof">',
@@ -680,7 +683,7 @@
 
                     function objectDigger(obj) {
                         for (let k in obj) {
-                            //if(!obj.hasOwnProperty(k)) {continue;}
+                            /*if(!obj.hasOwnProperty(k)) {continue;}*/
 
                             let str = tab[_i_] + styles.obj_index + k + styles.end;
                             str += ": " + styles.obj_value + obj[k] + styles.end;
@@ -706,7 +709,7 @@
 
                         for (let x in obj) {
 
-                            //if(!obj.hasOwnProperty(x)) {continue;}
+                            /*if(!obj.hasOwnProperty(x)) {continue;}*/
 
                             objectWriter(x, obj[x]);
 
@@ -778,7 +781,6 @@
         }, //DONE & DOCUMENTATION
 
         val: function(dt) {
-
             try {
 
                 let _sel = this.sel;
@@ -839,7 +841,17 @@
         }, //DONE
 
         show: function() {
-
+            try {
+                let _sel = this.sel;
+                (_sel && (typeof _sel === "object" || Array.isArray(_sel))) ?
+                    _sel.forEach(function(a, index, el) {
+                        _sel[index].style.display = 'block';
+                    }) : (_sel) ?
+                    _sel.style.display = 'block' : jsHunter.fn.exception("[Exception] show() error " + _sel);
+            } catch(err) {
+                console.error(err);
+            }
+            return this;
         }, //TODO
 
         hide: function() {
@@ -862,7 +874,7 @@
             let _element  = this.sel; /*Copy current target tag (Conflict Fix)*/
             let _keys     = Object.keys(_element);
             let _selector = this.selector; /*Save current selector (fadeOut())*/
-            let _timer_fade = (p.hasOwnProperty("timer_fade")) ? p.timer_fade : 1;
+            let _timer_fade = (p.hasOwnProperty("timer_fade")) ? p.timer_fade : 10;
             let _timeout = (p.hasOwnProperty("timeout")) ? p.timeout : 0;
 
             _keys.forEach(function(index){
@@ -909,9 +921,9 @@
         }, //DONE
 
         fadeOut: function(p) {
-            clearInterval(fadeCtrl); //Bug Fix
-            let _opacity  = 100; //100....0
-            let _element  = this.sel; //copy current target tag (noConflict)
+            clearInterval(fadeCtrl); /*Bug Fix*/
+            let _opacity  = 100; /*100....0*/
+            let _element  = this.sel; /*copy current target tag (noConflict)*/
             let _keys     = Object.keys(_element);
             /*let _selector = this.selector;*/
             let _timer_fade = (p.hasOwnProperty("timer_fade")) ? p.timer_fade : 1;
@@ -931,7 +943,7 @@
                     } else {
                         _opacity -= 2;
 
-                        //Cross Browser CSS > IE
+                        /*Cross Browser CSS > IE*/
                         if( userAgent.indexOf( 'msie' ) !== -1 ) {
                             _element[index].style.filter = "alpha(opacity=" + _opacity + ")";
                         } else { _element[index].style.opacity = (_opacity / 100).toString(); }
@@ -972,14 +984,12 @@
         }, //TODO PROGRAMAR FUNÇÃO PARA RETORNAR LARGURA DO ELEMENTO
 
         hidden: function(element) {
-
             let _el_ = document.querySelectorAll(element);
             let keys = Object.keys(_el_);
 
             keys.forEach(function(index) {
                 _el_[index].style.display = 'none';
             });
-
         }, //DONE
 
         margin: function(orientation, value) {
@@ -1226,12 +1236,11 @@
 
         trim: function(data) {
             return data
-                .replace(/^( +)([0-9a-zA-Z ,'"\\\/_\[\-\].!@#$%&*()]+)( +)$/gi, '$2')
+                .replace(/^( +)([0-9a-zA-Z ,'"\\\/_\[\-\].!@#$%&*()]+)( +)?$/gi, '$2')
                 .replace(/ +$/, '');
         }, //TODO
 
         hexToRgb: function(color_hex) {
-
             let i = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color_hex);
 
             if(!i) {

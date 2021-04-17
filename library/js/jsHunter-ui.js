@@ -272,11 +272,43 @@
         jsHunter.fn.sizer(_element, 'height', _height, _measure);
 
         /*Check default timer to fade effect*/
-        if(params.timer_fade > 10) {params.timer_fade = 5;}
-        jsHunter(params.selector).fadeIn(params);
+        if(!params.hasOwnProperty('timer_fade') || params.timer_fade > 10) {
+            params.timer_fade = 5;
+        }
 
-        /*Update margin element*/
-        jsHunter(params.modal).margin('all', 0);
+        if(!params.hasOwnProperty('replacer')) {
+            jsHunter(params.selector).fadeIn(params);
+            /*Update margin element*/
+            jsHunter(params.modal).margin('all', 0);
+        } else {
+            jsHunter(params.replacer).fadeIn(params);
+
+            let local = {
+                closeModal: function() {
+                    jsHunter.fn.remove(params.replacer, params.selector);
+                    jsHunter.fn.remove("body", params.replacer);
+                }
+            }
+
+            /*Event target when lock screen is clicked*/
+            jsHunter(params.lock_screen, {rsp: "eventTarget"}).on('click', function(rsp){
+                if(rsp === params.lock_screen.replace("#", '').replace(".", "")) {
+                    local.closeModal();
+                }
+            });
+
+            /*Button Event for modal close*/
+            jsHunter("[data-close-modalX]").on('click', function(){
+                local.closeModal();
+            });
+
+            /*Automatic Modal Close*/
+            if(params.timeout > 0) {
+                setTimeout(function(){
+                    local.closeModal();
+                }, parseInt(params.timeout));
+            }
+        }
 
         /*Loop to handler and view the element target - modal*/
         modalCtrl = setInterval(function() {
@@ -577,16 +609,17 @@
     }
 
     function _modalBody(target, _title_, _body_) {
-        let body = "PGgxIHN0eWxlPSJib3JkZXItYm90dG9tOiBzb2xpZCAjODg4ODg4IDFweDtwYWRkaW5nOiAxMHB4ICFpbXBvcnRhbnQ7Y29sb3I6ICMyNWMzZTg7YmFja2dyb3VuZDogIzJiMzc3ODsiPg0KCTxzcGFuIGlkPSJtb2RhbF90aXRsZSI+TW9kYWwgVGl0bGU8L3NwYW4+DQoJPHNwYW4gc3R5bGU9ImRpc3BsYXk6IGJsb2NrO2Zsb2F0OiByaWdodDttYXJnaW46IDNweDtmb250LXNpemU6IDE1cHg7Y29sb3I6ICM1NTU1NTU7Ij4NCiAgCQk8YSBkYXRhLWNsb3NlLW1vZGFseD0iIiBzdHlsZT0iY29sb3I6ICM4ODg4ODg7dGV4dC1kZWNvcmF0aW9uOiBub25lO2ZvbnQtc2l6ZTogMjVweDtwb3NpdGlvbjogcmVsYXRpdmU7d2lkdGg6IDMwcHg7aGVpZ2h0OiAzMHB4O3RleHQtYWxpZ246IGNlbnRlcjtib3JkZXItcmFkaXVzOiA1cHg7Y3Vyc29yOiBkZWZhdWx0O3BhZGRpbmc6IDZweDsiPlg8L2E+DQoJPC9zcGFuPg0KPC9oMT4NCjxkaXYgaWQ9Im1vZGFsX2NvbnRlbnQiIHN0eWxlPSJ3aWR0aDogOTglO2hlaWdodDogYXV0bzttYXJnaW46IDElO3Bvc2l0aW9uOiByZWxhdGl2ZTtib3JkZXI6IGRhc2hlZCAjQkRCREJEIDFweDtiYWNrZ3JvdW5kOiAjRThFNkU2OyI+DQoJPHAgc3R5bGU9ImNvbG9yOiAjYWVhNmE2O3BhZGRpbmc6IDEwcHg7Ij5Nb2RhbCBDb250ZW50PC9wPg0KPC9kaXY+";
+
+        let body = "PGgxIGlkPSJoMV9tb2RhbFgiPg0KCTxzcGFuIGlkPSJtb2RhbFhfdGl0bGUiPk1vZGFsIFRpdGxlPC9zcGFuPg0KCTxzcGFuIGlkPSJzcGFuX21vZGFsWF90aXRsZSI+DQogIAkJPGEgaWQ9ImFfbW9kYWxYX2Nsb3NlIiBkYXRhLWNsb3NlLW1vZGFseD0iIj5YPC9hPg0KCTwvc3Bhbj4NCjwvaDE+DQo8ZGl2IGlkPSJtb2RhbFhfY29udGVudCI+DQoJPHAgaWQ9InBfbW9kYWxYIj5Nb2RhbCBDb250ZW50PC9wPg0KPC9kaXY+";
 
         jsHunter(target).html(atob(body));
 
         if(_title_ !== '') {
-            jsHunter("#modal_title").html(_title_);
+            jsHunter("#modalX_title").html(_title_);
         }
 
         if(_body_ !== '') {
-            jsHunter("#modal_content").html(_body_);
+            jsHunter("#modalX_content").html(_body_);
         }
 
     }
@@ -678,6 +711,7 @@
         let _stateFX_ = (_contentFX_.hasOwnProperty("state")) ? _contentFX_.state : false;
         let _titleFX_ = (_contentFX_.hasOwnProperty("title")) ? _contentFX_.title : '';
         let _bodyFX_ = (_contentFX_.hasOwnProperty("body")) ? _contentFX_.body : '';
+        let _stylizeX_ = (_contentFX_.hasOwnProperty("stylize")) ? _contentFX_.stylize : 'modal_default';
 
         /*Max Size for this element*/
         let _max_width_ = 900;
@@ -722,6 +756,11 @@
             _modalBody(_e_name_, _titleFX_, _bodyFX_);
         }
 
+        /*Stylized*/
+        if(_stylizeX_ !== "modal_default") {
+            jsHunter('#div_modal').resetStyle().addClass(_stylizeX_);
+        }
+
         /*Init Modal Presentation and controls*/
         _modalInit({
             action: _c_action_,
@@ -759,7 +798,9 @@
         let _c_loop_ = (_config_.hasOwnProperty("loop")) ? _config_.loop : 3;
         let _c_force_ = (_config_.hasOwnProperty("force")) ? _config_.force : false;
 
-        _c_speed_ = (_c_speed_ < 40) ? _c_speed_ : 40;
+        if((_c_effect_ !== "elastic" && _c_speed_ < 40) || _c_speed_ > 40) {
+            _c_speed_ = 40;
+        }
 
         let _element_ = (params.hasOwnProperty("element")) ? params.element : '';
         let _e_name_  = (_element_.hasOwnProperty("name")) ? _element_.name : "#div_modal";
@@ -782,6 +823,7 @@
         let _stateX_ = (_contentX_.hasOwnProperty("state")) ? _contentX_.state : false;
         let _titleX_ = (_contentX_.hasOwnProperty("title")) ? _contentX_.title : '';
         let _bodyX_ = (_contentX_.hasOwnProperty("body")) ? _contentX_.body : '';
+        let _stylizeX_ = (_contentX_.hasOwnProperty("stylize")) ? _contentX_.stylize : 'modal_default';
 
         /*Max Height for html element according window size*/
         let _max_width_ = window.innerWidth - 200;
@@ -822,17 +864,19 @@
         _styles_.width = (_styles_.width > _max_width_ || !_c_force_ && _c_wide_) ? _max_width_ : _styles_.width ;
         _styles_.height = (_styles_.height > _max_height_ || !_c_force_ && _c_wide_) ? _max_height_ : _styles_.height ;
 
-        /*CSS Reset Element*/
-        _element_.style.width = "0px";
-        _element_.style.height = "0px";
-        _element_.style.display = "block";
-        _element_.style.color = _e_text_color_ || "#FEFEFE";
-        _element_.style.background = "rgba(" + jsHunter.fn.hexToRgb(_e_back_color_).rgb + ", " + _e_opacity_ + ")";
-        _element_.style.borderRadius = "2px";
-        _element_.style.boxShadow = "3px 4px 10px #222222";
-        _element_.style.opacity = "0";
-        _element_.style.border = "solid " + _e_border_color_ + " 1px";
-        _element_.style.transition = "all 1ms ease-out";
+        if(_c_effect_ !== 'inside-out') {
+            /*CSS Reset Element*/
+            _element_.style.width = "0px";
+            _element_.style.height = "0px";
+            _element_.style.display = "block";
+            _element_.style.color = _e_text_color_ || "#FEFEFE";
+            _element_.style.background = "rgba(" + jsHunter.fn.hexToRgb(_e_back_color_).rgb + ", " + _e_opacity_ + ")";
+            _element_.style.borderRadius = "2px";
+            _element_.style.boxShadow = "3px 4px 10px #222222";
+            _element_.style.opacity = "0";
+            _element_.style.border = "solid " + _e_border_color_ + " 1px";
+            _element_.style.transition = "all 1ms ease-out";
+        }
 
         /*Without Lock Screen*/
         if (!_ls_state_) {
@@ -843,6 +887,11 @@
             _element_.style.margin = "0px";
             _styles_.width = _max_width_ = window.innerWidth;
             _styles_.height = _max_height_ = window.innerHeight;
+        }
+
+        /*Stylized*/
+        if(_stylizeX_ !== "modal_default") {
+            jsHunter('#div_modal').resetStyle().addClass(_stylizeX_);
         }
 
         /*Init Modal Presentation and controls*/
@@ -860,7 +909,10 @@
             selector: _e_name_, /*ref*/
             lock_screen: _ls_name_,
             wide_width: _max_width_, /*max-wide-width*/
-            max_height: _max_height_ /*max height for modal*/
+            max_height: _max_height_, /*max height for modal*/
+            /*To inside-out effect*/
+            modal: _e_name_,
+            replacer: _ls_name_
         });
 
         return this;
