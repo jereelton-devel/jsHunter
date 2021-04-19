@@ -463,42 +463,42 @@
             return this;
         }, //DONE & DOCUMENTATION
 
-        addClass: function(classname, index) {console.log("addClass=>", classname);
+        addClass: function(classname, index) { //console.log("addClass::classname", classname);
             let _sel    = this.sel;
             let keys    = (_sel) ? Object.keys(_sel) : "";
             let element = (keys.length > 0) ?
                 (index) || (index >= 0) ? _sel[index] : _sel : _sel;
             try {
-                if((index || index >=0) && nodes.length > 0) { console.log("IF1");
+                if((index || index >=0) && nodes.length > 0) { //console.log("IF1");
                     if(!jsHunter.fn.matchClass(nodes[index], classname)) {
                         nodes[index].className += " " + classname;
                         nodes[index].className = jsHunter.fn.trim(nodes[index]);
                     }
-                } else if(nodes.length > 0 && !index) { console.log("IF2");
+                } else if(nodes.length > 0 && !index) { //console.log("IF2");
                     nodes.forEach(function(inode) {
                         if(!jsHunter.fn.matchClass(inode, classname)) {
                             inode.className += " " + classname;
                             inode.className = jsHunter.fn.trim(inode.className);
                         }
                     });
-                } else if(node) { console.log("IF3");
+                } else if(node) { //console.log("IF3");
                     if(!jsHunter.fn.matchClass(node, classname)) {
                         node.className += " " + classname;
                         node.className = jsHunter.fn.trim(node.className);
                     }
-                } else if(element.length > 0) { console.log("IF4");
+                } else if(element.length > 0) { //console.log("IF4");
                     keys.forEach(function(inode) {
                         if(!jsHunter.fn.matchClass(element[inode], classname)) {
                             element[inode].className += " " + classname;
                             element[inode].className = jsHunter.fn.trim(element[inode].className);
                         }
                     });
-                } else if(element && element.length > 0) { console.log("IF5");
+                } else if(element && element.length > 0) { //console.log("IF5");
                     if(!jsHunter.fn.matchClass(element, classname)) {
                         element.className += " " + classname;
                         element.className = jsHunter.fn.trim(element.className);
                     }
-                } else { console.log("ELSE");
+                } else { //console.log("ELSE");
                     jsHunter.fn.exception("addClass() error, nodes and selector is undefined !");
                 }
             } catch(err) {

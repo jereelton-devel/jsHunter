@@ -1318,61 +1318,66 @@
                 return;
             }
 
-            (_sel && typeof _sel === "object" || Array.isArray(_sel)) ?
+            (_sel && (typeof _sel === "object" || Array.isArray(_sel))) ?
 
-                //Current Element
-                _sel.forEach(function (a, index, el) {
-
-                    //Theme apply
-                    jH("." + _sel[index].className).addClass(_thm);
+                (function() {
 
                     /**
-                     * CODE MAPPER
+                     * THEME APPLY
                      * */
+                    jH(jsHunter.selector).addClass(_thm);
 
-                    if (_mod === 'mapper' || _mod === 'automatic') {
+                    _sel.forEach(function (a, index, el) {
 
-                        //Original lines from codes: Array
-                        _arr = (jH.fn.getData("text", _sel[index])).split("\n");
+                        /**
+                         * CODE MAPPER
+                         * */
 
-                        //Element reset
-                        _sel[index].innerHTML = "";
+                        if (_mod === 'mapper' || _mod === 'automatic') {
 
-                        //codeMapper: Line to line from codes
-                        _arr.forEach(function (node, idx, e) {
-                            //Data Append in element + Filters: Mapper
-                            _sel[index].innerHTML += _codeMapper(_arr[idx], _lan, _stx);
-                        });
+                            //Original lines from codes: Array
+                            _arr = (jH.fn.getData("text", _sel[index])).split("\n");
 
-                        if (_mod === 'mapper') {
-                            return;
-                        }
-                    }
+                            //Element reset
+                            _sel[index].innerHTML = "";
 
-                    /**
-                     * CODE STYLER
-                     * */
+                            //codeMapper: Line to line from codes
+                            _arr.forEach(function (node, idx, e) {
+                                //Data Append in element + Filters: Mapper
+                                _sel[index].innerHTML += _codeMapper(_arr[idx], _lan, _stx);
+                            });
 
-                    if (_mod === 'styler' || _mod === 'automatic') {
-
-                        //Mapped lines from codes: Array
-                        _arr = (jH.fn.getData("text", _sel[index])).split("\n");
-
-                        //Element reset
-                        _sel[index].innerHTML = "";
-
-                        //codeMapper: Line to line from codes
-                        _arr.forEach(function (node, idx, e) {
-                            //Data Append: Styler
-                            if (_num === true || _num === 'true') {
-                                _sel[index].innerHTML += "<span class='line-number'>" + (idx + 1) + "</span>";
+                            if (_mod === 'mapper') {
+                                return;
                             }
-                            _sel[index].innerHTML += "<span class='line-code'>" + _codeStyler(_arr[idx], _lan, _stx) + "</span>";
-                        });
+                        }
 
-                    }
+                        /**
+                         * CODE STYLER
+                         * */
 
-                }) : (_sel) ?
+                        if (_mod === 'styler' || _mod === 'automatic') {
+
+                            //Mapped lines from codes: Array
+                            _arr = (jH.fn.getData("text", _sel[index])).split("\n");
+
+                            //Element reset
+                            _sel[index].innerHTML = "";
+
+                            //codeMapper: Line to line from codes
+                            _arr.forEach(function (node, idx, e) {
+                                //Data Append: Styler
+                                if (_num === true || _num === 'true') {
+                                    _sel[index].innerHTML += "<span class='line-number'>" + (idx + 1) + "</span>";
+                                }
+                                _sel[index].innerHTML += "<span class='line-code'>" + _codeStyler(_arr[idx], _lan, _stx) + "</span>";
+                            });
+
+                        }
+
+                    })
+
+                })() : (_sel) ?
 
                 (function () {
                     console.log("Single: codify()", _sel);
