@@ -763,6 +763,8 @@
                     return e.href;
                 case "eventTarget":
                     return e.target.id;
+                case "hash":
+                    return e.hash;
                 default:
                     throw "Invalid argument [" + a + "] on getData !";
             }
@@ -1069,6 +1071,24 @@
                 _middlePositionConfigure(element, element_width, element_height);
             } catch(err) {
                 console.error("[Exception] centralize() => " + err);
+            }
+            return this;
+        }, //TODO
+
+        scroller: function() {
+            try {
+                if((jsHunter.selector).search(/^#/) !== -1) {
+                    let to = document.getElementById(jsHunter.selector.replace("#", "")).offsetTop;
+                    window.scrollTo({
+                        top: to - 10,
+                        left: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    jsHunter.fn.exception("Invalid selector, use #id");
+                }
+            } catch(err) {
+                console.log("[Exception] scroller() error => " + err);
             }
             return this;
         }, //TODO
