@@ -267,7 +267,102 @@
          * Requesters and Responses
          * */
 
-        ajax: function(){
+        ajax: function(args){
+
+            let browserAgent = navigator.userAgent.toLowerCase();
+            let xhr          = null;
+            let response     = null;
+            let responseText = null;
+            let accessctrl   = 1;
+
+            function xhrinit() {
+                // Internet Explorer
+                if( browserAgent.indexOf( 'msie' ) !== -1 ) {
+                    // IE Version >= 5
+                    let ieBrowser = ( browserAgent.indexOf( 'msie 5' ) !== -1 ) ? 'Microsoft.XMLHTTP' : 'Msxml2.XMLHTTP';
+
+                    try {
+                        throw xhr = new ActiveXObject( ieBrowser );
+                    } catch (xhr) {
+                        console.error("[Exception] ajax() XMLHttpRequest failed: " + xhr);
+                        return false;
+                    }
+
+                } else {
+                    // Firefox, Safari, Mozilla
+                    xhr = new XMLHttpRequest();
+                }
+
+                if( xhr === null ) {
+                    console.error("[Error] ajax() XMLHttpRequest failed !");
+                    return false;
+                }
+            }
+
+            function init(args) {
+
+                if(xhrinit() === false) {return}
+
+                let ajaxMethod = args.method;
+                let ajaxUrl    = args.url;
+                let ajaxData   = args.data;
+                let ajaxType   = args.dataType;
+                let ajaxContentType = args.contentType;
+
+                if(ajaxMethod === "POST" || ajaxMethod === "PUT" || ajaxMethod === "DELETE") {
+                    console.log("POST ?", ajaxMethod)
+
+                    if(ajaxData && ajaxMethod === "POST") ajaxContentType = 'application/x-www-form-urlencoded';
+
+                    xhr.open(ajaxMethod, ajaxUrl, true);
+                    xhr.setRequestHeader("Content-type", ajaxContentType);
+                    xhr.send(ajaxData);
+
+                    xhr.onreadystatechange = function () {
+                        if(
+                            xhr.readyState === 4 ||
+                            xhr.readyState === 0 ||
+                            xhr.readyState === "complete"
+                        ) {
+                            if (xhr.status === 200) {
+                                if(args.hasOwnProperty('success') && typeof args.success === 'function') {
+                                    args.success(xhr.response);
+                                }
+                            } else {
+                                if(args.hasOwnProperty('error') && typeof args.error === 'function') {
+                                    args.error(xhr.responseText);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if(ajaxMethod === "GET") {
+                    console.log("GET ?", ajaxMethod);
+                    xhr.open(ajaxMethod, ajaxUrl + "?" + ajaxData, true);
+                    xhr.send(ajaxData);
+                    xhr.onload = function() {
+                        if (xhr.status === 200) {
+                            if(args.hasOwnProperty('success') && typeof args.success === 'function') {
+                                args.success(xhr.response);
+                            }
+                        } else {
+                            if(args.hasOwnProperty('error') && typeof args.error === 'function') {
+                                args.error(xhr.responseText);
+                            }
+                        }
+                    }
+                }
+
+                return this;
+            }
+
+            try {
+                init(args);
+            } catch (err) {
+                console.error("[Exception] ajax() => " + err);
+            }
+
         }, //TODO
 
         requester: function(){
