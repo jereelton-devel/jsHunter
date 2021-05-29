@@ -1,6 +1,6 @@
 {
   "name": "jshunter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Javascript Library for Developers",
   "main": "jsHunter.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@id_rsa_ubuntu_desktop_devel.github.com:jereelton-devel/jsHunter.git"
+    "url": "https://github.com/jereelton-devel/jsHunter"
   },
   "keywords": [
     "library",
@@ -16,6 +16,6 @@
     "javascript",
     "hunter"
   ],
-  "author": "Jereelton Teixeira <e@email.com>",
+  "author": "Jereelton Teixeira",
   "license": "ISC"
 }
