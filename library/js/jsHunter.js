@@ -1,12 +1,10 @@
 /*
 *
-* Project: jsHunter Javascript Library - 2020 (by JOTICODE)
+* Project: jsHunter Javascript Library - 2020
 * Author: Jereelton Teixeira
 * Release: 1.0.0
 * Date: 2019-11-01
-*
-* JOTICODE is a property of the JEREELTON DE OLIVEIRA TEIXEIRA - ME
-* Use as open source code, but no sell it to anyone, however make a fork
+* License: MIT
 *
 */
 
