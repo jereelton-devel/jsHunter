@@ -1,8 +1,9 @@
-*.sql
-*.exe
 _old/
 old/
 tmp/
+*.sql
+*.exe
 bkp
 site
 .idea
+tasks.inf
