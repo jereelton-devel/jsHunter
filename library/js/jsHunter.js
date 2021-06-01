@@ -449,7 +449,11 @@
             let keys = Object.keys(_sel);
             (keys.length > 0) ?
                 keys.forEach(function(index) {
-                    _sel[index].removeEventListener("click", jsHunter.fn.noth);
+                    try {
+                        _sel[index].removeEventListener("click", jsHunter.fn.noth);
+                    } catch (ex) {
+                        console.exception("exception...");
+                    }
                     _sel[index].addEventListener("click", function(e){
                         e.preventDefault();
                         e.stopPropagation();
@@ -458,7 +462,11 @@
                         } console.log("click-1");
                     });
                 }) : (_sel) ? (function (){
-                    _sel.removeEventListener("click", jsHunter.fn.noth);
+                    try {
+                        _sel.removeEventListener("click", jsHunter.fn.noth);
+                    } catch (ex) {
+                        console.exception("exception...");
+                    }
                     _sel.addEventListener("click", function(e){
                         e.preventDefault();
                         e.stopPropagation();
@@ -502,7 +510,11 @@
             try {
                 (keys.length > 0) ?
                     keys.forEach(function(index) {
-                        _sel[index].removeEventListener(ev, jsHunter.fn.noth);
+                        try {
+                            _sel[index].removeEventListener(ev, jsHunter.fn.noth);
+                        } catch (ex) {
+                            console.exception("exception...");
+                        }
                         _sel[index].addEventListener(ev, function(e){
                             e.preventDefault();
                             e.stopPropagation();
@@ -510,7 +522,11 @@
                         });
                     }) : (_sel) ?
                     (function(){
-                        _sel.removeEventListener(ev, jsHunter.fn.noth);
+                        try {
+                            _sel.removeEventListener(ev, jsHunter.fn.noth);
+                        } catch (ex) {
+                            console.exception("exception...");
+                        }
                         _sel.addEventListener(ev, function(e){
                             e.preventDefault();
                             e.stopPropagation();
