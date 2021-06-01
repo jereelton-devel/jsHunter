@@ -25,6 +25,7 @@
     margin: 20px auto;
     font-style: normal !important;
     overflow: auto;
+    color: #5DC5E6;
 }
 .line-number {
     text-align: right !important;
