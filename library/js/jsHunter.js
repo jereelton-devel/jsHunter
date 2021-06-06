@@ -1,10 +1,9 @@
 /*
 *
-* Project: jsHunter Javascript Library - 2020
-* Author: Jereelton Teixeira
-* Release: 1.0.0
-* Date: 2019-11-01
+* Project: jsHunter Javascript Library
+* Initial Date: 2019-11-01
 * License: MIT
+* Description: This is a free source code, please use as best as possible.
 *
 */
 
@@ -49,7 +48,7 @@
         sizeCtrl  = null;
 
     /***
-     * Private Generic Funcions
+     * Private Generic Functions
      * */
 
     function _getStyles(_element) {
@@ -216,8 +215,8 @@
          * Testing Installation
          * */
 
-        /*for test your application, see:
-        http://joticode.com/works/jshunter/#_test_-installation*/
+        /*for more details please, see of documentation below:
+        http://www.jshunter-lib.com/#_test_-installation*/
         _test_: function(param) {
             console.log("Test is running...", param);
             let _sel = this.sel || nodes;
@@ -233,7 +232,7 @@
                 console.error("test", typeof _sel, _sel.length, _sel);
             console.log("Your test was performed successfully");
             return this;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         /***
          * Internal Functions
@@ -241,11 +240,11 @@
 
         exception: function(msg){
             throw msg;
-        }, //DONE INTERNAL
+        },//DONE: REMOVER
 
         noth: function() {
             (function(){void(0);})();
-        }, //TODO
+        },//DONE: REMOVER
 
         /***
          * Using
@@ -259,7 +258,7 @@
                     console.info("[Warning] callback is:", typeof callback);
                 }
             }
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         /***
          * Requesters and Responses
@@ -361,13 +360,13 @@
                 console.error("[Exception] ajax() => " + err);
             }
 
-        }, //TODO
+        },//DONE: REMOVER
 
         requester: function(){
-        }, //TODO
+        },//DONE: REMOVER
 
         receiver: function(){
-        }, //TODO
+        },//DONE: REMOVER
 
         /***
          * Properties Handler
@@ -375,7 +374,7 @@
 
         props: function(type, value) {
             return this.attr(type, value);
-        },//DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         attr: function(type, value) {
             try {
@@ -391,7 +390,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         screenSizer: function(params) {
             sizeCtrl = setInterval(function() {
@@ -433,12 +432,12 @@
                 }, params.timeout);
             }
             return null;
-        },//DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         screenSizerStop: function() {
             clearInterval(sizeCtrl);
             return null;
-        },//DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         /***
          * Events Listener
@@ -477,7 +476,7 @@
                 })()
                  : jsHunter.fn.exception("click() error " + _sel);
             return this;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         isOn: function(params, index) {
             let _sel    = this.sel;
@@ -501,7 +500,7 @@
                 console.error(err);
             }
             return state;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         on: function(ev, callback) {
             let _sel = this.sel;
@@ -538,7 +537,7 @@
                 console.error(err);
             }
             return this;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         /***
          * Writers And Modifiers
@@ -556,7 +555,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         append: function(text) {
             try {
@@ -570,7 +569,7 @@
                 console.error(err);
             }
             return this;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         addClass: function(classname, index) { //console.log("addClass::classname", classname);
             let _sel    = this.sel;
@@ -614,7 +613,7 @@
                 console.error(err);
             }
             return this;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         removeClass: function(classname, index) {
             let _sel    = this.sel;
@@ -640,7 +639,7 @@
                 console.error(err);
             }
             return this;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         setClass: function(classname, index) {
             let _sel    = this.sel;
@@ -669,7 +668,7 @@
                 console.error(err);
             }
             return this;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         resetStyle: function(index) {
             let _sel    = this.sel;
@@ -698,7 +697,7 @@
                 console.error(err);
             }
             return this;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         create: function(params) {
             let el = _createHtmlElement(params);
@@ -709,7 +708,7 @@
                     }, params.timeout);
                 })() : jsHunter.fn.noth();
             return el;
-        }, //TODO: DONE & DOCUMENTATION ????
+        },//DONE: REMOVER
 
         remove: function(parent, children) {
             let _el_ = document.querySelectorAll(parent);
@@ -720,7 +719,7 @@
             });
 
             return this;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         objWriter: function(obj, params) {/*For developers, use together with jsHunter.css*/
             try {
@@ -837,7 +836,7 @@
                 console.error("[Exception] objwriter() => " + err)
             }
             return this;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         /***
          * Information Data
@@ -848,7 +847,7 @@
                 (this.sel[0].textContent || this.sel[0].text) ? this.sel[0].textContent || this.sel[0].text :
                     jsHunter.fn.exception("text() error " + this.sel);
 
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         getData: function(a, e) {
             switch(a) {
@@ -877,11 +876,11 @@
                 default:
                     throw "Invalid argument [" + a + "] on getData !";
             }
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         screen: function() {
             return {width: window.innerWidth, height: window.innerHeight};
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         computedCss: function(element) {
             try {
@@ -889,7 +888,7 @@
             } catch (err) {
                 console.error("[Exception]: styles() => " + err);
             }
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         val: function(dt) {
             try {
@@ -915,7 +914,7 @@
                 console.error("[Exception] val() => " + err);
             }
             return (nodes.length === 1) ? nodes[0] : (nodes.length > 1) ? nodes : null;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         /***
          * Visual Handlers
@@ -935,7 +934,7 @@
                 console.error(err);
             }
             return this;
-        }, //DONE & DOCUMENTATION
+        },//DONE: REMOVER
 
         display: function(value) {
             try {
@@ -949,7 +948,7 @@
                 console.error(err);
             }
             return this;
-        }, //DONE
+        },//DONE: DOCUMENT
 
         show: function() {
             try {
@@ -963,7 +962,7 @@
                 console.error(err);
             }
             return this;
-        }, //TODO
+        },//TODO: CONTINUE
 
         hide: function() {
             try {
@@ -977,7 +976,7 @@
                 console.error(err);
             }
             return this;
-        }, //TODO
+        },//TODO: CONTINUE
 
         fadeIn: function(p) {
             clearInterval(fadeCtrl); /*Bug Fix*/
@@ -1029,7 +1028,7 @@
             }, _timer_fade);
 
             return this;
-        }, //DONE
+        },//DONE: DOCUMENT
 
         fadeOut: function(p) {
             clearInterval(fadeCtrl); /*Bug Fix*/
@@ -1064,7 +1063,7 @@
             }, _timer_fade);
 
             return this;
-        }, //DONE
+        },//DONE: DOCUMENT
 
         height: function(value) {
             try {
@@ -1078,7 +1077,7 @@
                 console.error(err);
             }
             return this;
-        }, //TODO PROGRAMAR FUNÇÃO PARA RETORNAR ALTURA DO ELEMENTO
+        },//TODO: CONTINUE - RETURN HEIGHT
 
         width: function(value) {
             try {
@@ -1092,7 +1091,7 @@
                 console.error(err);
             }
             return this;
-        }, //TODO PROGRAMAR FUNÇÃO PARA RETORNAR LARGURA DO ELEMENTO
+        },//TODO: CONTINUE - RETURN WIDTH
 
         hidden: function(element) {
             let _el_ = document.querySelectorAll(element);
@@ -1101,7 +1100,7 @@
             keys.forEach(function(index) {
                 _el_[index].style.display = 'none';
             });
-        }, //DONE
+        },//DONE: DOCUMENT
 
         margin: function(orientation, value) {
             try {
@@ -1155,7 +1154,7 @@
                 console.error(err);
             }
             return this;
-        }, //TODO
+        },//TODO: CONTINUE
 
         sizer: function(element, orientation, value, type) {
             try {
@@ -1164,7 +1163,7 @@
                 console.error("[Exception] sizer() => " + err);
             }
             return this;
-        }, //TODO
+        },//TODO: CONTINUE
 
         opacity: function(element, opacity) {
             try {
@@ -1173,7 +1172,7 @@
                 console.error("[Exception] opacity() => " + err);
             }
             return this;
-        }, //TODO
+        },//TODO: CONTINUE
 
         centralize: function(element, element_width, element_height) {
             try {
@@ -1182,7 +1181,7 @@
                 console.error("[Exception] centralize() => " + err);
             }
             return this;
-        }, //TODO
+        },//TODO: CONTINUE
 
         scroller: function() {
             try {
@@ -1200,7 +1199,7 @@
                 console.log("[Exception] scroller() error => " + err);
             }
             return this;
-        }, //TODO
+        },//TODO: CONTINUE
 
         /***
          * Css Handler
@@ -1229,27 +1228,36 @@
                 console.error("[Exception] css() error " + err);
             }
             return this;
-        },*/
+        },*/ //TODO: DEVELOP
 
         /***
-         * Advanced Components
+         * Advanced Components: TODO: MOVE TO jsHunter-UI ALL GRAPHIC VISUAL RESOURCES
          * */
 
         tooltip: function() {
-        }, //TODO
+        },//TODO: CONTINUE
+
+        toast: function() {
+        },//TODO: CONTINUE
 
         progressBar: function() {
-        }, //TODO
+        },//TODO: CONTINUE
 
         progress: function() {
             return "Please wait...";
-        }, //TODO
+        },//TODO: CONTINUE
 
         slider: function() {
-        }, //TODO
+        },//TODO: CONTINUE
 
         dialog: function() {
-        }, //TODO
+        },//TODO: CONTINUE
+
+        alert: function() {
+        },//TODO: CONTINUE
+
+        confirm: function() {
+        },//TODO: CONTINUE
 
         /***
          * Utils And Others
@@ -1270,7 +1278,7 @@
                 console.error("[Exception] select() error, wrong or missing element [sel]");
             }
             return this;
-        }, //TODO
+        },//TODO: CONTINUE
 
         hunter: function(wanted, nodeType) {
             try {
@@ -1307,7 +1315,7 @@
                 console.error(err);
             }
             return this;
-        }, //DONE
+        },//DONE: DOCUMENT
 
         nodeParent: function(parentItem) { console.log("NODEPARENT", parentItem + " " + this.selector);
             try {
@@ -1318,7 +1326,7 @@
                 console.error(err);
             }
             return this;
-        }, //DONE
+        },//DONE: DOCUMENT
 
         nodeChild: function(childItem) {
             try {
@@ -1329,7 +1337,7 @@
                 console.error(err);
             }
             return this;
-        }, //DONE
+        },//DONE: DOCUMENT
 
         matchId: function(element, id_value) {
             return (
@@ -1337,7 +1345,7 @@
                 element.id.search(" " + id_value) >= 0 ||
                 element.id.search(id_value + " ") >= 0
             );
-        }, //DONE
+        },//DONE: DOCUMENT
 
         matchClass: function(element, classname) {
             return (
@@ -1345,29 +1353,29 @@
                 element.className.search(" " + classname) >= 0 ||
                 element.className.search(classname + " ") >= 0
             );
-        }, //DONE
+        },//DONE: DOCUMENT
 
         findId: function(element, id) {
-        }, //TODO
+        },//TODO: CONTINUE
 
         findClass: function(element, classname) {
-        }, //TODO
+        },//TODO: CONTINUE
 
         joinSplit: function(args) {
-        }, //TODO
+        },//TODO: CONTINUE
 
         intNumber: function(data) {
             if(isNaN(data)) {
                 return parseInt((data).replace(/[^0-9]/gi, ""));
             }
             return parseInt(data);
-        }, //DONE
+        },//DONE: DOCUMENT
 
         trim: function(data) {
             return data
                 .replace(/^( +)([0-9a-zA-Z ,'"\\\/_\[\-\].!@#$%&*()]+)( +)?$/gi, '$2')
                 .replace(/ +$/, '');
-        }, //TODO
+        },//DONE: DOCUMENT
 
         hexToRgb: function(color_hex) {
             let i = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color_hex);
@@ -1383,7 +1391,7 @@
                 b: parseInt(i[3], 16),
                 rgb: parseInt(i[1], 16) +','+ parseInt(i[2], 16) +','+ parseInt(i[3], 16)
             }
-        }, //DONE
+        },//DONE: DOCUMENT
     };
 
     window.jH = window.jsHunter = jsHunter;

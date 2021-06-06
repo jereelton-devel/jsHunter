@@ -1,10 +1,9 @@
 /*
 *
-* Project: jsHunter-codify
-* Author: Jereelton Teixeira
-* Release: 1.0.0
-* Date: 2019-11-01
+* Project: jsHunter Codify
+* Initial Date: 2019-11-01
 * License: MIT
+* Description: This is a free source code, please use as best as possible.
 *
 * This library should be used together with jsHunter and jsHunter-codify.css !
 *

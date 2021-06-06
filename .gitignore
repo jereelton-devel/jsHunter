@@ -6,4 +6,4 @@ tmp/
 bkp
 site
 .idea
-tasks.inf
+tasks*.inf
