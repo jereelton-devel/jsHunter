@@ -1,10 +1,9 @@
 /*
 *
-* Project: jsHunter-ui
-* Author: Jereelton Teixeira
-* Release: 1.0.0
-* Date: 2019-11-01
+* Project: jsHunter UI
+* Initial Date: 2019-11-01
 * License: MIT
+* Description: This is a free source code, please use as best as possible.
 *
 * This library should be used together with jsHunter and jsHunter-ui.css !
 *
@@ -680,7 +679,7 @@
         }
 
         return this;
-    } //DONE & DOCUMENTATION
+    }
 
     jsHunter.prototype.modalFX = function(params) {
 
@@ -781,7 +780,7 @@
 
         return this;
 
-    } //DONE & DOCUMENTATION (modal flyer without dependence)
+    }
 
     jsHunter.prototype.modalX = function(params) {
 
@@ -918,7 +917,7 @@
 
         return this;
 
-    } //DONE & DOCUMENTATION (modal without dependence)
+    }
 
     jsHunter.prototype.modalTheme = function(params) {
 
@@ -1052,6 +1051,6 @@
 
         return this;
 
-    } //DONE E DOCUMENTATION
+    }
 
 })((typeof jsHunter !== "undefined" ? jsHunter: ''));
