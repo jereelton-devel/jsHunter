@@ -1355,11 +1355,20 @@
             );
         },//DONE: DOCUMENT
 
-        findId: function(element, id) {
-        },//TODO: CONTINUE
+        findId: function(id) {
+            return !!document.querySelector('#'+id.replace(/#/g, ''));
+        },//DONE: DOCUMENT
 
-        findClass: function(element, classname) {
-        },//TODO: CONTINUE
+        findClass: function(classname) {
+            return !!document.querySelectorAll('.'+classname.replace(/\./g, '')).length;
+        },//DONE: DOCUMENT
+
+        findElements: function(element) {
+            if(element.search(/^\[(.*)+\]$/) !== -1) {
+                return !!document.querySelectorAll(element).length;
+            }
+            jsHunter.fn.exception("findElements() error: target is not a valid DOM element to data-set []");
+        },//DONE: DOCUMENT
 
         joinSplit: function(args) {
         },//TODO: CONTINUE
