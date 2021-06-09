@@ -57,7 +57,6 @@
     font-style: italic;
 }
 /*Buttons*/
-
 .simulate-button-green,
 .simulate-button-blue,
 .simulate-button-orange,
@@ -66,7 +65,8 @@
 .simulate-button-cyan,
 .simulate-button-red,
 .simulate-button-yellow,
-.simulate-button-pink {
+.simulate-button-pink,
+.simulate-button-silver {
     display: inline-block;
     min-width: 150px;
     height: 40px;
@@ -81,6 +81,19 @@
     box-shadow: 1px 2px 5px #454545;
     margin: 3px 0px 3px 3px;
     text-decoration: none !important;
+}
+.simulate-button-green img,
+.simulate-button-blue img,
+.simulate-button-orange img,
+.simulate-button-purple img,
+.simulate-button-black img,
+.simulate-button-cyan img,
+.simulate-button-red img,
+.simulate-button-yellow img,
+.simulate-button-pink img,
+.simulate-button-silver img {
+    text-align: center;
+    vertical-align: middle;
 }
 .simulate-button-blue {
     background-color: #2344e7;
@@ -106,6 +119,9 @@
 }
 .simulate-button-pink {
     background-color: #d80ae0;
+}
+.simulate-button-silver {
+    background-color: #595959;
 }
 .simulate-button-disabled {
     color: #BBBBBB !important;
