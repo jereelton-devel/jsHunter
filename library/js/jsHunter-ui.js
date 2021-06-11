@@ -624,6 +624,10 @@
 
     }
 
+    /**
+     * Modals Prototype
+     * */
+
     jsHunter.prototype.modal = function(params) {
         try {
             if(typeof  params === "undefined") {
@@ -1052,5 +1056,67 @@
         return this;
 
     }
+
+    /**
+     * Message Prototype
+     * */
+
+    jsHunter.prototype.tooltip = function(params) {
+        return null;
+    }
+
+    jsHunter.prototype.toast = function(params) {
+
+    }
+
+    jsHunter.prototype.dialog = function(params) {
+
+    }
+
+    jsHunter.prototype.alert = function(params) {
+
+    }
+
+    jsHunter.prototype.confirm = function(params) {
+
+    }
+
+    jsHunter.prototype.adapterBox = function(params) {
+
+    }
+
+    /**
+     * Widgets Elements
+     * */
+
+    jsHunter.prototype.progressBar = function(params) {
+
+    }
+
+    jsHunter.prototype.progress = function(params) {
+
+    }
+
+    jsHunter.prototype.slider = function(params) {
+
+    }
+
+    /**
+     * Data Elements
+     * */
+
+    jsHunter.prototype.tableRender = function(params) {
+
+    }
+
+    jsHunter.prototype.tableCloner = function(params) {
+
+    }
+
+    jsHunter.prototype.selectCloner = function(params) {
+
+    }
+
+
 
 })((typeof jsHunter !== "undefined" ? jsHunter: ''));

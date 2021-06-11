@@ -232,7 +232,7 @@
                 console.error("test", typeof _sel, _sel.length, _sel);
             console.log("Your test was performed successfully");
             return this;
-        },//DONE: REMOVER
+        },
 
         /***
          * Internal Functions
@@ -240,11 +240,11 @@
 
         exception: function(msg){
             throw msg;
-        },//DONE: REMOVER
+        },
 
         noth: function() {
             (function(){void(0);})();
-        },//DONE: REMOVER
+        },
 
         /***
          * Using
@@ -258,7 +258,7 @@
                     console.info("[Warning] callback is:", typeof callback);
                 }
             }
-        },//DONE: REMOVER
+        },
 
         /***
          * Requesters and Responses
@@ -360,13 +360,13 @@
                 console.error("[Exception] ajax() => " + err);
             }
 
-        },//DONE: REMOVER
+        },
 
         requester: function(){
-        },//DONE: REMOVER
+        },
 
         receiver: function(){
-        },//DONE: REMOVER
+        },
 
         /***
          * Properties Handler
@@ -374,7 +374,7 @@
 
         props: function(type, value) {
             return this.attr(type, value);
-        },//DONE: REMOVER
+        },
 
         attr: function(type, value) {
             try {
@@ -390,7 +390,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: REMOVER
+        },
 
         screenSizer: function(params) {
             sizeCtrl = setInterval(function() {
@@ -432,12 +432,12 @@
                 }, params.timeout);
             }
             return null;
-        },//DONE: REMOVER
+        },
 
         screenSizerStop: function() {
             clearInterval(sizeCtrl);
             return null;
-        },//DONE: REMOVER
+        },
 
         /***
          * Events Listener
@@ -476,7 +476,7 @@
                 })()
                  : jsHunter.fn.exception("click() error " + _sel);
             return this;
-        },//DONE: REMOVER
+        },
 
         isOn: function(params, index) {
             let _sel    = this.sel;
@@ -500,7 +500,7 @@
                 console.error(err);
             }
             return state;
-        },//DONE: REMOVER
+        },
 
         on: function(ev, callback) {
             let _sel = this.sel;
@@ -537,7 +537,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: REMOVER
+        },
 
         /***
          * Writers And Modifiers
@@ -555,7 +555,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: REMOVER
+        },
 
         append: function(text) {
             try {
@@ -569,7 +569,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: REMOVER
+        },
 
         addClass: function(classname, index) { //console.log("addClass::classname", classname);
             let _sel    = this.sel;
@@ -613,7 +613,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: REMOVER
+        },
 
         removeClass: function(classname, index) {
             let _sel    = this.sel;
@@ -639,7 +639,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: REMOVER
+        },
 
         setClass: function(classname, index) {
             let _sel    = this.sel;
@@ -668,7 +668,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: REMOVER
+        },
 
         resetStyle: function(index) {
             let _sel    = this.sel;
@@ -697,7 +697,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: REMOVER
+        },
 
         create: function(params) {
             let el = _createHtmlElement(params);
@@ -708,7 +708,7 @@
                     }, params.timeout);
                 })() : jsHunter.fn.noth();
             return el;
-        },//DONE: REMOVER
+        },
 
         remove: function(parent, children) {
             let _el_ = document.querySelectorAll(parent);
@@ -719,7 +719,7 @@
             });
 
             return this;
-        },//DONE: REMOVER
+        },
 
         objWriter: function(obj, params) {/*For developers, use together with jsHunter.css*/
             try {
@@ -836,7 +836,7 @@
                 console.error("[Exception] objwriter() => " + err)
             }
             return this;
-        },//DONE: REMOVER
+        },
 
         /***
          * Information Data
@@ -847,7 +847,7 @@
                 (this.sel[0].textContent || this.sel[0].text) ? this.sel[0].textContent || this.sel[0].text :
                     jsHunter.fn.exception("text() error " + this.sel);
 
-        },//DONE: REMOVER
+        },
 
         getData: function(a, e) {
             switch(a) {
@@ -876,11 +876,11 @@
                 default:
                     throw "Invalid argument [" + a + "] on getData !";
             }
-        },//DONE: REMOVER
+        },
 
         screen: function() {
             return {width: window.innerWidth, height: window.innerHeight};
-        },//DONE: REMOVER
+        },
 
         computedCss: function(element) {
             try {
@@ -888,7 +888,7 @@
             } catch (err) {
                 console.error("[Exception]: styles() => " + err);
             }
-        },//DONE: REMOVER
+        },
 
         val: function(dt) {
             try {
@@ -914,7 +914,7 @@
                 console.error("[Exception] val() => " + err);
             }
             return (nodes.length === 1) ? nodes[0] : (nodes.length > 1) ? nodes : null;
-        },//DONE: REMOVER
+        },
 
         /***
          * Visual Handlers
@@ -934,7 +934,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: REMOVER
+        },
 
         display: function(value) {
             try {
@@ -948,7 +948,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: DOCUMENT
+        },
 
         show: function() {
             try {
@@ -962,7 +962,7 @@
                 console.error(err);
             }
             return this;
-        },//TODO: CONTINUE
+        },
 
         hide: function() {
             try {
@@ -976,7 +976,7 @@
                 console.error(err);
             }
             return this;
-        },//TODO: CONTINUE
+        },
 
         fadeIn: function(p) {
             clearInterval(fadeCtrl); /*Bug Fix*/
@@ -1028,7 +1028,7 @@
             }, _timer_fade);
 
             return this;
-        },//DONE: DOCUMENT
+        },
 
         fadeOut: function(p) {
             clearInterval(fadeCtrl); /*Bug Fix*/
@@ -1063,7 +1063,7 @@
             }, _timer_fade);
 
             return this;
-        },//DONE: DOCUMENT
+        },
 
         height: function(value) {
             try {
@@ -1077,7 +1077,7 @@
                 console.error(err);
             }
             return this;
-        },//TODO: CONTINUE - RETURN HEIGHT
+        },
 
         width: function(value) {
             try {
@@ -1091,7 +1091,7 @@
                 console.error(err);
             }
             return this;
-        },//TODO: CONTINUE - RETURN WIDTH
+        },
 
         hidden: function(element) {
             let _el_ = document.querySelectorAll(element);
@@ -1100,7 +1100,7 @@
             keys.forEach(function(index) {
                 _el_[index].style.display = 'none';
             });
-        },//DONE: DOCUMENT
+        },
 
         margin: function(orientation, value) {
             try {
@@ -1154,7 +1154,7 @@
                 console.error(err);
             }
             return this;
-        },//TODO: CONTINUE
+        },
 
         sizer: function(element, orientation, value, type) {
             try {
@@ -1163,7 +1163,7 @@
                 console.error("[Exception] sizer() => " + err);
             }
             return this;
-        },//TODO: CONTINUE
+        },
 
         opacity: function(element, opacity) {
             try {
@@ -1172,7 +1172,7 @@
                 console.error("[Exception] opacity() => " + err);
             }
             return this;
-        },//TODO: CONTINUE
+        },
 
         centralize: function(element, element_width, element_height) {
             try {
@@ -1181,7 +1181,7 @@
                 console.error("[Exception] centralize() => " + err);
             }
             return this;
-        },//TODO: CONTINUE
+        },
 
         scroller: function() {
             try {
@@ -1199,7 +1199,7 @@
                 console.log("[Exception] scroller() error => " + err);
             }
             return this;
-        },//TODO: CONTINUE
+        },
 
         /***
          * Css Handler
@@ -1231,35 +1231,6 @@
         },*/ //TODO: DEVELOP
 
         /***
-         * Advanced Components: TODO: MOVE TO jsHunter-UI ALL GRAPHIC VISUAL RESOURCES
-         * */
-
-        tooltip: function() {
-        },//TODO: CONTINUE
-
-        toast: function() {
-        },//TODO: CONTINUE
-
-        progressBar: function() {
-        },//TODO: CONTINUE
-
-        progress: function() {
-            return "Please wait...";
-        },//TODO: CONTINUE
-
-        slider: function() {
-        },//TODO: CONTINUE
-
-        dialog: function() {
-        },//TODO: CONTINUE
-
-        alert: function() {
-        },//TODO: CONTINUE
-
-        confirm: function() {
-        },//TODO: CONTINUE
-
-        /***
          * Utils And Others
          * */
 
@@ -1278,7 +1249,7 @@
                 console.error("[Exception] select() error, wrong or missing element [sel]");
             }
             return this;
-        },//TODO: CONTINUE
+        },
 
         hunter: function(wanted, nodeType) {
             try {
@@ -1315,7 +1286,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: DOCUMENT
+        },
 
         nodeParent: function(parentItem) { console.log("NODEPARENT", parentItem + " " + this.selector);
             try {
@@ -1326,7 +1297,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: DOCUMENT
+        },
 
         nodeChild: function(childItem) {
             try {
@@ -1337,7 +1308,7 @@
                 console.error(err);
             }
             return this;
-        },//DONE: DOCUMENT
+        },
 
         matchId: function(element, id_value) {
             return (
@@ -1345,7 +1316,7 @@
                 element.id.search(" " + id_value) >= 0 ||
                 element.id.search(id_value + " ") >= 0
             );
-        },//DONE: DOCUMENT
+        },
 
         matchClass: function(element, classname) {
             return (
@@ -1353,38 +1324,38 @@
                 element.className.search(" " + classname) >= 0 ||
                 element.className.search(classname + " ") >= 0
             );
-        },//DONE: DOCUMENT
+        },
 
         findId: function(id) {
             return !!document.querySelector('#'+id.replace(/#/g, ''));
-        },//DONE: DOCUMENT
+        },
 
         findClass: function(classname) {
             return !!document.querySelectorAll('.'+classname.replace(/\./g, '')).length;
-        },//DONE: DOCUMENT
+        },
 
         findElements: function(element) {
             if(element.search(/^\[(.*)+\]$/) !== -1) {
                 return !!document.querySelectorAll(element).length;
             }
             jsHunter.fn.exception("findElements() error: target is not a valid DOM element to data-set []");
-        },//DONE: DOCUMENT
+        },
 
         joinSplit: function(args) {
-        },//TODO: CONTINUE
+        },
 
         intNumber: function(data) {
             if(isNaN(data)) {
                 return parseInt((data).replace(/[^0-9]/gi, ""));
             }
             return parseInt(data);
-        },//DONE: DOCUMENT
+        },
 
         trim: function(data) {
             return data
                 .replace(/^( +)([0-9a-zA-Z ,'"\\\/_\[\-\].!@#$%&*()]+)( +)?$/gi, '$2')
                 .replace(/ +$/, '');
-        },//DONE: DOCUMENT
+        },
 
         hexToRgb: function(color_hex) {
             let i = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(color_hex);
@@ -1400,7 +1371,7 @@
                 b: parseInt(i[3], 16),
                 rgb: parseInt(i[1], 16) +','+ parseInt(i[2], 16) +','+ parseInt(i[3], 16)
             }
-        },//DONE: DOCUMENT
+        },
     };
 
     window.jH = window.jsHunter = jsHunter;
