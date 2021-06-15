@@ -1231,6 +1231,34 @@
         },*/ //TODO: DEVELOP
 
         /***
+         * Data Structure
+         * */
+
+        jsonMap: function() {
+            return this;
+        },
+
+        arrayMap: function() {
+            return this;
+        },
+
+        listMap: function() {
+            return this;
+        },
+
+        objectMap: function() {
+            return this;
+        },
+
+        csvMap: function() {
+            return this;
+        },
+
+        envMap: function() {
+            return this;
+        },
+
+        /***
          * Utils And Others
          * */
 
